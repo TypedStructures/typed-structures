@@ -1,4 +1,4 @@
-import { SinglyLinkedList } from './linked-list/singly-linked-list';
+import { SinglyLinkedList } from './linked-list/singly-linked-list/singly-linked-list';
 
 let list = new SinglyLinkedList<number>();
 list.push(5);
