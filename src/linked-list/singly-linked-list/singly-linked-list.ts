@@ -137,7 +137,7 @@ export class SinglyLinkedList<T> {
                 current = current.next;
             }
 
-            previous.next = undefined;
+            previous.next = current.next;
             return current.data;
 
         }
