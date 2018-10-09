@@ -1,5 +1,5 @@
-import { BiFunction } from '../util/function/biFunction';
-import { Function } from '../util/function/function';
+import { BiFunctionInterface } from '../util/function/biFunctionInterface';
+import { FunctionInterface } from '../util/function/functionInterface';
 
 /**
  * This interface an adaptation of the Map<K, V> of the Java Collections Framework.
@@ -49,10 +49,10 @@ export interface MapInterface<K, V> {
      * Any implementation providing atomicity guarantees must override this method and document its concurrency properties.
      * In particular, all implementations of subinterface ConcurrentMap must document whether the function is applied once atomically only if the value is not present.
      * @param {K} key
-     * @param {BiFunction<K, V, V>} remappingFunction
+     * @param {BiFunctionInterface<K, V, V>} remappingFunction
      * @since 0.0.1
      */
-    compute(key: K, remappingFunction: BiFunction<K, V, V>): V;
+    compute(key: K, remappingFunction: BiFunctionInterface<K, V, V>): V;
 
     /**
      * If the specified key is not already associated with a value (or is mapped to null), attempts to compute its value using the given mapping function and enters it into this map unless null.
@@ -78,14 +78,14 @@ export interface MapInterface<K, V> {
      * Any implementation providing atomicity guarantees must override this method and document its concurrency properties.
      * In particular, all implementations of subinterface ConcurrentMap must document whether the function is applied once atomically only if the value is not present.
      * @param {K} key key with which the specified value is to be associated
-     * @param {Function<K, V>} mappingFunction the function to compute a value
+     * @param {FunctionInterface<K, V>} mappingFunction the function to compute a value
      * @return {V} the current (existing or computed) value associated with the specified key, or null if the computed value is null
      * @throws UnsupportedOperationException - if the put operation is not supported by this map (optional)
      * @throws ClassCastException - if the class of the specified key or value prevents it from being stored in this map (optional)
      * @throws NullReferenceException - if the specified key is null and this map does not support null keys, or the mappingFunction is null
      * @since 0.0.1
      */
-    computeIfAbsent(key: K, mappingFunction: Function<K, V>): V;
+    computeIfAbsent(key: K, mappingFunction: FunctionInterface<K, V>): V;
 
     /**
      * If the value for the specified key is present and non-null, attempts to compute a new mapping given the key and its current mapped value.
@@ -108,14 +108,14 @@ export interface MapInterface<K, V> {
      * Any implementation providing atomicity guarantees must override this method and document its concurrency properties.
      * In particular, all implementations of subinterface ConcurrentMap must document whether the function is applied once atomically only if the value is not present.
      * @param {K} key key with which the specified value is to be associated
-     * @param {BiFunction<K, V, V>} v the function to compute a value
+     * @param {BiFunctionInterface<K, V, V>} v the function to compute a value
      * @return {V} the new value associated with the specified key, or null if none
      * @throws UnsupportedOperationException - if the put operation is not supported by this map (optional)
      * @throws ClassCastException - if the class of the specified key or value prevents it from being stored in this map (optional)
      * @throws NullReferenceException - if the specified key is null and this map does not support null keys, or the mappingFunction is null
      * @since 0.0.1
      */
-    computeIfPresent(key: K, v: BiFunction<K, V, V>): V;
+    computeIfPresent(key: K, v: BiFunctionInterface<K, V, V>): V;
 
     /**
      * Returns true if this map contains a mapping for the specified key.
@@ -165,10 +165,10 @@ export interface MapInterface<K, V> {
 
     /**
      * Executes a provided function once for each Map<K, V> element.
-     * @param {Function} callback Function to execute for each element, taking four arguments: node {MapEntry<K, V>} The current element, value {V} The current Node value, index {number} The current index in the Map<K, V>, Map {Map<K, V>} The Map.
+     * @param {FunctionInterface} callback FunctionInterface to execute for each element, taking four arguments: node {MapEntry<K, V>} The current element, value {V} The current Node value, index {number} The current index in the Map<K, V>, Map {Map<K, V>} The Map.
      * @since 0.0.1
      */
-    forEach(callback: Function<K, V>): void;
+    forEach(callback: FunctionInterface<K, V>): void;
 
     /**
      * Returns the value to which the specified key is mapped, or null if this map contains no mapping for the key.
