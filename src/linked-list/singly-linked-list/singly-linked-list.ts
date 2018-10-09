@@ -69,7 +69,7 @@ export class SinglyLinkedList<T> {
     }
 
     /**
-     * Adds one or more elements to the end of a SinglyLinkedList
+     * Adds one elements to the end of a SinglyLinkedList
      * @param {T} item The elements to add to the end of the SinglyLinkedList.
      */
     public push(item: T): void {
@@ -99,11 +99,12 @@ export class SinglyLinkedList<T> {
             return undefined;
         }
 
+        let current = this._head;
+
         if (this.length() === 1) {
             this._head = undefined;
 
         } else {
-            let current = this._head;
             let previous;
 
             while (current.hasNext()) {
@@ -112,11 +113,11 @@ export class SinglyLinkedList<T> {
             }
 
             previous.next = undefined;
-
-            return current.data;
         }
 
         --this._size;
+
+        return current.data;
     }
 
     /**
@@ -129,8 +130,8 @@ export class SinglyLinkedList<T> {
             return undefined;
         } else {
 
-            let current = this._head;
-            let previous;
+            let current: Node<T> = this._head;
+            let previous: Node<T>;
 
             while (current.data !== item) {
                 previous = current;
