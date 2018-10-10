@@ -14,7 +14,7 @@ export interface FunctionInterface<T, R> extends FunctionConstructor {
      * @param {T} t the first function argument
      * @return the function result
      */
-    apply(t: T): void;
+    apply(t: T): R;
 
     /**
      * Returns a composed function that first applies the before function to its input, and then applies this function to the result.
