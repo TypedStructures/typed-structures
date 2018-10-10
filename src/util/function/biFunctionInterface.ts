@@ -17,5 +17,5 @@ export interface BiFunctionInterface<T, U, R> {
      * @param {U} u the second function argument
      * @return the function result
      */
-    apply(t: T, u: U): void;
+    apply(t: T, u: U): R;
 }
