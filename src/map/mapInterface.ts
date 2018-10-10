@@ -1,6 +1,7 @@
 import { BiFunctionInterface } from '../util/function/biFunctionInterface';
 import { FunctionInterface } from '../util/function/functionInterface';
-import {SetInterface} from './setInterface';
+import { SetInterface } from './setInterface';
+import { MapEntryInterface } from './mapEntryInterface';
 
 /**
  * This interface an adaptation of the Map<K, V> of the Java Collections Framework.
@@ -141,7 +142,6 @@ export interface MapInterface<K, V> {
     containsValue(value: any): boolean;
 
     /**
-     * TODO: Define and implement Set
      * TODO: Define and implement MapEntry
      *
      * Returns a Set view of the mappings contained in this map. The set is backed by the map, so changes to the map are reflected in the set, and vice-versa.
@@ -216,12 +216,11 @@ export interface MapInterface<K, V> {
     isEmpty(): boolean;
 
     /**
-     * TODO: Define and implement Set
      * Returns a Set view of the keys contained in this map. The set is backed by the map, so changes to the map are reflected in the set, and vice-versa.
      * @return {Set<K>} a set view of the keys contained in this map
      * @since 0.0.1
      */
-    keySet(): Set<K>;
+    keySet(): SetInterface<K>;
 
     /**
      * If the specified key is not already associated with a value or is associated with null, associates it with the given non-null value.
