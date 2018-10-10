@@ -1,5 +1,6 @@
 import { BiFunctionInterface } from '../util/function/biFunctionInterface';
 import { FunctionInterface } from '../util/function/functionInterface';
+import {SetInterface} from './setInterface';
 
 /**
  * This interface an adaptation of the Map<K, V> of the Java Collections Framework.
@@ -151,7 +152,7 @@ export interface MapInterface<K, V> {
      * @return {Set<MapEntry<K, V>>} a set view of the mappings contained in this map
      * @since 0.0.1
      */
-    entrySet(): Set<MapEntry<K, V>>;
+    entrySet(): SetInterface<MapEntryInterface<K, V>>;
 
     /**
      * Compares the specified object with this map for equality. Returns true if the given object is also a map and the two maps represent the same mappings.
