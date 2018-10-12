@@ -167,7 +167,7 @@ export interface MapInterface<K, V> {
      * @param {FunctionInterface} callback FunctionInterface to execute for each element, taking four arguments: node {MapEntry<K, V>} The current element, value {V} The current Node value, index {number} The current index in the Map<K, V>, Map {Map<K, V>} The Map.
      * @since 0.0.1
      */
-    forEach(callback: FunctionInterface<K, V>): void;
+    forEach(callback: FunctionInterface<MapEntryInterface<K, V>, MapEntryInterface<K, V>>): void;
 
     /**
      * Returns the value to which the specified key is mapped, or null if this map contains no mapping for the key.
@@ -402,8 +402,8 @@ export interface MapInterface<K, V> {
      * Implementation Requirements:
      *  The default implementation is equivalent to, for this map:
      *
-     *  for (let entry: Map.Entry<K, V> of map.entrySet()) {
-     *      entry.setValue(function.apply(entry.getKey(), entry.getValue()));
+     *  for (let entry: MapEntryInterface<K, V> of map.entrySet()) {
+     *      entry.setValue(f.apply(entry.getKey(), entry.getValue()));
      *  }
      *
      * The default implementation makes no guarantees about synchronization or atomicity properties of this method. Any implementation providing atomicity guarantees must override this method and document its concurrency properties.
