@@ -41,6 +41,17 @@ export class TsQ {
     public toArray(): any[] {
         let r: any[] =  <any[]>this._from.toArray();
 
+        if (this._select) {
+            r = r.map((e: any) => {
+                return Object.getOwnPropertyNames(e)
+                    .filter(key => this._select.includes(key))
+                    .reduce((obj: any, key: any) => {
+                        obj[key] = e[key];
+                        return obj;
+                    }, {});
+            });
+        }
+
         if (this._where)
             r = r.filter(this._where);
 
