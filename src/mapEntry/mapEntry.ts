@@ -11,7 +11,7 @@ export class MapEntry<K, V> implements MapEntryInterface<K, V> {
     }
 
     equals(o: any): boolean {
-        return (this.getKey() === null ? o.getKey() === null : this.getKey() === o.getKey())  &&
+        return (this.getKey() === null ? o.getKey() === null : this.getKey() === o.getKey()) &&
             (this.getValue() === null ? o.getValue() === null : this.getValue() === o.getValue());
     }
 
@@ -24,10 +24,22 @@ export class MapEntry<K, V> implements MapEntryInterface<K, V> {
     }
 
     hashCode(): number {
-        return 0;
-        // FIXME: Find d way to get d hash
-        // return (this.getKey() === null ? 0 : this.getKey().hashCode()) ^
-        //     (this.getValue() === null ? 0 : this.getValue().hashCode());
+        let hash: number = 1;
+
+        if ((<any>this.getKey()).hashCode && (<any>this.getValue()).hashCode)
+            hash = hash * 17 + (this.getKey() === null ? 0 : (<any>this.getKey()).hashCode()) +
+                (this.getValue() === null ? 0 : (<any>this.getValue()).hashCode());
+        else if ((<any>this.getKey()).hashCode && !(<any>this.getValue()).hashCode)
+            hash = hash * 17 + (this.getKey() === null ? 0 : (<any>this.getKey()).hashCode()) +
+                (this.getValue() === null ? 0 : (<any>this.getValue()) as number);
+        else if (!(<any>this.getKey()).hashCode && (<any>this.getValue()).hashCode)
+            hash = hash * 17 + (this.getKey() === null ? 0 : (<any>this.getKey()) as number) +
+                (this.getValue() === null ? 0 : (<any>this.getValue()).hashCode());
+        else
+            hash = hash * 17 + (this.getKey() === null ? 0 : (<any>this.getKey()) as number) +
+                (this.getValue() === null ? 0 : (<any>this.getValue()) as number);
+
+        return hash;
     }
 
     setValue(value: V): V {

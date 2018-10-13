@@ -154,6 +154,7 @@ describe('hashCode of object', function () {
     class A {
         a: number;
         b: string;
+        [key: number]: number;
 
         constructor(a: number, b: string) {
             this.a = a;
