@@ -1,14 +1,20 @@
 import {MapInterface} from './mapInterface';
-import {BiFunctionInterface} from '../util/function/biFunctionInterface';
-import {FunctionInterface} from '../util/function/functionInterface';
-import {SetInterface} from './setInterface';
-import {MapEntryInterface} from './mapEntryInterface';
+import {BiFunctionInterface} from '../biFunction/biFunctionInterface';
+import {FunctionInterface} from '../function/functionInterface';
+import {SetInterface} from '../set/setInterface';
+import {MapEntryInterface} from '../mapEntry/mapEntryInterface';
 import {UnsupportedOperationException} from '../util/exception/unsupportedOperationException';
 import {NullReferenceException} from '../util/exception/nullReferenceException';
+import {Set} from '../set/set';
+import {MapEntry} from '../mapEntry/mapEntry';
 
 export class Map<K, V> implements MapInterface<K, V> {
 
     private _entries: MapEntryInterface<K, V>[];
+
+    constructor() {
+        this._entries = [];
+    }
 
     clear(): void {
         try {
@@ -93,12 +99,10 @@ export class Map<K, V> implements MapInterface<K, V> {
         }) !== undefined;
     }
 
-    /**
-     * TODO: Implement Set and MapEntry
-     * @return {SetInterface<MapEntryInterface<K, V>>}
-     */
     entrySet(): SetInterface<MapEntryInterface<K, V>> {
-        return (new Set<MapEntry<K, V>>()).addAll(this._entries);
+        let set: SetInterface<MapEntryInterface<K, V>> = new Set<MapEntry<K, V>>();
+        set.addAll(this._entries);
+        return set;
     }
 
     equals(m: MapInterface<K, V>): boolean {
@@ -142,8 +146,10 @@ export class Map<K, V> implements MapInterface<K, V> {
     }
 
     keySet(): SetInterface<K> {
-        // FIXME: keys() is defined nowhere so not sure it works
-        return (new Set<K>()).addAll(this._entries.keys());
+        return this._entries.reduce((set: SetInterface<K>, mapEntry: MapEntryInterface<K, V>) => {
+            set.add(mapEntry.getKey());
+            return set;
+        }, new Set<K>());
     }
 
     merge(key: K, value: V, remappingFunction: BiFunctionInterface<V, V, V>): V {

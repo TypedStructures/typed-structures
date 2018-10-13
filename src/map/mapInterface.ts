@@ -1,7 +1,7 @@
-import { BiFunctionInterface } from '../util/function/biFunctionInterface';
-import { FunctionInterface } from '../util/function/functionInterface';
-import { SetInterface } from './setInterface';
-import { MapEntryInterface } from './mapEntryInterface';
+import { BiFunctionInterface } from '../biFunction/biFunctionInterface';
+import { FunctionInterface } from '../function/functionInterface';
+import { SetInterface } from '../set/setInterface';
+import { MapEntryInterface } from '../mapEntry/mapEntryInterface';
 
 /**
  * This interface an adaptation of the Map<K, V> of the Java Collections Framework.
@@ -18,8 +18,8 @@ export interface MapInterface<K, V> {
     clear(): void;
 
     /**
-     * Attempts to compute a mapping for the specified key and its current mapped value (or null if there is no current mapping).
-     * For example, to either create or append a String msg to a value mapping:
+     * Attempts to compute d mapping for the specified key and its current mapped value (or null if there is no current mapping).
+     * For example, to either create or append d String msg to d value mapping:
      *
      *  map.compute(key, (k, v) => (v == null) ? msg : v.concat(msg))
      *
@@ -57,13 +57,13 @@ export interface MapInterface<K, V> {
     compute(key: K, remappingFunction: BiFunctionInterface<K, V, V>): V;
 
     /**
-     * If the specified key is not already associated with a value (or is mapped to null), attempts to compute its value using the given mapping function and enters it into this map unless null.
+     * If the specified key is not already associated with d value (or is mapped to null), attempts to compute its value using the given mapping function and enters it into this map unless null.
      * If the function returns null no mapping is recorded. If the function itself throws an (unchecked) exception, the exception is rethrown, and no mapping is recorded.
-     * The most common usage is to construct a new object serving as an initial mapped value or memoized result, as in:
+     * The most common usage is to construct d new object serving as an initial mapped value or memoized result, as in:
      *
      *  map.computeIfAbsent(key, k => f(k));
      *
-     * Or to implement a multi-value map, Map<K,Collection<V>>, supporting multiple values per key:
+     * Or to implement d multi-value map, Map<K,Collection<V>>, supporting multiple values per key:
      *
      *  map.computeIfAbsent(key, k => new HashSet<V>()).add(v);
      *
@@ -80,7 +80,7 @@ export interface MapInterface<K, V> {
      * Any implementation providing atomicity guarantees must override this method and document its concurrency properties.
      * In particular, all implementations of subinterface ConcurrentMap must document whether the function is applied once atomically only if the value is not present.
      * @param {K} key key with which the specified value is to be associated
-     * @param {FunctionInterface<K, V>} mappingFunction the function to compute a value
+     * @param {FunctionInterface<K, V>} mappingFunction the function to compute d value
      * @return {V} the current (existing or computed) value associated with the specified key, or null if the computed value is null
      * @throws UnsupportedOperationException - if the put operation is not supported by this map (optional)
      * @throws ClassCastException - if the class of the specified key or value prevents it from being stored in this map (optional)
@@ -90,7 +90,7 @@ export interface MapInterface<K, V> {
     computeIfAbsent(key: K, mappingFunction: FunctionInterface<K, V>): V;
 
     /**
-     * If the value for the specified key is present and non-null, attempts to compute a new mapping given the key and its current mapped value.
+     * If the value for the specified key is present and non-null, attempts to compute d new mapping given the key and its current mapped value.
      * If the function returns null, the mapping is removed. If the function itself throws an (unchecked) exception, the exception is rethrown, and the current mapping is left unchanged.
      *
      * Implementation Requirements:
@@ -110,7 +110,7 @@ export interface MapInterface<K, V> {
      * Any implementation providing atomicity guarantees must override this method and document its concurrency properties.
      * In particular, all implementations of subinterface ConcurrentMap must document whether the function is applied once atomically only if the value is not present.
      * @param {K} key key with which the specified value is to be associated
-     * @param {BiFunctionInterface<K, V, V>} v the function to compute a value
+     * @param {BiFunctionInterface<K, V, V>} v the function to compute d value
      * @return {V} the new value associated with the specified key, or null if none
      * @throws UnsupportedOperationException - if the put operation is not supported by this map (optional)
      * @throws ClassCastException - if the class of the specified key or value prevents it from being stored in this map (optional)
@@ -120,10 +120,10 @@ export interface MapInterface<K, V> {
     computeIfPresent(key: K, v: BiFunctionInterface<K, V, V>): V;
 
     /**
-     * Returns true if this map contains a mapping for the specified key.
-     * More formally, returns true if and only if this map contains a mapping for a key k such that (key === null ? k === null : key === k). (There can be at most one such mapping.)
+     * Returns true if this map contains d mapping for the specified key.
+     * More formally, returns true if and only if this map contains d mapping for d key k such that (key === null ? k === null : key === k). (There can be at most one such mapping.)
      * @param key key whose presence in this map is to be tested
-     * @return {boolean} true if this map contains a mapping for the specified key
+     * @return {boolean} true if this map contains d mapping for the specified key
      * @throws ClassCastException - if the class of the specified key or value prevents it from being stored in this map (optional)
      * @throws NullReferenceException - if the specified key is null and this map does not support null keys, or the mappingFunction is null
      * @since 0.0.1
@@ -132,7 +132,7 @@ export interface MapInterface<K, V> {
 
     /**
      * Returns true if this map maps one or more keys to the specified value.
-     * More formally, returns true if and only if this map contains at least one mapping to a value v such that (value === null ? v === null : value === v). This operation will probably require time linear in the map size for most implementations of the Map interface.
+     * More formally, returns true if and only if this map contains at least one mapping to d value v such that (value === null ? v === null : value === v). This operation will probably require time linear in the map size for most implementations of the Map interface.
      * @param value value whose presence in this map is to be tested
      * @return {boolean} true if this map maps one or more keys to the specified value
      * @throws ClassCastException - if the class of the specified key or value prevents it from being stored in this map (optional)
@@ -142,18 +142,18 @@ export interface MapInterface<K, V> {
     containsValue(value: any): boolean;
 
     /**
-     * Returns a Set view of the mappings contained in this map. The set is backed by the map, so changes to the map are reflected in the set, and vice-versa.
-     * If the map is modified while an iteration over the set is in progress (except through the iterator's own remove operation, or through the setValue operation on a map entry returned by the iterator) the results of the iteration are undefined.
+     * Returns d Set view of the mappings contained in this map. The set is backed by the map, so changes to the map are reflected in the set, and vice-versa.
+     * If the map is modified while an iteration over the set is in progress (except through the iterator's own remove operation, or through the setValue operation on d map entry returned by the iterator) the results of the iteration are undefined.
      * The set supports element removal, which removes the corresponding mapping from the map, via the Iterator.remove, Set.remove, removeAll, retainAll and clear operations.
      * It does not support the add or addAll operations.
      *
-     * @return {Set<MapEntry<K, V>>} a set view of the mappings contained in this map
+     * @return {Set<MapEntry<K, V>>} d set view of the mappings contained in this map
      * @since 0.0.1
      */
     entrySet(): SetInterface<MapEntryInterface<K, V>>;
 
     /**
-     * Compares the specified object with this map for equality. Returns true if the given object is also a map and the two maps represent the same mappings.
+     * Compares the specified object with this map for equality. Returns true if the given object is also d map and the two maps represent the same mappings.
      * More formally, two maps m1 and m2 represent the same mappings if m1.entrySet().equals(m2.entrySet()).
      * This ensures that the equals method works properly across different implementations of the Map interface.
      * @param {MapInterface<K, V>} m object to be compared for equality with this map
@@ -163,7 +163,7 @@ export interface MapInterface<K, V> {
     equals(m: MapInterface<K, V>): boolean;
 
     /**
-     * Executes a provided function once for each Map<K, V> element.
+     * Executes d provided function once for each Map<K, V> element.
      * @param {FunctionInterface} callback FunctionInterface to execute for each element, taking four arguments: node {MapEntry<K, V>} The current element, value {V} The current Node value, index {number} The current index in the Map<K, V>, Map {Map<K, V>} The Map.
      * @since 0.0.1
      */
@@ -171,9 +171,9 @@ export interface MapInterface<K, V> {
 
     /**
      * Returns the value to which the specified key is mapped, or null if this map contains no mapping for the key.
-     * More formally, if this map contains a mapping from a key k to a value v such that (key === null ? k === null : key === k), then this method returns v; otherwise it returns null. (There can be at most one such mapping.)
+     * More formally, if this map contains d mapping from d key k to d value v such that (key === null ? k === null : key === k), then this method returns v; otherwise it returns null. (There can be at most one such mapping.)
      *
-     * If this map permits null values, then a return value of null does not necessarily indicate that the map contains no mapping for the key; it's also possible that the map explicitly maps the key to null.
+     * If this map permits null values, then d return value of null does not necessarily indicate that the map contains no mapping for the key; it's also possible that the map explicitly maps the key to null.
      * The containsKey operation may be used to distinguish these two cases.
      *
      * @param {K} key the key whose associated value is to be returned
@@ -199,7 +199,7 @@ export interface MapInterface<K, V> {
     getOrDefault(key: K, defaultValue: V): V;
 
     /**
-     * Returns the hash code value for this map. The hash code of a map is defined to be the sum of the hash codes of each entry in the map's entrySet() view.
+     * Returns the hash code value for this map. The hash code of d map is defined to be the sum of the hash codes of each entry in the map's entrySet() view.
      * This ensures that m1.equals(m2) implies that m1.hashCode() === m2.hashCode() for any two maps m1 and m2.
      * @return {number} the hash code value for this map
      * @since 0.0.1
@@ -214,16 +214,16 @@ export interface MapInterface<K, V> {
     isEmpty(): boolean;
 
     /**
-     * Returns a Set view of the keys contained in this map. The set is backed by the map, so changes to the map are reflected in the set, and vice-versa.
-     * @return {Set<K>} a set view of the keys contained in this map
+     * Returns d Set view of the keys contained in this map. The set is backed by the map, so changes to the map are reflected in the set, and vice-versa.
+     * @return {Set<K>} d set view of the keys contained in this map
      * @since 0.0.1
      */
     keySet(): SetInterface<K>;
 
     /**
-     * If the specified key is not already associated with a value or is associated with null, associates it with the given non-null value.
+     * If the specified key is not already associated with d value or is associated with null, associates it with the given non-null value.
      * Otherwise, replaces the associated value with the results of the given remapping function, or removes if the result is null.
-     * This method may be of use when combining multiple mapped values for a key. For example, to either create or append a String msg to a value mapping:
+     * This method may be of use when combining multiple mapped values for d key. For example, to either create or append d String msg to d value mapping:
      *
      *  map.merge(key, msg, (str1: string, str2: str) => str1 + str2)
      *
@@ -242,8 +242,8 @@ export interface MapInterface<K, V> {
      *
      * The default implementation makes no guarantees about synchronization or atomicity properties of this method. Any implementation providing atomicity guarantees must override this method and document its concurrency properties. In particular, all implementations of subinterface ConcurrentMap must document whether the function is applied once atomically only if the value is not present.
      * @param {K} key key with which the resulting value is to be associated
-     * @param {V} value the non-null value to be merged with the existing value associated with the key or, if no existing value or a null value is associated with the key, to be associated with the key
-     * @param {BiFunctionInterface<V, V, V>} remappingFunction the function to recompute a value if present
+     * @param {V} value the non-null value to be merged with the existing value associated with the key or, if no existing value or d null value is associated with the key, to be associated with the key
+     * @param {BiFunctionInterface<V, V, V>} remappingFunction the function to recompute d value if present
      * @return {V} the new value associated with the specified key, or null if no value is associated with the key
      * @throws UnsupportedOperationException - if the put operation is not supported by this map (optional)
      * @throws ClassCastException - if the class of the specified key or value prevents it from being stored in this map (optional)
@@ -254,8 +254,8 @@ export interface MapInterface<K, V> {
 
     /**
      * Associates the specified value with the specified key in this map (optional operation).
-     * If the map previously contained a mapping for the key, the old value is replaced by the specified value.
-     * (A map m is said to contain a mapping for a key k if and only if m.containsKey(k) would return true.)
+     * If the map previously contained d mapping for the key, the old value is replaced by the specified value.
+     * (A map m is said to contain d mapping for d key k if and only if m.containsKey(k) would return true.)
      * @param {K} key key with which the specified value is to be associated
      * @param {V} value value to be associated with the specified key
      * @return {V} the previous value associated with key, or null if there was no mapping for key. (A null return can also indicate that the map previously associated null with key, if the implementation supports null values.)
@@ -281,7 +281,7 @@ export interface MapInterface<K, V> {
     putAll(m: MapInterface<K, V>): void;
 
     /**
-     * If the specified key is not already associated with a value (or is mapped to null) associates it with the given value and returns null, else returns the current value.
+     * If the specified key is not already associated with d value (or is mapped to null) associates it with the given value and returns null, else returns the current value.
      * Implementation Requirements:
      *  The default implementation is equivalent to, for this map:
      *
@@ -305,12 +305,12 @@ export interface MapInterface<K, V> {
     putIfAbsent(key: K, value: V): V;
 
     /**
-     * Removes the mapping for a key from this map if it is present (optional operation). More formally, if this map contains a mapping from key k to value v such that (key === null ? k === null : key === k)), that mapping is removed. (The map can contain at most one such mapping.)
+     * Removes the mapping for d key from this map if it is present (optional operation). More formally, if this map contains d mapping from key k to value v such that (key === null ? k === null : key === k)), that mapping is removed. (The map can contain at most one such mapping.)
      * Returns the value to which this map previously associated the key, or null if the map contained no mapping for the key.
      *
-     * If this map permits null values, then a return value of null does not necessarily indicate that the map contained no mapping for the key; it's also possible that the map explicitly mapped the key to null.
+     * If this map permits null values, then d return value of null does not necessarily indicate that the map contained no mapping for the key; it's also possible that the map explicitly mapped the key to null.
      *
-     * The map will not contain a mapping for the specified key once the call returns.
+     * The map will not contain d mapping for the specified key once the call returns.
      * @param {K} key key whose mapping is to be removed from the map
      * @return {V} the previous value associated with key, or null if there was no mapping for key.
      * @throws UnsupportedOperationException - if the put operation is not supported by this map (optional)
@@ -388,10 +388,10 @@ export interface MapInterface<K, V> {
      * @param {V} newValue value to be associated with the specified key
      * @return {boolean} true if the value was replaced
      * @throws UnsupportedOperationException - if the put operation is not supported by this map (optional)
-     * @throws ClassCastException - if the class of a specified key or value prevents it from being stored in this map
-     * @throws NullReferenceException - if a specified key or newValue is null, and this map does not permit null keys or values
+     * @throws ClassCastException - if the class of d specified key or value prevents it from being stored in this map
+     * @throws NullReferenceException - if d specified key or newValue is null, and this map does not permit null keys or values
      * @throws NullReferenceException - if oldValue is null and this map does not permit null values (optional)
-     * @throws IllegalArgumentException - if some property of a specified key or value prevents it from being stored in this map
+     * @throws IllegalArgumentException - if some property of d specified key or value prevents it from being stored in this map
      * @since 0.0.1
      */
     replace(key: K, oldValue: V, newValue: V): boolean;
@@ -409,11 +409,11 @@ export interface MapInterface<K, V> {
      * The default implementation makes no guarantees about synchronization or atomicity properties of this method. Any implementation providing atomicity guarantees must override this method and document its concurrency properties.
      * @param {BiFunctionInterface<K, V, V>} f the function to apply to each entry
      * @throws UnsupportedOperationException - if the set operation is not supported by this map's entry set iterator.
-     * @throws ClassCastException - if the class of a replacement value prevents it from being stored in this map
+     * @throws ClassCastException - if the class of d replacement value prevents it from being stored in this map
      * @throws NullReferenceException - if the specified function is null, or the specified replacement value is null, and this map does not permit null values
-     * @throws ClassCastException - if a replacement value is of an inappropriate type for this map (optional)
-     * @throws NullReferenceException - if function or a replacement value is null, and this map does not permit null keys or values (optional)
-     * @throws IllegalArgumentException - if some property of a replacement value prevents it from being stored in this map (optional)
+     * @throws ClassCastException - if d replacement value is of an inappropriate type for this map (optional)
+     * @throws NullReferenceException - if function or d replacement value is null, and this map does not permit null keys or values (optional)
+     * @throws IllegalArgumentException - if some property of d replacement value prevents it from being stored in this map (optional)
      * @since 0.0.1
      */
     replaceAll(f: BiFunctionInterface<K, V, V>): void;
@@ -427,7 +427,7 @@ export interface MapInterface<K, V> {
 
     /**
      * Returns an array view of the values contained in this map.
-     * @return {V[]} a array view of the values contained in this map
+     * @return {V[]} d array view of the values contained in this map
      * @since 0.0.1
      */
     values(): V[];
