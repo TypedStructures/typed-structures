@@ -53,10 +53,14 @@ export class Set<E> implements SetInterface<E> {
         return this.size() === o.size() && o.toArray().every((e: E, index: number) => e === this._elements[index]);
     }
 
-    // FIXME: Hashcode...
     hashCode(): number {
-        return this.toArray().reduce((accumulator: number, e: E) => {
-            return accumulator + 0 /*e.hashCode()*/;
+        let hash: number = 1;
+        return this.toArray().reduce((accumulator: number, e: any) => {
+            if (e.hashCode)
+                hash = hash * 31 + e.hashCode();
+            else
+                hash = hash * 17 + +e;
+            return hash;
         }, 0);
     }
 
