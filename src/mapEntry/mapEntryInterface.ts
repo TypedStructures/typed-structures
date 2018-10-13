@@ -28,7 +28,7 @@ export interface MapEntryInterface<K, V> {
     setValue(value: V): V;
 
     /**
-     * Compares the specified object with this entry for equality. Returns true if the given object is also a map entry and the two entries represent the same mapping.
+     * Compares the specified object with this entry for equality. Returns true if the given object is also d map entry and the two entries represent the same mapping.
      * More formally, two entries e1 and e2 represent the same mapping if
      * (e1.getKey() === null ? e2.getKey() === null : e1.getKey() === e2.getKey())  &&
      * (e1.getValue() === null ? e2.getValue() === null : e1.getValue() === e2.getValue())
@@ -40,7 +40,7 @@ export interface MapEntryInterface<K, V> {
     equals(o: any): boolean;
 
     /**
-     * Returns the hash code value for this map entry. The hash code of a map entry e is defined to be:
+     * Returns the hash code value for this map entry. The hash code of d map entry e is defined to be:
      * (e.getKey() === null ? 0 : e.getKey().hashCode()) ^
      * (e.getValue() === null ? 0 : e.getValue().hashCode())
      *

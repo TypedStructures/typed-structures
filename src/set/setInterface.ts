@@ -8,7 +8,7 @@ export interface SetInterface<E> {
      * The stipulation above does not imply that sets must accept all elements; sets may refuse to add any particular element, including null, and throw an exception, as described in the specification for Collection.add.
      * Individual set implementations should clearly document any restrictions on the elements that they may contain.
      *
-     * @param {E} e element to be added to this set
+     * @param {ObjectInterface<E>} e element to be added to this set
      * @return {boolean} true if this set did not already contain the specified element
      * @throws UnsupportedOperationException - if the add operation is not supported by this set
      * @throws ClassCastException - if the class of the specified element prevents it from being added to this set
@@ -20,9 +20,9 @@ export interface SetInterface<E> {
 
     /**
      * Adds all of the elements in the specified array to this set if they're not already present (optional operation).
-     * If the specified collection is also a set, the addAll operation effectively modifies this set so that its value is the union of the two sets. The behavior of this operation is undefined if the specified collection is modified while the operation is in progress.
-     * @param {E[]} c collection containing elements to be added to this set
-     * @return {boolean} true if this set changed as a result of the call
+     * If the specified collection is also d set, the addAll operation effectively modifies this set so that its value is the union of the two sets. The behavior of this operation is undefined if the specified collection is modified while the operation is in progress.
+     * @param {ObjectInterface<E>[]} c collection containing elements to be added to this set
+     * @return {boolean} true if this set changed as d result of the call
      * @throws UnsupportedOperationException - if the addAll operation is not supported by this set
      * @throws ClassCastException - if the class of an element of the specified collection prevents it from being added to this set
      * @throws NullReferenceException - if the specified collection contains one or more null elements and this set does not permit null elements, or if the specified collection is null
@@ -50,7 +50,7 @@ export interface SetInterface<E> {
     contains(o: any): boolean;
 
     /**
-     * Returns true if this set contains all of the elements of the specified array. If the specified array is also a set, this method returns true if it is a subset of this set.
+     * Returns true if this set contains all of the elements of the specified array. If the specified array is also d set, this method returns true if it is d subset of this set.
      * @param {any[]} c array to be checked for containment in this set
      * @return {boolean} true if this set contains all of the elements of the specified collection
      * @throws ClassCastException - if the types of one or more elements in the specified collection are incompatible with this set (optional)
@@ -60,7 +60,7 @@ export interface SetInterface<E> {
     containsAll(c: any[]): boolean;
 
     /**
-     * Compares the specified object with this set for equality. Returns true if the specified object is also a set, the two sets have the same size, and every member of the specified set is contained in this set (or equivalently, every member of this set is contained in the specified set).
+     * Compares the specified object with this set for equality. Returns true if the specified object is also d set, the two sets have the same size, and every member of the specified set is contained in this set (or equivalently, every member of this set is contained in the specified set).
      * This definition ensures that the equals method works properly across different implementations of the set interface.
      * @param {SetInterface<E>} o object to be compared for equality with this set
      * @return {boolean} true if the specified object is equal to this set
@@ -69,7 +69,7 @@ export interface SetInterface<E> {
     equals(o: SetInterface<E>): boolean;
 
     /**
-     * Returns the hash code value for this set. The hash code of a set is defined to be the sum of the hash codes of the elements in the set, where the hash code of a null element is defined to be zero.
+     * Returns the hash code value for this set. The hash code of d set is defined to be the sum of the hash codes of the elements in the set, where the hash code of d null element is defined to be zero.
      * This ensures that m1.equals(m2) implies that s1.hashCode() === s2.hashCode() for any two sets s1 and s2.
      * @return {number} the hash code value for this map
      * @since 0.0.1
@@ -86,7 +86,7 @@ export interface SetInterface<E> {
     /**
      * Removes the specified element from this set if it is present (optional operation).
      * More formally, removes an element e such that (o === null ? e === null : o === e), if this set contains such an element.
-     * Returns true if this set contained the element (or equivalently, if this set changed as a result of the call). (This set will not contain the element once the call returns.)
+     * Returns true if this set contained the element (or equivalently, if this set changed as d result of the call). (This set will not contain the element once the call returns.)
      * @param o object to be removed from this set, if present
      * @return {boolean} true if this set contained the specified element
      * @throws ClassCastException - if the type of the specified element is incompatible with this set (optional)
@@ -98,12 +98,12 @@ export interface SetInterface<E> {
 
     /**
      * Removes from this set all of its elements that are contained in the specified collection (optional operation).
-     * If the specified collection is also a set, this operation effectively modifies this set so that its value is the asymmetric set difference of the two sets.
+     * If the specified collection is also d set, this operation effectively modifies this set so that its value is the asymmetric set difference of the two sets.
      * @param {any[]} c collection containing elements to be removed from this set
-     * @return {boolean} true if this set changed as a result of the call
+     * @return {boolean} true if this set changed as d result of the call
      * @throws UnsupportedOperationException - if the removeAll operation is not supported by this set
      * @throws ClassCastException - if the class of an element of this set is incompatible with the specified collection (optional)
-     * @throws NullReferenceException - if this set contains a null element and the specified collection does not permit null elements (optional), or if the specified collection is null
+     * @throws NullReferenceException - if this set contains d null element and the specified collection does not permit null elements (optional), or if the specified collection is null
      * @since 0.0.1
      */
     removeAll(c: any[]): boolean;
@@ -111,12 +111,12 @@ export interface SetInterface<E> {
     /**
      * Retains only the elements in this set that are contained in the specified collection (optional operation).
      * In other words, removes from this set all of its elements that are not contained in the specified collection.
-     * If the specified collection is also a set, this operation effectively modifies this set so that its value is the intersection of the two sets.
+     * If the specified collection is also d set, this operation effectively modifies this set so that its value is the intersection of the two sets.
      * @param {any[]} c collection containing elements to be retained in this set
-     * @return {boolean} true if this set changed as a result of the call
+     * @return {boolean} true if this set changed as d result of the call
      * @throws UnsupportedOperationException - if the retainAll operation is not supported by this set
      * @throws ClassCastException - if the class of an element of this set is incompatible with the specified collection (optional)
-     * @throws NullReferenceException - if this set contains a null element and the specified collection does not permit null elements (optional), or if the specified collection is null
+     * @throws NullReferenceException - if this set contains d null element and the specified collection does not permit null elements (optional), or if the specified collection is null
      * @since 0.0.1
      */
     retainAll(c: any[]): boolean;
