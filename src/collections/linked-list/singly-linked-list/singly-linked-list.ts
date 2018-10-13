@@ -201,6 +201,12 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
         return this._size;
     }
 
+    public toArray(): T[] {
+        let res: T[] = [];
+        this.forEach((item: T) => res.push(item));
+        return res;
+    }
+
     private create(item: T): Node<T> {
         return new Node<T>(item);
     }
