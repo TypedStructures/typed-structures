@@ -41,6 +41,16 @@ export class TsQ {
     public toArray(): any[] {
         let r: any[] =  <any[]>this._from.toArray();
 
+        if (this._where)
+            r = r.filter(this._where);
+
+        if (this._orderby.length)
+            this._orderby.forEach((c: OrderClause) => {
+                r = r.sort((a: any, b: any) => {
+                    return c.direction.toLowerCase() === 'asc' ? a[c.field] - b[c.field] : b[c.field] - a[c.field];
+                });
+            });
+
         if (this._select) {
             r = r.map((e: any) => {
                 return Object.getOwnPropertyNames(e)
@@ -51,16 +61,6 @@ export class TsQ {
                     }, {});
             });
         }
-
-        if (this._where)
-            r = r.filter(this._where);
-
-        if (this._orderby.length)
-            this._orderby.forEach((c: OrderClause) => {
-                r = r.sort((a: any, b: any) => {
-                    return c.direction.toLowerCase() === 'asc' ? a[c.field] - b[c.field] : b[c.field] - a[c.field];
-                });
-            });
 
         if (this._groupby)
             r = r.reduce((accumulator: any[], e: any) => {
