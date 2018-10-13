@@ -50,7 +50,12 @@ export class Set<E> implements SetInterface<E> {
     }
 
     equals(o: SetInterface<E>): boolean {
-        return this.size() === o.size() && o.toArray().every((e: E, index: number) => e === this._elements[index]);
+        return this.size() === o.size() && o.toArray().every((e: E, index: number) => {
+            if ((<any>e).equals)
+                return (<any>e).equals(this._elements[index]);
+            else
+                return e === this._elements[index];
+        });
     }
 
     hashCode(): number {

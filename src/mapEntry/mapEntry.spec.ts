@@ -1,5 +1,4 @@
 import {MapEntry} from './mapEntry';
-import {Set} from '../set/set';
 
 describe('equals', function () {
     it('should be true', function () {

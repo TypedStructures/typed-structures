@@ -29,7 +29,7 @@ export class Map<K, V> implements MapInterface<K, V> {
         let oldValue: V = this.get(key);
         let newValue: V = remappingFunction.apply(key, oldValue);
         if (oldValue !== null) {
-            if (newValue != null) {
+            if (newValue !== null) {
                 return this.put(key, newValue);
             } else {
                 return this.remove(key);
@@ -142,7 +142,7 @@ export class Map<K, V> implements MapInterface<K, V> {
     }
 
     isEmpty(): boolean {
-        return this._entries.length > 0;
+        return this._entries.length === 0;
     }
 
     keySet(): SetInterface<K> {
@@ -225,7 +225,7 @@ export class Map<K, V> implements MapInterface<K, V> {
                 throw new NullReferenceException('The key cannot be null nor undefined');
 
             let length: number = this._entries.length;
-            this._entries
+            this._entries = this._entries
                 .filter((mapEntry: MapEntryInterface<K, V>) => mapEntry.getKey() !== key);
             return this._entries.length !== length;
         }
@@ -234,7 +234,7 @@ export class Map<K, V> implements MapInterface<K, V> {
     replace(key: K, value: V): V;
     replace(key: K, oldValue: V, newValue: V): boolean;
     replace(key: K, value: V, newValue?: V): any {
-        if (value)
+        if (newValue)
             if (this.containsKey(key) && this.get(key) === value) {
                 this.put(key, newValue);
                 return true;
@@ -243,7 +243,7 @@ export class Map<K, V> implements MapInterface<K, V> {
             }
         else {
             if (key === null || key === undefined)
-                throw new NullReferenceException('The value cannot be null nor undefined');
+                throw new NullReferenceException('The key cannot be null nor undefined');
 
             if (this.containsKey(key)) {
                 return this.put(key, value);
