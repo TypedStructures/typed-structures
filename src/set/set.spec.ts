@@ -125,6 +125,39 @@ describe('equals', function () {
 
         expect(a.equals(b)).toBe(false);
     });
+
+    class A {
+        constructor(a: string) {
+            this.a = a;
+        }
+        a: string;
+
+        equals(a: A) {
+            return a.a === this.a;
+        }
+    }
+
+    it('should be true with object', function () {
+
+        let a: Set<A> = new Set<A>();
+        a.addAll([new A('a'), new A('b'), new A('c'), new A('d')]);
+
+        let b: Set<A> = new Set<A>();
+        b.addAll([new A('a'), new A('b'), new A('c'), new A('d')]);
+
+        expect(a.equals(b)).toBe(true);
+    });
+
+    it('should be false with object', function () {
+
+        let a: Set<A> = new Set<A>();
+        a.addAll([new A('a'), new A('b'), new A('c'), new A('e')]);
+
+        let b: Set<A> = new Set<A>();
+        b.addAll([new A('a'), new A('b'), new A('c'), new A('d')]);
+
+        expect(a.equals(b)).toBe(false);
+    });
 });
 
 describe('hashCode of int', function () {
