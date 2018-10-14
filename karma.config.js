@@ -15,7 +15,7 @@ module.exports = function(config) {
         preprocessors: {
             '**/*.+(ts|tsx)': ['karma-typescript'],
         },
-        reporters: ['progress'],
+        reporters: ['progress', 'karma-typescript'],
 
         karmaTypescriptConfig: {
             bundlerOptions: {
@@ -45,6 +45,12 @@ module.exports = function(config) {
         autoWatch: true,
         singleRun: false,
 
-        browsers: ['ChromeHeadless']
+        browsers: ['ChromeHeadless'],
+
+        coverageReporter: {
+            instrumenterOptions: {
+                istanbul: { noCompact: true }
+            }
+        }
     });
 };

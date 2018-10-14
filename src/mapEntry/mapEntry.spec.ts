@@ -12,6 +12,18 @@ describe('equals', function () {
         let b: MapEntry<number, number> = new MapEntry<number, number>(2, 2);
         expect(a.equals(b)).toBe(false);
     });
+
+    it('should be true', function () {
+        let a: MapEntry<number, number> = new MapEntry<number, number>(null, null);
+        let b: MapEntry<number, number> = new MapEntry<number, number>(null, null);
+        expect(a.equals(b)).toBe(true);
+    });
+
+    it('should be false', function () {
+        let a: MapEntry<number, number> = new MapEntry<number, number>(null, 2);
+        let b: MapEntry<number, number> = new MapEntry<number, number>(2, null);
+        expect(a.equals(b)).toBe(false);
+    });
 });
 
 describe('getKey', function () {
@@ -79,6 +91,38 @@ describe('hashCode of object', function () {
         let a: MapEntry<number, A> = new MapEntry<number, A>(1, new A(1, 'a'));
 
         let b: MapEntry<number, A> = new MapEntry<number, A>(1, new A(1, 'b'));
+
+        expect(a.hashCode()).not.toEqual(b.hashCode());
+    });
+
+    it('should be the same', function () {
+        let a: MapEntry<A, A> = new MapEntry<A, A>(new A(1, 'a'), new A(1, 'a'));
+
+        let b: MapEntry<A, A> = new MapEntry<A, A>(new A(1, 'a'), new A(1, 'a'));
+
+        expect(a.hashCode()).toEqual(b.hashCode());
+    });
+
+    it('should be different', function () {
+        let a: MapEntry<A, A> = new MapEntry<A, A>(new A(1, 'a'), new A(1, 'a'));
+
+        let b: MapEntry<A, A> = new MapEntry<A, A>(new A(1, 'a'), new A(1, 'b'));
+
+        expect(a.hashCode()).not.toEqual(b.hashCode());
+    });
+
+    it('should be the same', function () {
+        let a: MapEntry<A, number> = new MapEntry<A, number>(new A(1, 'a'), 1);
+
+        let b: MapEntry<A, number> = new MapEntry<A, number>(new A(1, 'a'), 1);
+
+        expect(a.hashCode()).toEqual(b.hashCode());
+    });
+
+    it('should be different', function () {
+        let a: MapEntry<A, number> = new MapEntry<A, number>(new A(1, 'a'), 1);
+
+        let b: MapEntry<A, number> = new MapEntry<A, number>(new A(1, 'a'), 2);
 
         expect(a.hashCode()).not.toEqual(b.hashCode());
     });

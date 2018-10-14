@@ -17,11 +17,7 @@ export class Map<K, V> implements MapInterface<K, V> {
     }
 
     clear(): void {
-        try {
-            this._entries.length = 0;
-        } catch (e) {
-            throw new UnsupportedOperationException(e.message);
-        }
+        this._entries.length = 0;
     }
 
     compute(key: K, remappingFunction: BiFunctionInterface<K, V, V>): V {
@@ -51,11 +47,7 @@ export class Map<K, V> implements MapInterface<K, V> {
         if (this.get(key) === null) {
             let newValue: V = mappingFunction.apply(key);
             if (newValue !== null)
-                try {
-                    return this.put(key, newValue);
-                } catch (e) {
-                    throw new UnsupportedOperationException(e.message);
-                }
+                return this.put(key, newValue);
         }
     }
 
@@ -67,15 +59,10 @@ export class Map<K, V> implements MapInterface<K, V> {
         if (this.get(key) !== null) {
             let oldValue: V = this.get(key);
             let newValue: V = v.apply(key, oldValue);
-            if (newValue != null) {
-                try {
-                    return this.put(key, newValue);
-                } catch (e) {
-                    throw new UnsupportedOperationException(e.message);
-                }
-            } else {
+            if (newValue !== null)
+                return this.put(key, newValue);
+            else
                 return this.remove(key);
-            }
         }
     }
 
@@ -162,12 +149,8 @@ export class Map<K, V> implements MapInterface<K, V> {
         if (newValue === null) {
             this.remove(key);
         } else {
-            try {
-                this.put(key, newValue);
-                return newValue;
-            } catch (e) {
-                throw new UnsupportedOperationException(e.message);
-            }
+            this.put(key, newValue);
+            return newValue;
         }
     }
 
