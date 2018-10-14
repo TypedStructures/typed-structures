@@ -90,4 +90,10 @@ export interface ILinkedList<T> {
      */
     find(item: T): Node<T>;
 
+    /**
+     * Return the item at the beginning of a LinkedList without removing it
+     * @returns{T} the item at the beginning
+     */
+    peek(): T;
+
 }
