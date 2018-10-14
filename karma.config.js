@@ -4,6 +4,8 @@ webpackConfig.mode = 'production';
 module.exports = function(config) {
   config.set({
     singleRun: true,
+
+    logLevel: config.LOG_DEBUG,
     
     browsers: [
       'PhantomJS'
