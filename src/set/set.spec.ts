@@ -290,8 +290,8 @@ describe('removeAll', function () {
 describe('retainAll null and undefined', function () {
     it('should throw NullReferenceException', function () {
         let set: Set<number> = new Set<number>();
-        expect(() => set.removeAll(null)).toThrow(new NullReferenceException('The collection cannot be null nor undefined'));
-        expect(() => set.removeAll(undefined)).toThrow(new NullReferenceException('The collection cannot be null nor undefined'));
+        expect(() => set.retainAll(null)).toThrow(new NullReferenceException('The collection cannot be null nor undefined'));
+        expect(() => set.retainAll(undefined)).toThrow(new NullReferenceException('The collection cannot be null nor undefined'));
     });
 });
 

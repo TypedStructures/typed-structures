@@ -31,6 +31,21 @@ describe('compute', function () {
         map.compute(2, new BiFunction<number, string, string>((key: number, v: string) => (v === null) ? 'value was null' : v.concat(' was computed')));
         expect(map.get(2)).toEqual('value was null');
     });
+
+    it('should remove the value', function () {
+        let map: Map<number, string> = new Map<number, string>();
+        map.put(1, 'first');
+        map.put(2, 'second');
+        map.compute(1, new BiFunction<number, string, string>((key: number, v: string) => null));
+        expect(map.get(1)).toEqual(null);
+    });
+
+    it('should return null', function () {
+        let map: Map<number, string> = new Map<number, string>();
+        map.put(1, null);
+        map.compute(1, new BiFunction<number, string, string>((key: number, v: string) => null));
+        expect(map.get(1)).toEqual(null);
+    });
 });
 
 describe('computeIfAbsent', function () {
@@ -60,6 +75,13 @@ describe('computeIfAbsent', function () {
         map.computeIfAbsent(3, new Function<number, number>((v: number) => 10));
         expect(map.get(3)).toEqual(3);
     });
+
+    it('should return null', function () {
+        let map: Map<number, string> = new Map<number, string>();
+        map.put(1, null);
+        map.computeIfAbsent(3, new Function<number, string>((v: number) => null));
+        expect(map.get(1)).toEqual(null);
+    });
 });
 
 describe('computeIfPresent', function () {
@@ -88,6 +110,13 @@ describe('computeIfPresent', function () {
         map.put(3, 3);
         map.computeIfPresent(3, new BiFunction<number, number, number>((v: number) => 10));
         expect(map.get(3)).toEqual(10);
+    });
+
+    it('should return null', function () {
+        let map: Map<number, string> = new Map<number, string>();
+        map.put(1, 'a');
+        map.computeIfPresent(1, new BiFunction<number, string, string>((key: number, v: string) => null));
+        expect(map.get(1)).toEqual(null);
     });
 });
 
@@ -302,6 +331,12 @@ describe('keySet', function () {
 });
 
 describe('merge', function () {
+    it('should throw a NullReferenceException if key is null or undefined', function () {
+        let map: Map<number, number> = new Map<number, number>();
+        expect(() => map.merge(null, 1, new BiFunction<number, number, number>((t: number, u: number) => 0))).toThrow(new NullReferenceException('The key cannot be null nor undefined'));
+        expect(() => map.merge(undefined, 1, new BiFunction<number, number, number>((t: number, u: number) => 0))).toThrow(new NullReferenceException('The key cannot be null nor undefined'));
+    });
+
     it('should add value if key is not associated', function () {
         let map: Map<number, number> = new Map<number, number>();
         map.merge(1, 1, new BiFunction<number, number, number>((t: number, u: number) => 0));
@@ -321,9 +356,22 @@ describe('merge', function () {
         map.merge(1, 1, new BiFunction<number, number, number>((t: number, u: number) => 2));
         expect(map.get(1)).toEqual(2);
     });
+
+    it('should remove the null value', function () {
+        let map: Map<number, number> = new Map<number, number>();
+        map.put(1, 1);
+        map.merge(1, 1, new BiFunction<number, number, number>((t: number, u: number) => null));
+        expect(map.get(1)).toEqual(null);
+    });
 });
 
-describe('push', function () {
+describe('put', function () {
+    it('should throw a NullReferenceException if key is null or undefined', function () {
+        let map: Map<number, number> = new Map<number, number>();
+        expect(() => map.put(null, 0)).toThrow(new NullReferenceException('The key cannot be null nor undefined'));
+        expect(() => map.put(undefined, 0)).toThrow(new NullReferenceException('The key cannot be null nor undefined'));
+    });
+
     it('should replace existing value', function () {
         let map: Map<number, number> = new Map<number, number>();
         map.put(1, 1);
@@ -443,6 +491,12 @@ describe('replace(key, newValue)', function () {
         let map: Map<number, number> = new Map<number, number>();
         map.put(1, 1);
         expect(map.replace(1, 2)).toEqual(1);
+    });
+
+    it('should return null', function () {
+        let map: Map<number, number> = new Map<number, number>();
+        map.put(1, 1);
+        expect(map.replace(2, 2)).toEqual(null);
     });
 });
 
