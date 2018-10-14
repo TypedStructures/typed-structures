@@ -24,11 +24,11 @@ export class Node<T> {
         this._next = node;
     }
 
-    get previous(): Node<T> {
+    get previous(): Node<T> | undefined {
         return this._previous;
     }
 
-    set previous(previous: Node<T>) {
+    set previous(previous: Node<T> | undefined) {
         this._previous = previous;
     }
 
