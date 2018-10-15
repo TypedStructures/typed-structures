@@ -1,4 +1,4 @@
-import { Node } from './node';
+import { Node } from '../node/node';
 
 export class DoublyLinkedList<T> {
     private _head?: Node<T>;
