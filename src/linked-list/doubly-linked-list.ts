@@ -82,4 +82,8 @@ export class DoublyLinkedList<T> {
     private create(item: T): Node<T> {
         return new Node<T>(item);
     }
+
+    public peek(): T {
+        return this._head.data;
+    }
 }
