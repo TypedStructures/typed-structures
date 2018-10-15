@@ -3,7 +3,7 @@
 
 # TypedStructures
 
-TypeScript implementation of a simple set of data structures.
+TypeScript implementation of d simple set of data structures.
 
 ## TypedStructures list
 
