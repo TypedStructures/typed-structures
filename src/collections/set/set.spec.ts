@@ -1,5 +1,5 @@
 import {Set} from './set';
-import {NullReferenceException} from '../util/exception/nullReferenceException';
+import {NullReferenceException} from '../../exceptions/null-reference-exception';
 
 describe('new Set', function () {
     it('should be empty', function () {

@@ -1,8 +1,8 @@
 import {Exception} from './exception';
-import {ClassCastException} from './classCastException';
-import {IllegalArgumentException} from './illegalArgumentException';
-import {NullReferenceException} from './nullReferenceException';
-import {UnsupportedOperationException} from './unsupportedOperationException';
+import {ClassCastException} from './class-cast-exception';
+import {IllegalArgumentException} from './illegal-argument-exception';
+import {NullReferenceException} from './null-reference-exception';
+import {UnsupportedOperationException} from './unsupported-operation-exception';
 
 describe('exception', function () {
     it('should return the error', function () {

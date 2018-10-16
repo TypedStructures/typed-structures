@@ -1,16 +1,16 @@
-import {MapInterface} from './mapInterface';
-import {BiFunctionInterface} from '../biFunction/biFunctionInterface';
-import {FunctionInterface} from '../function/functionInterface';
-import {SetInterface} from '../set/setInterface';
-import {MapEntryInterface} from '../mapEntry/mapEntryInterface';
-import {UnsupportedOperationException} from '../util/exception/unsupportedOperationException';
-import {NullReferenceException} from '../util/exception/nullReferenceException';
+import {IMap} from './map-interface';
+import {IBiFunction} from '../../functions/bi-function/bi-function-interface';
+import {IFunction} from '../../functions/function/function-interface';
+import {ISetInterface} from '../set/set-interface';
+import {IMapEntry} from './utils/map-entry/map-entry-interface';
+import {UnsupportedOperationException} from '../../exceptions/unsupported-operation-exception';
+import {NullReferenceException} from '../../exceptions/null-reference-exception';
 import {Set} from '../set/set';
-import {MapEntry} from '../mapEntry/mapEntry';
+import {MapEntry} from './utils/map-entry/map-entry';
 
-export class Map<K, V> implements MapInterface<K, V> {
+export class Map<K, V> implements IMap<K, V> {
 
-    private _entries: MapEntryInterface<K, V>[];
+    private _entries: IMapEntry<K, V>[];
 
     constructor() {
         this._entries = [];
@@ -20,7 +20,7 @@ export class Map<K, V> implements MapInterface<K, V> {
         this._entries.length = 0;
     }
 
-    compute(key: K, remappingFunction: BiFunctionInterface<K, V, V>): V {
+    compute(key: K, remappingFunction: IBiFunction<K, V, V>): V {
 
         let oldValue: V = this.get(key);
         let newValue: V = remappingFunction.apply(key, oldValue);
@@ -39,7 +39,7 @@ export class Map<K, V> implements MapInterface<K, V> {
         }
     }
 
-    computeIfAbsent(key: K, mappingFunction: FunctionInterface<K, V>): V {
+    computeIfAbsent(key: K, mappingFunction: IFunction<K, V>): V {
 
         if (key === null || key === undefined)
             throw new NullReferenceException('The key cannot be null nor undefined');
@@ -51,7 +51,7 @@ export class Map<K, V> implements MapInterface<K, V> {
         }
     }
 
-    computeIfPresent(key: K, v: BiFunctionInterface<K, V, V>): V {
+    computeIfPresent(key: K, v: IBiFunction<K, V, V>): V {
 
         if (key === null || key === undefined)
             throw new NullReferenceException('The key cannot be null nor undefined');
@@ -71,7 +71,7 @@ export class Map<K, V> implements MapInterface<K, V> {
         if (key === null || key === undefined)
             throw new NullReferenceException('The key cannot be null nor undefined');
 
-        return this._entries.find((entry: MapEntryInterface<K, V>) => {
+        return this._entries.find((entry: IMapEntry<K, V>) => {
             return entry.getKey() === key;
         }) !== undefined;
     }
@@ -81,22 +81,22 @@ export class Map<K, V> implements MapInterface<K, V> {
         if (value === null || value === undefined)
             throw new NullReferenceException('The value cannot be null nor undefined');
 
-        return this._entries.find((entry: MapEntryInterface<K, V>) => {
+        return this._entries.find((entry: IMapEntry<K, V>) => {
             return entry.getValue() === value;
         }) !== undefined;
     }
 
-    entrySet(): SetInterface<MapEntryInterface<K, V>> {
-        let set: SetInterface<MapEntryInterface<K, V>> = new Set<MapEntry<K, V>>();
+    entrySet(): ISetInterface<IMapEntry<K, V>> {
+        let set: ISetInterface<IMapEntry<K, V>> = new Set<MapEntry<K, V>>();
         set.addAll(this._entries);
         return set;
     }
 
-    equals(m: MapInterface<K, V>): boolean {
+    equals(m: IMap<K, V>): boolean {
         return this.entrySet().equals(m.entrySet());
     }
 
-    forEach(callback: FunctionInterface<MapEntryInterface<K, V>, MapEntryInterface<K, V>>): void {
+    forEach(callback: IFunction<IMapEntry<K, V>, IMapEntry<K, V>>): void {
         this._entries = this._entries.map(mapEntry => callback.apply(mapEntry));
     }
 
@@ -106,7 +106,7 @@ export class Map<K, V> implements MapInterface<K, V> {
 
         try {
             return this._entries
-                .find((mapEntry: MapEntryInterface<K, V>) => mapEntry.getKey() === key)
+                .find((mapEntry: IMapEntry<K, V>) => mapEntry.getKey() === key)
                 .getValue();
         } catch (e) {
             return null;
@@ -123,7 +123,7 @@ export class Map<K, V> implements MapInterface<K, V> {
     }
 
     hashCode(): number {
-        return this.entrySet().toArray().reduce((accumulator: number, mapEntry: MapEntryInterface<K, V>) => {
+        return this.entrySet().toArray().reduce((accumulator: number, mapEntry: IMapEntry<K, V>) => {
             return accumulator + mapEntry.hashCode();
         }, 0);
     }
@@ -132,14 +132,14 @@ export class Map<K, V> implements MapInterface<K, V> {
         return this._entries.length === 0;
     }
 
-    keySet(): SetInterface<K> {
-        return this._entries.reduce((set: SetInterface<K>, mapEntry: MapEntryInterface<K, V>) => {
+    keySet(): ISetInterface<K> {
+        return this._entries.reduce((set: ISetInterface<K>, mapEntry: IMapEntry<K, V>) => {
             set.add(mapEntry.getKey());
             return set;
         }, new Set<K>());
     }
 
-    merge(key: K, value: V, remappingFunction: BiFunctionInterface<V, V, V>): V {
+    merge(key: K, value: V, remappingFunction: IBiFunction<V, V, V>): V {
 
         if (key === null || key === undefined)
             throw new NullReferenceException('The key cannot be null nor undefined');
@@ -162,7 +162,7 @@ export class Map<K, V> implements MapInterface<K, V> {
 
         if (this.containsKey(key))
             this._entries = this._entries
-                .map((mapEntry: MapEntryInterface<K, V>) => {
+                .map((mapEntry: IMapEntry<K, V>) => {
                     if (mapEntry.getKey() === key)
                         previousValue = mapEntry.setValue(value);
                     return mapEntry;
@@ -173,10 +173,10 @@ export class Map<K, V> implements MapInterface<K, V> {
         return previousValue;
     }
 
-    putAll(m: MapInterface<K, V>): void {
+    putAll(m: IMap<K, V>): void {
         m.entrySet()
             .toArray()
-            .forEach((mapEntry: MapEntryInterface<K, V>) => this.put(mapEntry.getKey(), mapEntry.getValue()));
+            .forEach((mapEntry: IMapEntry<K, V>) => this.put(mapEntry.getKey(), mapEntry.getValue()));
     }
 
     putIfAbsent(key: K, value: V): V {
@@ -209,7 +209,7 @@ export class Map<K, V> implements MapInterface<K, V> {
 
             let length: number = this._entries.length;
             this._entries = this._entries
-                .filter((mapEntry: MapEntryInterface<K, V>) => mapEntry.getKey() !== key);
+                .filter((mapEntry: IMapEntry<K, V>) => mapEntry.getKey() !== key);
             return this._entries.length !== length;
         }
     }
@@ -236,12 +236,12 @@ export class Map<K, V> implements MapInterface<K, V> {
         }
     }
 
-    replaceAll(f: BiFunctionInterface<K, V, V>): void {
+    replaceAll(f: IBiFunction<K, V, V>): void {
 
         if (f === null || f === undefined)
             throw new NullReferenceException('The function cannot be null nor undefined');
 
-        this.entrySet().toArray().forEach((mapEntry: MapEntryInterface<K, V>) => {
+        this.entrySet().toArray().forEach((mapEntry: IMapEntry<K, V>) => {
             mapEntry.setValue(f.apply(mapEntry.getKey(), mapEntry.getValue()));
         });
     }
@@ -252,6 +252,6 @@ export class Map<K, V> implements MapInterface<K, V> {
 
     values(): V[] {
         return this._entries
-            .map((mapEntry: MapEntryInterface<K, V>) => mapEntry.getValue());
+            .map((mapEntry: IMapEntry<K, V>) => mapEntry.getValue());
     }
 }

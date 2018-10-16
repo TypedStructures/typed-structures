@@ -1,13 +1,13 @@
-import { BiFunctionInterface } from '../biFunction/biFunctionInterface';
-import { FunctionInterface } from '../function/functionInterface';
-import { SetInterface } from '../set/setInterface';
-import { MapEntryInterface } from '../mapEntry/mapEntryInterface';
+import { IBiFunction } from '../../functions/bi-function/bi-function-interface';
+import { IFunction } from '../../functions/function/function-interface';
+import { ISetInterface } from '../set/set-interface';
+import { IMapEntry } from './utils/map-entry/map-entry-interface';
 
 /**
  * This interface an adaptation of the Map<K, V> of the Java Collections Framework.
  * https://docs.oracle.com/javase/8/docs/api/java/util/Map.html
  */
-export interface MapInterface<K, V> {
+export interface IMap<K, V> {
 
     /**
      * Removes all of the mappings from this map (optional operation).
@@ -26,7 +26,7 @@ export interface MapInterface<K, V> {
      * (Method merge() is often simpler to use for such purposes.)
      *
      * If the function returns null, the mapping is removed (or remains absent if initially absent).
-     * If the function itself throws an (unchecked) exception, the exception is rethrown, and the current mapping is left unchanged.
+     * If the function itself throws an (unchecked) exceptions, the exceptions is rethrown, and the current mapping is left unchanged.
      *
      * Implementation Requirements:
      *  The default implementation is equivalent to performing the following steps for this map, then returning the current value or null if absent:
@@ -51,14 +51,14 @@ export interface MapInterface<K, V> {
      * Any implementation providing atomicity guarantees must override this method and document its concurrency properties.
      * In particular, all implementations of subinterface ConcurrentMap must document whether the function is applied once atomically only if the value is not present.
      * @param {K} key
-     * @param {BiFunctionInterface<K, V, V>} remappingFunction
+     * @param {IBiFunction<K, V, V>} remappingFunction
      * @since 0.0.1
      */
-    compute(key: K, remappingFunction: BiFunctionInterface<K, V, V>): V;
+    compute(key: K, remappingFunction: IBiFunction<K, V, V>): V;
 
     /**
      * If the specified key is not already associated with d value (or is mapped to null), attempts to compute its value using the given mapping function and enters it into this map unless null.
-     * If the function returns null no mapping is recorded. If the function itself throws an (unchecked) exception, the exception is rethrown, and no mapping is recorded.
+     * If the function returns null no mapping is recorded. If the function itself throws an (unchecked) exceptions, the exceptions is rethrown, and no mapping is recorded.
      * The most common usage is to construct d new object serving as an initial mapped value or memoized result, as in:
      *
      *  map.computeIfAbsent(key, k => f(k));
@@ -80,18 +80,18 @@ export interface MapInterface<K, V> {
      * Any implementation providing atomicity guarantees must override this method and document its concurrency properties.
      * In particular, all implementations of subinterface ConcurrentMap must document whether the function is applied once atomically only if the value is not present.
      * @param {K} key key with which the specified value is to be associated
-     * @param {FunctionInterface<K, V>} mappingFunction the function to compute d value
+     * @param {IFunction<K, V>} mappingFunction the function to compute d value
      * @return {V} the current (existing or computed) value associated with the specified key, or null if the computed value is null
      * @throws UnsupportedOperationException - if the put operation is not supported by this map (optional)
      * @throws ClassCastException - if the class of the specified key or value prevents it from being stored in this map (optional)
      * @throws NullReferenceException - if the specified key is null and this map does not support null keys, or the mappingFunction is null
      * @since 0.0.1
      */
-    computeIfAbsent(key: K, mappingFunction: FunctionInterface<K, V>): V;
+    computeIfAbsent(key: K, mappingFunction: IFunction<K, V>): V;
 
     /**
      * If the value for the specified key is present and non-null, attempts to compute d new mapping given the key and its current mapped value.
-     * If the function returns null, the mapping is removed. If the function itself throws an (unchecked) exception, the exception is rethrown, and the current mapping is left unchanged.
+     * If the function returns null, the mapping is removed. If the function itself throws an (unchecked) exceptions, the exceptions is rethrown, and the current mapping is left unchanged.
      *
      * Implementation Requirements:
      *  The default implementation is equivalent to performing the following steps for this map, then returning the current value or null if now absent:
@@ -110,14 +110,14 @@ export interface MapInterface<K, V> {
      * Any implementation providing atomicity guarantees must override this method and document its concurrency properties.
      * In particular, all implementations of subinterface ConcurrentMap must document whether the function is applied once atomically only if the value is not present.
      * @param {K} key key with which the specified value is to be associated
-     * @param {BiFunctionInterface<K, V, V>} v the function to compute d value
+     * @param {IBiFunction<K, V, V>} v the function to compute d value
      * @return {V} the new value associated with the specified key, or null if none
      * @throws UnsupportedOperationException - if the put operation is not supported by this map (optional)
      * @throws ClassCastException - if the class of the specified key or value prevents it from being stored in this map (optional)
      * @throws NullReferenceException - if the specified key is null and this map does not support null keys, or the mappingFunction is null
      * @since 0.0.1
      */
-    computeIfPresent(key: K, v: BiFunctionInterface<K, V, V>): V;
+    computeIfPresent(key: K, v: IBiFunction<K, V, V>): V;
 
     /**
      * Returns true if this map contains d mapping for the specified key.
@@ -150,24 +150,24 @@ export interface MapInterface<K, V> {
      * @return {Set<MapEntry<K, V>>} d set view of the mappings contained in this map
      * @since 0.0.1
      */
-    entrySet(): SetInterface<MapEntryInterface<K, V>>;
+    entrySet(): ISetInterface<IMapEntry<K, V>>;
 
     /**
      * Compares the specified object with this map for equality. Returns true if the given object is also d map and the two maps represent the same mappings.
      * More formally, two maps m1 and m2 represent the same mappings if m1.entrySet().equals(m2.entrySet()).
      * This ensures that the equals method works properly across different implementations of the Map interface.
-     * @param {MapInterface<K, V>} m object to be compared for equality with this map
+     * @param {IMap<K, V>} m object to be compared for equality with this map
      * @return {boolean} true if the specified object is equal to this map
      * @since 0.0.1
      */
-    equals(m: MapInterface<K, V>): boolean;
+    equals(m: IMap<K, V>): boolean;
 
     /**
      * Executes d provided function once for each Map<K, V> element.
-     * @param {FunctionInterface} callback FunctionInterface to execute for each element, taking four arguments: node {MapEntry<K, V>} The current element, value {V} The current Node value, index {number} The current index in the Map<K, V>, Map {Map<K, V>} The Map.
+     * @param {IFunction} callback IFunction to execute for each element, taking four arguments: node {MapEntry<K, V>} The current element, value {V} The current Node value, index {number} The current index in the Map<K, V>, Map {Map<K, V>} The Map.
      * @since 0.0.1
      */
-    forEach(callback: FunctionInterface<MapEntryInterface<K, V>, MapEntryInterface<K, V>>): void;
+    forEach(callback: IFunction<IMapEntry<K, V>, IMapEntry<K, V>>): void;
 
     /**
      * Returns the value to which the specified key is mapped, or null if this map contains no mapping for the key.
@@ -218,7 +218,7 @@ export interface MapInterface<K, V> {
      * @return {Set<K>} d set view of the keys contained in this map
      * @since 0.0.1
      */
-    keySet(): SetInterface<K>;
+    keySet(): ISetInterface<K>;
 
     /**
      * If the specified key is not already associated with d value or is associated with null, associates it with the given non-null value.
@@ -227,7 +227,7 @@ export interface MapInterface<K, V> {
      *
      *  map.merge(key, msg, (str1: string, str2: str) => str1 + str2)
      *
-     * If the function returns null the mapping is removed. If the function itself throws an (unchecked) exception, the exception is rethrown, and the current mapping is left unchanged.
+     * If the function returns null the mapping is removed. If the function itself throws an (unchecked) exceptions, the exceptions is rethrown, and the current mapping is left unchanged.
      *
      * Implementation Requirements:
      *  The default implementation is equivalent to performing the following steps for this map, then returning the current value or null if absent:
@@ -243,14 +243,14 @@ export interface MapInterface<K, V> {
      * The default implementation makes no guarantees about synchronization or atomicity properties of this method. Any implementation providing atomicity guarantees must override this method and document its concurrency properties. In particular, all implementations of subinterface ConcurrentMap must document whether the function is applied once atomically only if the value is not present.
      * @param {K} key key with which the resulting value is to be associated
      * @param {V} value the non-null value to be merged with the existing value associated with the key or, if no existing value or d null value is associated with the key, to be associated with the key
-     * @param {BiFunctionInterface<V, V, V>} remappingFunction the function to recompute d value if present
+     * @param {IBiFunction<V, V, V>} remappingFunction the function to recompute d value if present
      * @return {V} the new value associated with the specified key, or null if no value is associated with the key
      * @throws UnsupportedOperationException - if the put operation is not supported by this map (optional)
      * @throws ClassCastException - if the class of the specified key or value prevents it from being stored in this map (optional)
      * @throws NullReferenceException - if the specified key is null and this map does not support null keys, or the mappingFunction is null
      * @since 0.0.1
      */
-    merge(key: K, value: V, remappingFunction: BiFunctionInterface<V, V, V>): V;
+    merge(key: K, value: V, remappingFunction: IBiFunction<V, V, V>): V;
 
     /**
      * Associates the specified value with the specified key in this map (optional operation).
@@ -278,7 +278,7 @@ export interface MapInterface<K, V> {
      * @throws IllegalArgumentException - if some property of the specified key or value prevents it from being stored in this map
      * @since 0.0.1
      */
-    putAll(m: MapInterface<K, V>): void;
+    putAll(m: IMap<K, V>): void;
 
     /**
      * If the specified key is not already associated with d value (or is mapped to null) associates it with the given value and returns null, else returns the current value.
@@ -397,17 +397,17 @@ export interface MapInterface<K, V> {
     replace(key: K, oldValue: V, newValue: V): boolean;
 
     /**
-     * Replaces each entry's value with the result of invoking the given function on that entry until all entries have been processed or the function throws an exception.
+     * Replaces each entry's value with the result of invoking the given function on that entry until all entries have been processed or the function throws an exceptions.
      * Exceptions thrown by the function are relayed to the caller.
      * Implementation Requirements:
      *  The default implementation is equivalent to, for this map:
      *
-     *  for (let entry: MapEntryInterface<K, V> of map.entrySet()) {
+     *  for (let entry: IMapEntry<K, V> of map.entrySet()) {
      *      entry.setValue(f.apply(entry.getKey(), entry.getValue()));
      *  }
      *
      * The default implementation makes no guarantees about synchronization or atomicity properties of this method. Any implementation providing atomicity guarantees must override this method and document its concurrency properties.
-     * @param {BiFunctionInterface<K, V, V>} f the function to apply to each entry
+     * @param {IBiFunction<K, V, V>} f the function to apply to each entry
      * @throws UnsupportedOperationException - if the set operation is not supported by this map's entry set iterator.
      * @throws ClassCastException - if the class of d replacement value prevents it from being stored in this map
      * @throws NullReferenceException - if the specified function is null, or the specified replacement value is null, and this map does not permit null values
@@ -416,7 +416,7 @@ export interface MapInterface<K, V> {
      * @throws IllegalArgumentException - if some property of d replacement value prevents it from being stored in this map (optional)
      * @since 0.0.1
      */
-    replaceAll(f: BiFunctionInterface<K, V, V>): void;
+    replaceAll(f: IBiFunction<K, V, V>): void;
 
     /**
      * Returns the number of key-value mappings in this map.

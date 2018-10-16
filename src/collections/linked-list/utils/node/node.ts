@@ -1,6 +1,6 @@
-import {NodeInterface} from './nodeInterface';
+import {INode} from './node-interface';
 
-export class Node<T> implements NodeInterface {
+export class Node<T> implements INode {
 
     private _data: T;
     private _next?: Node<T>;

@@ -1,8 +1,8 @@
-import {SetInterface} from './setInterface';
-import {NullReferenceException} from '../util/exception/nullReferenceException';
-import {MapEntryInterface} from '../mapEntry/mapEntryInterface';
+import {ISetInterface} from './set-interface';
+import {NullReferenceException} from '../../exceptions/null-reference-exception';
+import {IMapEntry} from '../map/utils/map-entry/map-entry-interface';
 
-export class Set<E> implements SetInterface<E> {
+export class Set<E> implements ISetInterface<E> {
 
     private _elements: E[];
 
@@ -49,7 +49,7 @@ export class Set<E> implements SetInterface<E> {
         return c.every((e: E) => this.contains(e));
     }
 
-    equals(o: SetInterface<E>): boolean {
+    equals(o: ISetInterface<E>): boolean {
         return this.size() === o.size() && o.toArray().every((e: E, index: number) => {
             if ((<any>e).equals)
                 return (<any>e).equals(this._elements[index]);

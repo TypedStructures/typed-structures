@@ -1,4 +1,4 @@
-export interface MapEntryInterface<K, V> {
+export interface IMapEntry<K, V> {
 
     /**
      * Returns the key corresponding to this entry.

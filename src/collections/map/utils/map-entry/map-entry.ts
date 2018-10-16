@@ -1,6 +1,6 @@
-import {MapEntryInterface} from './mapEntryInterface';
+import {IMapEntry} from './map-entry-interface';
 
-export class MapEntry<K, V> implements MapEntryInterface<K, V> {
+export class MapEntry<K, V> implements IMapEntry<K, V> {
 
     private _key: K;
     private _value: V;
