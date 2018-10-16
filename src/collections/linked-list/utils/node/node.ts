@@ -1,4 +1,6 @@
-export class Node<T> {
+import {INode} from './node-interface';
+
+export class Node<T> implements INode {
 
     private _data: T;
     private _next?: Node<T>;
@@ -33,6 +35,10 @@ export class Node<T> {
     }
 
     public hasNext(): boolean {
-        return this._next !== undefined ? true : false;
+        return this._next !== undefined && this._next !== null;
+    }
+
+    hasPrevious(): boolean {
+        return this._previous !== undefined && this._previous !== null;
     }
 }
