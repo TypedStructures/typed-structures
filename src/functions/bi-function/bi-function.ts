@@ -1,7 +1,7 @@
-import {BiFunctionInterface} from './biFunctionInterface';
-import {FunctionInterface} from '../function/functionInterface';
+import {IBiFunction} from './bi-function-interface';
+import {IFunction} from '../function/function-interface';
 
-export class BiFunction<T, U, R> implements BiFunctionInterface<T, U, R> {
+export class BiFunction<T, U, R> implements IBiFunction<T, U, R> {
 
     // Cannot type this one as Native Function because this class redifines it
     private _function: any;
@@ -14,7 +14,7 @@ export class BiFunction<T, U, R> implements BiFunctionInterface<T, U, R> {
         this._function = f;
     }
 
-    andThen<V>(after: FunctionInterface<R, V>): BiFunctionInterface<T, U, R> {
+    andThen<V>(after: IFunction<R, V>): IBiFunction<T, U, R> {
         return new BiFunction<T, U, R>(
             (t: T, u: U) => {
                 return after.getNativeFunction()(this.getNativeFunction()(t, u));

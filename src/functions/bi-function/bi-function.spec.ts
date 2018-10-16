@@ -1,4 +1,4 @@
-import {BiFunction} from './biFunction';
+import {BiFunction} from './bi-function';
 import {Function} from '../function/function';
 
 describe('andThen', function () {

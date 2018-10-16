@@ -1,6 +1,6 @@
-import { Node } from './node';
+import { Node } from './utils/node/node';
 
-export interface LinkedListInterface<T> {
+export interface ILinkedList<T> {
 
     /**
      * Returns the number of nodes of a LinkedList.
@@ -55,9 +55,9 @@ export interface LinkedListInterface<T> {
     /**
      * Creates a new LinkedList with all elements that pass the test implemented by the provided function.
      * @param {Function} callback Function is a predicate, to test each element of the LinkedList. Return true to keep the element, false otherwise. It accepts two arguments: item {T} The current item being processed in the array, index {number} The index of the current element being processed in the LinkedList.
-     * @returns {LinkedListInterface<T>} A new LinkedList with the elements that pass the test. If no elements pass the test, an empty LinkedList will be returned.
+     * @returns {ILinkedList<T>} A new LinkedList with the elements that pass the test. If no elements pass the test, an empty LinkedList will be returned.
      */
-    filter(callback: Function): LinkedListInterface<T>;
+    filter(callback: Function): ILinkedList<T>;
 
     /**
      * Determines whether an LinkedList includes a certain element, returning true or false as appropriate.

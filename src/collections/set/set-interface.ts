@@ -1,11 +1,11 @@
-export interface SetInterface<E> {
+export interface ISetInterface<E> {
 
     /**
      * Adds the specified element to this set if it is not already present (optional operation).
      * More formally, adds the specified element e to this set if the set contains no element e2 such that (e === null ? e2 === null : e === e2).
      * If this set already contains the element, the call leaves the set unchanged and returns false.
      * In combination with the restriction on constructors, this ensures that sets never contain duplicate elements.
-     * The stipulation above does not imply that sets must accept all elements; sets may refuse to add any particular element, including null, and throw an exception, as described in the specification for Collection.add.
+     * The stipulation above does not imply that sets must accept all elements; sets may refuse to add any particular element, including null, and throw an exceptions, as described in the specification for Collection.add.
      * Individual set implementations should clearly document any restrictions on the elements that they may contain.
      *
      * @param {ObjectInterface<E>} e element to be added to this set
@@ -62,11 +62,11 @@ export interface SetInterface<E> {
     /**
      * Compares the specified object with this set for equality. Returns true if the specified object is also d set, the two sets have the same size, and every member of the specified set is contained in this set (or equivalently, every member of this set is contained in the specified set).
      * This definition ensures that the equals method works properly across different implementations of the set interface.
-     * @param {SetInterface<E>} o object to be compared for equality with this set
+     * @param {ISetInterface<E>} o object to be compared for equality with this set
      * @return {boolean} true if the specified object is equal to this set
      * @since 0.0.1
      */
-    equals(o: SetInterface<E>): boolean;
+    equals(o: ISetInterface<E>): boolean;
 
     /**
      * Returns the hash code value for this set. The hash code of d set is defined to be the sum of the hash codes of the elements in the set, where the hash code of d null element is defined to be zero.

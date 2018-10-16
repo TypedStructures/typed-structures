@@ -1,4 +1,4 @@
-import { Node } from '../node/node';
+import { Node } from './utils/node/node';
 
 export class SinglyLinkedList<T> {
 

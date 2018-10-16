@@ -1,8 +1,8 @@
 import {Map} from './map';
-import {BiFunction} from '../biFunction/biFunction';
-import {Function} from '../function/function';
-import {NullReferenceException} from '../util/exception/nullReferenceException';
-import {MapEntry} from '../mapEntry/mapEntry';
+import {BiFunction} from '../../functions/bi-function/bi-function';
+import {Function} from '../../functions/function/function';
+import {NullReferenceException} from '../../exceptions/null-reference-exception';
+import {MapEntry} from './utils/map-entry/map-entry';
 
 describe('clear', function () {
     it('should empty the map', function () {

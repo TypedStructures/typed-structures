@@ -1,4 +1,4 @@
-export interface NodeInterface {
+export interface INode {
 
     /**
      * Returns true if the node is attached to another one through his next attribute.

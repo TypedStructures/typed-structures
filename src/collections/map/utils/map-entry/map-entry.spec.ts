@@ -1,4 +1,4 @@
-import {MapEntry} from './mapEntry';
+import {MapEntry} from './map-entry';
 
 describe('equals', function () {
     it('should be true', function () {
