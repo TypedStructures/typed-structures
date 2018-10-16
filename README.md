@@ -17,6 +17,7 @@ TypeScript implementation of d simple set of data structures.
  - [ ] Heap
  - [ ] Graph
  - [ ] Matrix
+ - [ ] Quadtree
 
 ### Singly linked list
 
