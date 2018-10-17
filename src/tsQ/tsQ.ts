@@ -4,23 +4,20 @@ export class TsQ {
 
     private _select: string[];
     private _groupby: string;
-    set select(value: string[]) {
-        this._select = value;
-    }
     private _from: any;
     private _where: any;
     private  _orderby: OrderClause[] = [];
     private _orderDirection: string;
 
-    public static select(...select: string[]): TsQ {
-        let tsq: TsQ = new TsQ();
-        tsq.select = select;
-        return tsq;
+    public select(...select: string[]): TsQ {
+        this._select = select;
+        return this;
     }
 
-    public from(from: any): TsQ {
-        this._from = from;
-        return this;
+    public static from(from: any): TsQ {
+        let tsq: TsQ = new TsQ();
+        tsq._from = from;
+        return tsq;
     }
 
     public where(f: (e: any) => boolean): TsQ {
