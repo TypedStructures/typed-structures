@@ -127,4 +127,119 @@ describe('remove', function () {
         list.push(2);
         expect(list.remove(1)).toEqual(1);
     });
+
+    it('should remove the third element', function () {
+        let list: DoublyLinkedList<any> = new DoublyLinkedList<any>();
+        list.push(1);
+        list.push(2);
+        list.push(3);
+        list.push(4);
+        expect(list.remove(3)).toEqual(3);
+        expect(list.contains(3)).toBe(false);
+    });
+});
+
+describe('contains', function () {
+    it('should be true', function () {
+        let list: DoublyLinkedList<number> = new DoublyLinkedList<number>();
+        list.push(1);
+        expect(list.contains(1)).toBe(true);
+    });
+
+    it('should be false', function () {
+        let list: DoublyLinkedList<number> = new DoublyLinkedList<number>();
+        expect(list.contains(1)).toBe(false);
+    });
+});
+
+describe('peek', function () {
+    it('should return 1', function () {
+        let list: DoublyLinkedList<number> = new DoublyLinkedList<number>();
+        list.push(1);
+        expect(list.peek()).toEqual(1);
+    });
+
+    it('should contain 1', function () {
+        let list: DoublyLinkedList<number> = new DoublyLinkedList<number>();
+        list.push(1);
+        list.peek();
+        expect(list.contains(1)).toBe(true);
+    });
+});
+
+describe('clear', function () {
+    it('should empty the list', function () {
+        let list: DoublyLinkedList<number> = new DoublyLinkedList<number>();
+        list.push(1);
+        list.push(2);
+        list.push(3);
+        list.push(4);
+        list.clear();
+        expect(list.empty()).toBe(true);
+    });
+});
+
+describe('filter', function () {
+    it('should contains 1, 2, 3', function () {
+        let list: DoublyLinkedList<number> = new DoublyLinkedList<number>();
+        list.push(1);
+        list.push(2);
+        list.push(3);
+        list.push(4);
+        list.push(5);
+        list = list.filter((x: number) => x === 3);
+        expect(list.contains(3)).toBe(true);
+        expect(list.contains(4)).toBe(false);
+        expect(list.contains(5)).toBe(false);
+    });
+});
+
+describe('includes', function () {
+    it('should be true', function () {
+        let list: DoublyLinkedList<any> = new DoublyLinkedList<any>();
+        list.push(1);
+        expect(list.includes(1)).toBe(true);
+    });
+
+    it('should be false', function () {
+        let list: DoublyLinkedList<number> = new DoublyLinkedList<number>();
+        list.push(1);
+        expect(list.includes(2)).toBe(false);
+    });
+});
+
+describe('find', function () {
+    it('should be a Node containing 4', function () {
+        let list: DoublyLinkedList<number> = new DoublyLinkedList<number>();
+        list.push(3);
+        list.push(4);
+        list.push(5);
+        expect(list.find(4).data).toEqual(4);
+    });
+
+    it('should be undefined', function () {
+        let list: DoublyLinkedList<number> = new DoublyLinkedList<number>();
+        list.push(3);
+        list.push(4);
+        list.push(5);
+        expect(list.find(6)).toBeUndefined();
+    });
+});
+
+describe('indexOf', function () {
+    it('should be -1', function () {
+        let list: DoublyLinkedList<number> = new DoublyLinkedList<number>();
+        list.push(3);
+        list.push(4);
+        list.push(5);
+        expect(list.indexOf(6)).toEqual(-1);
+    });
+
+    it('should be 2', function () {
+        let list: DoublyLinkedList<number> = new DoublyLinkedList<number>();
+        list.push(3);
+        list.push(4);
+        list.push(5);
+        expect(list.indexOf(5)).toEqual(2);
+    });
 });
