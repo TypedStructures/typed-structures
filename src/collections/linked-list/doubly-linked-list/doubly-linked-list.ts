@@ -117,6 +117,8 @@ export class DoublyLinkedList<T> implements ILinkedList<T> {
                 current = current.next;
             }
 
+            previous.next = current.next;
+
             --this._size;
             return current.data;
 
@@ -127,15 +129,15 @@ export class DoublyLinkedList<T> implements ILinkedList<T> {
         let current = this._head;
         let index = 0;
         while (current) {
-            callback.call(current, current.data, index++, this);
+            callback.call(current, current, index++, this);
             current = current.next;
         }
     }
 
     public filter(callback: Function): DoublyLinkedList<T> {
         let result = new DoublyLinkedList<T>();
-        this.forEach((item: any, index: number) => {
-            if (callback.call(item, item, index, this)) {
+        this.forEach((item: Node<T>, index: number) => {
+            if (callback.call(item.data, item.data, index, this)) {
                 result.push(item.data);
             }
         });
