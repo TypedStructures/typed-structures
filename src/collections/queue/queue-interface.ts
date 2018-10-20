@@ -1,4 +1,10 @@
 export interface IQueue<T> {
+
+    /**
+     * return the length of a Queue
+     * @returns queue size
+     */
+    length(): number;
     /**
      * Add an item to the end of a Queue
      * @param item item to enqueue
@@ -16,4 +22,5 @@ export interface IQueue<T> {
      * @returns{T} the item at the beginning
      */
     peek(): T;
+
 }
