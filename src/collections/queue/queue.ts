@@ -1,4 +1,4 @@
-import { DoublyLinkedList } from '../linked-list/doubly-linked-list';
+import { DoublyLinkedList } from '../linked-list/doubly-linked-list/doubly-linked-list';
 
 export class Queue<T> {
 

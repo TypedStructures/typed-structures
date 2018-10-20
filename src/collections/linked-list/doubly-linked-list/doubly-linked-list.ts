@@ -1,8 +1,10 @@
-import { Node } from './utils/node/node';
+import { Node } from '../utils/node/node';
+import {ILinkedList} from '../linked-list-interface';
 
-export class SinglyLinkedList<T> {
+export class DoublyLinkedList<T> implements  ILinkedList<T> {
 
     private _head?: Node<T>;
+    private _tail?: Node<T>;
     private _size: number;
 
     constructor() {
@@ -18,94 +20,104 @@ export class SinglyLinkedList<T> {
     }
 
     public unshift(item: T) {
-
         if (item === undefined) {
             return 0;
         }
 
-        if (this._head === undefined) {
+        if (this.empty()) {
             this._head = this.create(item);
+            this._tail = this._head;
 
         } else {
             const node = this.create(item);
             node.next = this._head;
+            this._head.previous = node;
             this._head = node;
         }
 
         ++this._size;
 
+        return this._size;
     }
 
     public shift(): T {
-
         if (this.empty()) {
             return undefined;
+        }
+        if (this.length() === 1) {
+            const result = this._head;
+            this._head = undefined;
+            --this._size;
+            return result.data;
         } else {
             let result = this._head;
             this._head = this._head.next;
+            this._head.previous = undefined;
             --this._size;
             return result.data;
         }
-
     }
 
     public push(item: T): void {
         if (this.empty()) {
-            this._head = this.create(item);
+            this._head = this._tail = this.create(item);
 
         } else {
-            let current = this._head;
-
-            while (current.hasNext()) {
-                current = current.next;
-            }
-            current.next = this.create(item);
+            let current = this.create(item);
+            this._tail.next = current;
+            current.previous = this._tail;
+            this._tail = current;
         }
 
         ++this._size;
-
     }
 
     public pop(): T {
 
-         if (this.empty()) {
+        if (this.empty()) {
             return undefined;
         }
 
         if (this.length() === 1) {
-            this._head = undefined;
+            let current = this._head;
+            this._head = this._tail = undefined;
+            --this._size;
+            return current.data;
 
         } else {
-            let current = this._head;
-            let previous;
-
-            while (current.hasNext()) {
-                previous = current;
-                current = current.next;
-            }
-
-            previous.next = undefined;
-
+            let current = this._tail;
+            this._tail = this._tail.previous;
+            this._tail.next = undefined;
+            --this._size;
             return current.data;
         }
 
-        --this._size;
     }
 
     public remove(item: T): T {
-        if (this.empty()) {
+        if (this.empty())
             return undefined;
-        } else {
 
+        else if (this.length() === 1) {
             let current = this._head;
-            let previous;
+            this._head = this._tail = undefined;
+            --this._size;
+            return current.data;
+        }
+        else {
+            let current = this._head;
+            if (this._head.data === item) {
+                this._head = this._head.next;
+                return current.data;
+            }
 
-            while (current.data !== item) {
+            let previous: Node<T>;
+            while (current.next && current.data !== item) {
                 previous = current;
                 current = current.next;
             }
 
-            previous.next = undefined;
+            --this._size;
             return current.data;
 
         }
@@ -120,9 +132,9 @@ export class SinglyLinkedList<T> {
         }
     }
 
-    public filter(callback: Function): SinglyLinkedList<T> {
-        let result = new SinglyLinkedList<T>();
-        this.forEach( (item: any, index: number) => {
+    public filter(callback: Function): DoublyLinkedList<T> {
+        let result = new DoublyLinkedList<T>();
+        this.forEach((item: any, index: number) => {
             if (callback.call(item, item, index, this)) {
                 result.push(item.data);
             }
@@ -131,7 +143,7 @@ export class SinglyLinkedList<T> {
     }
 
     public includes(item: T): boolean {
-        return this.filter( (element: T)  => element === item).length() > 0;
+        return this.filter((element: T) => element === item).length() > 0;
     }
 
     public indexOf(item: T): number {
@@ -154,4 +166,21 @@ export class SinglyLinkedList<T> {
         return new Node<T>(item);
     }
 
+    public peek(): T {
+        return this._head.data;
+    }
+
+    public clear(): void {
+        // todo
+    }
+
+    public contains(item: T): boolean {
+        // todo
+        return undefined;
+    }
+
+    public find(item: T): Node<T> {
+        // todo
+        return undefined;
+    }
 }
