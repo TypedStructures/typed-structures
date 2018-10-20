@@ -33,6 +33,6 @@ describe('destack', function() {
     it('should enstack 1 element', function () {
         const stack = new Stack<number>();
         stack.stack(1);
-        // check here with peek
+        expect(stack.unstack()).toEqual(1);
     });
 });

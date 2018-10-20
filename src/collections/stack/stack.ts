@@ -23,7 +23,6 @@ export class Stack<T> implements IStack<T> {
     }
 
     public peek(): T {
-        // todo
-        return undefined;
+        return this._items.peek();
     }
 }
