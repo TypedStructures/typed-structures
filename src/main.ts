@@ -1,9 +1,6 @@
-import { Queue } from './collections/queue/queue';
+import {DoublyLinkedList} from './collections/linked-list/doubly-linked-list/doubly-linked-list';
 
-let queue = new Queue<number>();
-queue.enqueue(5);
-queue.enqueue(6);
-queue.enqueue(7);
-queue.dequeue();
-console.log(queue.peek());
-console.log(queue);
+let list = new DoublyLinkedList<number>();
+list.push(1);
+list.push(2);
+console.log(list);

@@ -8,6 +8,8 @@ export class Node<T> implements INode {
 
     constructor(data: T) {
         this._data = data;
+        this._next = undefined;
+        this._previous = undefined;
     }
 
     get data(): T {
@@ -26,11 +28,11 @@ export class Node<T> implements INode {
         this._next = node;
     }
 
-    get previous(): Node<T> {
+    get previous(): Node<T> | undefined {
         return this._previous;
     }
 
-    set previous(previous: Node<T>) {
+    set previous(previous: Node<T> | undefined) {
         this._previous = previous;
     }
 
@@ -38,7 +40,7 @@ export class Node<T> implements INode {
         return this._next !== undefined && this._next !== null;
     }
 
-    hasPrevious(): boolean {
+    public hasPrevious(): boolean {
         return this._previous !== undefined && this._previous !== null;
     }
 }
