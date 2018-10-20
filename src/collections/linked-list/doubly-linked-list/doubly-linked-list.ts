@@ -1,7 +1,7 @@
 import { Node } from '../utils/node/node';
-import {ILinkedList} from '../linked-list-interface';
+import { ILinkedList } from '../linked-list-interface';
 
-export class DoublyLinkedList<T> implements  ILinkedList<T> {
+export class DoublyLinkedList<T> implements ILinkedList<T> {
 
     private _head?: Node<T>;
     private _tail?: Node<T>;
@@ -171,16 +171,31 @@ export class DoublyLinkedList<T> implements  ILinkedList<T> {
     }
 
     public clear(): void {
-        // todo
+        this._head = this._tail = undefined;
+        this._size = 0;
     }
 
     public contains(item: T): boolean {
-        // todo
-        return undefined;
+        if (!this._head)
+            return false;
+
+        let current: Node<T> = this._head;
+
+        while (current) {
+            if (current.data === item)
+                return true;
+            current = current.next;
+        }
+        return false;
     }
 
     public find(item: T): Node<T> {
-        // todo
+        let current = this._head;
+        while (current) {
+            if (current.data === item)
+                return current;
+            current = current.next;
+        }
         return undefined;
     }
 }

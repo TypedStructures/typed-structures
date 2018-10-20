@@ -41,6 +41,11 @@ describe('size of DoublyLinkedList', function () {
 });
 
 describe('unshift', function () {
+    it('should return undefined', function () {
+        let list: DoublyLinkedList<any> = new DoublyLinkedList<any>();
+        expect(list.unshift(undefined)).toEqual(0);
+    });
+
     it('should add to the beginning when empty', function () {
         let list: DoublyLinkedList<any> = new DoublyLinkedList<any>();
         expect(list.unshift(1)).toEqual(1);
