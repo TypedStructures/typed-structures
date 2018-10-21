@@ -36,3 +36,16 @@ describe('dequeue', function() {
         expect(queue.peek()).toEqual(1);
     });
 });
+
+describe('empty', function() {
+    it('should return false', function () {
+        const queue = new Queue<number>();
+        queue.enqueue(1);
+        expect(queue.empty()).toBe(false);
+    });
+
+    it('should return true', function () {
+        const queue = new Queue<number>();
+        expect(queue.empty()).toBe(true);
+    });
+});

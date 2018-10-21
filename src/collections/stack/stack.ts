@@ -25,4 +25,8 @@ export class Stack<T> implements IStack<T> {
     public peek(): T {
         return this._items.peek();
     }
+
+    public empty(): boolean {
+        return this._items.empty();
+    }
 }
