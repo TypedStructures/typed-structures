@@ -25,4 +25,8 @@ export class Queue<T> implements IQueue<T> {
     public peek(): T {
         return this._items.peek();
     }
+
+    public empty(): boolean {
+        return this._items.empty();
+    }
 }
