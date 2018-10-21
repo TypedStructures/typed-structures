@@ -23,4 +23,9 @@ export interface IStack<T> {
      */
     peek(): T;
 
+    /**
+     * Return wether the stack is empty or not
+     */
+    empty(): boolean;
+
 }

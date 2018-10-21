@@ -23,4 +23,9 @@ export interface IQueue<T> {
      */
     peek(): T;
 
+    /**
+     * Return wether the queue is empty or not
+     */
+    empty(): boolean;
+
 }
