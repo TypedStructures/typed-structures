@@ -36,3 +36,24 @@ describe('destack', function() {
         expect(stack.unstack()).toEqual(1);
     });
 });
+
+describe('empty', function() {
+    it('should return false', function () {
+        const queue = new Stack<number>();
+        queue.stack(1);
+        expect(queue.empty()).toBe(false);
+    });
+
+    it('should return true', function () {
+        const queue = new Stack<number>();
+        expect(queue.empty()).toBe(true);
+    });
+});
+
+describe('peek', function () {
+    it('should return 1', function () {
+        let list: Stack<number> = new Stack<number>();
+        list.stack(1);
+        expect(list.peek()).toEqual(1);
+    });
+});
