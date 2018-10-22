@@ -172,6 +172,10 @@ export class DoublyLinkedList<T> implements ILinkedList<T> {
         return this._head.data;
     }
 
+    public back(): T {
+        return this._tail.data;
+    }
+
     public clear(): void {
         this._head = this._tail = undefined;
         this._size = 0;

@@ -90,6 +90,14 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
         return this._head.data;
     }
 
+    back(): T {
+        let current = this._head;
+        while (current.hasNext()) {
+            current = current.next;
+        }
+        return current.data;
+    }
+
     pop(): T {
         if (this.empty()) {
             return undefined;
@@ -101,7 +109,7 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
             this._head = undefined;
 
         } else {
-            let previous;
+            let previous: Node<T>;
 
             while (current.hasNext()) {
                 previous = current;
