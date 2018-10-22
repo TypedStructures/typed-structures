@@ -3,7 +3,6 @@ import {IBiFunction} from '../../functions/bi-function/bi-function-interface';
 import {IFunction} from '../../functions/function/function-interface';
 import {ISetInterface} from '../set/set-interface';
 import {IMapEntry} from './utils/map-entry/map-entry-interface';
-import {UnsupportedOperationException} from '../../exceptions/unsupported-operation-exception';
 import {NullReferenceException} from '../../exceptions/null-reference-exception';
 import {Set} from '../set/set';
 import {MapEntry} from './utils/map-entry/map-entry';
