@@ -96,4 +96,10 @@ export interface ILinkedList<T> {
      */
     peek(): T;
 
+    /**
+     * Return the item at the end of a LinkedList without removing it
+     * @returns{T} the item at the end
+     */
+    back(): T;
+
 }

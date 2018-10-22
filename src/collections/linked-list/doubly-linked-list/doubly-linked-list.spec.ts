@@ -167,6 +167,35 @@ describe('peek', function () {
     });
 });
 
+describe('back', function () {
+    it('should return 1', function () {
+        let list: DoublyLinkedList<number> = new DoublyLinkedList<number>();
+        list.push(1);
+        expect(list.back()).toEqual(1);
+    });
+
+    it('should contain 1', function () {
+        let list: DoublyLinkedList<number> = new DoublyLinkedList<number>();
+        list.push(1);
+        list.peek();
+        expect(list.contains(1)).toBe(true);
+    });
+    it('should return 1', function () {
+        let list: DoublyLinkedList<number> = new DoublyLinkedList<number>();
+        list.unshift(1);
+        list.unshift(2);
+        expect(list.back()).toEqual(1);
+    });
+
+    it('should contain 1', function () {
+        let list: DoublyLinkedList<number> = new DoublyLinkedList<number>();
+        list.unshift(1);
+        list.unshift(2);
+        list.back();
+        expect(list.contains(1)).toBe(true);
+    });
+});
+
 describe('clear', function () {
     it('should empty the list', function () {
         let list: DoublyLinkedList<number> = new DoublyLinkedList<number>();
