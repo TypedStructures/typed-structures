@@ -3,6 +3,9 @@ import {ClassCastException} from './class-cast-exception';
 import {IllegalArgumentException} from './illegal-argument-exception';
 import {NullReferenceException} from './null-reference-exception';
 import {UnsupportedOperationException} from './unsupported-operation-exception';
+import {IndexOutOfBoundsException} from './index-out-of-bounds-exception';
+import {InvalidMarkException} from './invalid-mark-exception';
+import {ReadOnlyBufferException} from './read-only-buffer-exception';
 
 describe('exception', function () {
     it('should return the error', function () {
@@ -36,5 +39,33 @@ describe('unsupportedOperationException', function () {
     it('should return the error', function () {
         let e = new UnsupportedOperationException('error');
         expect(e.toString()).toEqual('UnsupportedOperationException: error\n');
+    });
+});
+
+describe('IndexOutOfBoundException', function () {
+    it('should return the error', function () {
+        let e = new IndexOutOfBoundsException('error');
+        expect(e.toString()).toEqual('IndexOutOfBoundsException: error\n');
+    });
+});
+
+describe('InvalidMarkException', function () {
+    it('should return the error', function () {
+        let e = new InvalidMarkException('error');
+        expect(e.toString()).toEqual('InvalidMarkException: error\n');
+    });
+});
+
+describe('IndexOutOfBoundException', function () {
+    it('should return the error', function () {
+        let e = new IndexOutOfBoundsException('error');
+        expect(e.toString()).toEqual('IndexOutOfBoundsException: error\n');
+    });
+});
+
+describe('ReadOnlyBufferException', function () {
+    it('should return the error', function () {
+        let e = new ReadOnlyBufferException('error');
+        expect(e.toString()).toEqual('ReadOnlyBufferException: error\n');
     });
 });
