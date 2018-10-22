@@ -49,3 +49,24 @@ describe('empty', function() {
         expect(queue.empty()).toBe(true);
     });
 });
+
+describe('back', function () {
+    it('should return 1', function () {
+        let list: Queue<number> = new Queue<number>();
+        list.enqueue(1);
+        expect(list.back()).toEqual(1);
+    });
+    it('should return 2', function () {
+        let list: Queue<number> = new Queue<number>();
+        list.enqueue(1);
+        list.enqueue(2);
+        expect(list.back()).toEqual(2);
+    });
+    it('should return 2', function () {
+        let list: Queue<number> = new Queue<number>();
+        list.enqueue(1);
+        list.enqueue(2);
+        list.dequeue();
+        expect(list.back()).toEqual(2);
+    });
+});
