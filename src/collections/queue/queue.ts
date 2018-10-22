@@ -3,7 +3,7 @@ import { IQueue } from './queue-interface';
 
 export class Queue<T> implements IQueue<T> {
 
-    private _items: DoublyLinkedList<T>;
+    protected _items: DoublyLinkedList<T>;
 
     constructor() {
         this._items = new DoublyLinkedList<T>();
