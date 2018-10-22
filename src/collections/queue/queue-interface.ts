@@ -24,6 +24,12 @@ export interface IQueue<T> {
     peek(): T;
 
     /**
+     * Return the item at the end of the Queue without removing it
+     * @returns{T} the item at the end
+     */
+    back(): T;
+
+    /**
      * Return wether the queue is empty or not
      */
     empty(): boolean;
