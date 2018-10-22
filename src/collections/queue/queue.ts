@@ -19,7 +19,6 @@ export class Queue<T> implements IQueue<T> {
 
     public dequeue(): T {
         return this._items.shift();
-        
     }
 
     public peek(): T {
