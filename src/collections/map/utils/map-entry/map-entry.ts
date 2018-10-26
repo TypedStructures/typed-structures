@@ -1,4 +1,6 @@
-import {IMapEntry} from './map-entry-interface';
+import { hash } from '../../../../util/hash';
+import { flattenObject } from '../../../../util/flatten';
+import { IMapEntry } from './map-entry-interface';
 
 export class MapEntry<K, V> implements IMapEntry<K, V> {
 
@@ -24,22 +26,10 @@ export class MapEntry<K, V> implements IMapEntry<K, V> {
     }
 
     hashCode(): number {
-        let hash: number = 1;
+        let key: string = typeof this._key === 'object' ? typeof (<any>this._key).hashCode === 'function' ? (<any>this._key).hashCode() : flattenObject(this._key) : this._key;
+        let value: string = typeof this._value === 'object' ? typeof (<any>this._value).hashCode === 'function' ? (<any>this._value).hashCode() : flattenObject(this._value) : this._value;
 
-        if ((<any>this.getKey()).hashCode && (<any>this.getValue()).hashCode)
-            hash = hash * 17 + (this.getKey() === null ? 0 : (<any>this.getKey()).hashCode()) +
-                (this.getValue() === null ? 0 : (<any>this.getValue()).hashCode());
-        else if ((<any>this.getKey()).hashCode && !(<any>this.getValue()).hashCode)
-            hash = hash * 17 + (this.getKey() === null ? 0 : (<any>this.getKey()).hashCode()) +
-                (this.getValue() === null ? 0 : (<any>this.getValue()) as number);
-        else if (!(<any>this.getKey()).hashCode && (<any>this.getValue()).hashCode)
-            hash = hash * 17 + (this.getKey() === null ? 0 : (<any>this.getKey()) as number) +
-                (this.getValue() === null ? 0 : (<any>this.getValue()).hashCode());
-        else
-            hash = hash * 17 + (this.getKey() === null ? 0 : (<any>this.getKey()) as number) +
-                (this.getValue() === null ? 0 : (<any>this.getValue()) as number);
-
-        return hash;
+        return hash( <string>key + <string>value);
     }
 
     setValue(value: V): V {
