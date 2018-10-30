@@ -1,18 +1,18 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const ROOT = path.resolve( __dirname, 'src' );
-const DESTINATION = path.resolve( __dirname, 'dist' );
+const ROOT = path.resolve( __dirname);
+const DESTINATION = path.resolve( __dirname);
 
 module.exports = {
     context: ROOT,
 
     entry: {
-        'main': './TypedStructures.ts'
+        'main': './index    .ts'
     },
     
     output: {
-        filename: '[name].bundle.js',
+        filename: 'index.js',
         path: DESTINATION
     },
 

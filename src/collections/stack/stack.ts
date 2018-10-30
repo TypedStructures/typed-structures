@@ -19,7 +19,6 @@ export class Stack<T> implements IStack<T> {
 
     public unstack(): T {
         return this._items.shift();
-        
     }
 
     public peek(): T {
