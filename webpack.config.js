@@ -8,7 +8,7 @@ module.exports = {
     context: ROOT,
 
     entry: {
-        'main': './main.ts'
+        'main': './TypedStructures.ts'
     },
     
     output: {

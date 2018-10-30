@@ -1,7 +1,15 @@
-export { IFunction } from './src/functions/function/function-interface';
-export { Function } from './src/functions/function/function';
-export { BiFunction } from './src/functions/bi-function/bi-function';
-export { UnsupportedOperationException } from './src/exceptions/unsupported-operation-exception';
+import * as  IFunctionImport from './src/functions/function/function-interface';
+export import IFunction = IFunctionImport.IFunction;
+
+import * as FunctionImport from './src/functions/function/function';
+export import Function = FunctionImport.Function;
+
+import * as BiFunctionImport from './src/functions/bi-function/bi-function';
+export import BiFunction = BiFunctionImport.BiFunction;
+
+import * as UnsupportedOperationExceptionImport from './src/exceptions/unsupported-operation-exception';
+export import UnsupportedOperationException = UnsupportedOperationExceptionImport.UnsupportedOperationException;
+
 export { ReadOnlyBufferException } from './src/exceptions/read-only-buffer-exception';
 export { NullReferenceException } from './src/exceptions/null-reference-exception';
 export { InvalidMarkException } from './src/exceptions/invalid-mark-exception';
