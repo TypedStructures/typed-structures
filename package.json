@@ -1,8 +1,12 @@
 {
   "name": "typed-structures",
   "version": "0.0.1",
-  "description": "Typed Structures",
+  "description": "Common typed structures implementations in TypeScript",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnthonyPierrat/typed-structures.git"
+  },
   "scripts": {
     "start": "webpack-dev-server --port 9000 --inline --progress --profile --colors --watch --content-base src/ --mode development",
     "build": "webpack --config webpack.config.js --mode production",
@@ -10,11 +14,18 @@
     "test": "karma start karma.config.js"
   },
   "keywords": [
-    "webpack",
-    "webpack4",
+    "buffer",
+    "linked-list",
+    "linkedlist",
+    "map",
+    "queue",
+    "set",
+    "stack",
+    "structures",
+    "types",
     "typescript"
   ],
-  "author": "Anthony && Thibaud",
+  "author": "Anthony Pierrat && Thibaud Rey",
   "license": "MIT",
   "devDependencies": {
     "@types/jasmine": "2.8.7",
