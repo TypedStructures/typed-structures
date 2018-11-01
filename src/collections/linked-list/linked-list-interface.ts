@@ -1,4 +1,4 @@
-import { Node } from './utils/node/node';
+import { Node } from '../..';
 
 export interface ILinkedList<T> {
 

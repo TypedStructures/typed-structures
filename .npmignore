@@ -1,8 +1,9 @@
-./webpack-test.config.js
-./webpack.config.js
-./tslint.json
-./spec.bundle.js
-./karma.config.js
-./images/
-./coverage/
+webpack-test.config.js
+webpack.config.js
+tslint.json
+spec.bundle.js
+karma.config.js
+images/
+coverage/
 .idea/
+src/

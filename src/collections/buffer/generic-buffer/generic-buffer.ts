@@ -1,5 +1,5 @@
-import { Buffer } from '../buffer';
-import { IBuffer } from '../buffer-interface';
+import { Buffer } from '../../..';
+import { IBuffer } from '../../..';
 
 export class GenericBuffer<T> extends Buffer {
 

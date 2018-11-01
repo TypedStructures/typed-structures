@@ -1,8 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const ROOT = path.resolve( __dirname);
-const DESTINATION = path.resolve( __dirname);
+const ROOT = path.resolve(__dirname, 'src');
+const DESTINATION = path.resolve(__dirname, 'dist');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     context: ROOT,
@@ -10,7 +11,7 @@ module.exports = {
     entry: {
         'main': './index.ts'
     },
-    
+
     output: {
         filename: 'index.js',
         path: DESTINATION
@@ -27,8 +28,8 @@ module.exports = {
     module: {
         rules: [
             /****************
-            * PRE-LOADERS
-            *****************/
+             * PRE-LOADERS
+             *****************/
             {
                 enforce: 'pre',
                 test: /\.js$/,
@@ -42,17 +43,27 @@ module.exports = {
             },
 
             /****************
-            * LOADERS
-            *****************/
+             * LOADERS
+             *****************/
             {
                 test: /\.ts$/,
-                exclude: [ /node_modules/ ],
+                exclude: [/node_modules/],
                 use: 'awesome-typescript-loader'
             }
         ]
     },
 
     devtool: 'source-map',
-    devServer: {}
+    devServer: {},
+    plugins: [
+        new CopyWebpackPlugin([{
+            from: {
+                glob: ROOT
+            },
+            to: DESTINATION
+        }], {
+            copyUnmodified: true
+        })
+    ]
 };
 

@@ -1,5 +1,5 @@
-import { DoublyLinkedList } from '../linked-list/doubly-linked-list/doubly-linked-list';
-import { IQueue } from './queue-interface';
+import { DoublyLinkedList } from '../..';
+import { IQueue } from '../..';
 
 export class Queue<T> implements IQueue<T> {
 

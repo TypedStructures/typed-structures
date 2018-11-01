@@ -1,4 +1,4 @@
-import { Exception } from './exception';
+import { Exception } from '..';
 
 export class ReadOnlyBufferException extends Exception {
 

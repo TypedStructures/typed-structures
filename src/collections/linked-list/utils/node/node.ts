@@ -1,4 +1,4 @@
-import {INode} from './node-interface';
+import { INode } from '../../../..';
 
 export class Node<T> implements INode {
 

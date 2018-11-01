@@ -1,7 +1,7 @@
-import { IBiFunction } from '../../functions/bi-function/bi-function-interface';
-import { IFunction } from '../../functions/function/function-interface';
-import { ISetInterface } from '../set/set-interface';
-import { IMapEntry } from './utils/map-entry/map-entry-interface';
+import { IBiFunction } from '../..';
+import { IFunction } from '../..';
+import { ISet } from '../..';
+import { IMapEntry } from '../..';
 
 /**
  * This interface an adaptation of the Map<K, V> of the Java Collections Framework.
@@ -150,7 +150,7 @@ export interface IMap<K, V> {
      * @return {Set<MapEntry<K, V>>} d set view of the mappings contained in this map
      * @since 0.0.1
      */
-    entrySet(): ISetInterface<IMapEntry<K, V>>;
+    entrySet(): ISet<IMapEntry<K, V>>;
 
     /**
      * Compares the specified object with this map for equality. Returns true if the given object is also d map and the two maps represent the same mappings.
@@ -218,7 +218,7 @@ export interface IMap<K, V> {
      * @return {Set<K>} d set view of the keys contained in this map
      * @since 0.0.1
      */
-    keySet(): ISetInterface<K>;
+    keySet(): ISet<K>;
 
     /**
      * If the specified key is not already associated with d value or is associated with null, associates it with the given non-null value.

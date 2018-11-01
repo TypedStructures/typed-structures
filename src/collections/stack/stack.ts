@@ -1,5 +1,5 @@
-import { SinglyLinkedList } from '../linked-list/singly-linked-list/singly-linked-list';
-import { IStack } from './stack-interface';
+import { SinglyLinkedList } from '../..';
+import { IStack } from '../..';
 
 export class Stack<T> implements IStack<T> {
 
