@@ -1,6 +1,6 @@
-import { Buffer } from '../buffer';
-import { IBuffer } from '../buffer-interface';
-import {IllegalArgumentException} from '../../../exceptions/illegal-argument-exception';
+import { Buffer } from '../../..';
+import { IBuffer } from '../../..';
+import { IllegalArgumentException } from '../../..';
 
 export class GenericRingBuffer<T> extends Buffer {
 

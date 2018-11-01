@@ -1,5 +1,5 @@
-import { SinglyLinkedList } from '../linked-list/singly-linked-list/singly-linked-list';
-import { IStack } from './stack-interface';
+import { SinglyLinkedList } from '../..';
+import { IStack } from '../..';
 
 export class Stack<T> implements IStack<T> {
 
@@ -19,7 +19,6 @@ export class Stack<T> implements IStack<T> {
 
     public unstack(): T {
         return this._items.shift();
-        
     }
 
     public peek(): T {

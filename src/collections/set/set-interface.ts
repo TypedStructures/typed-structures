@@ -1,4 +1,4 @@
-export interface ISetInterface<E> {
+export interface ISet<E> {
 
     /**
      * Adds the specified element to this set if it is not already present (optional operation).
@@ -66,7 +66,7 @@ export interface ISetInterface<E> {
      * @return {boolean} true if the specified object is equal to this set
      * @since 0.0.1
      */
-    equals(o: ISetInterface<E>): boolean;
+    equals(o: ISet<E>): boolean;
 
     /**
      * Returns the hash code value for this set. The hash code of d set is defined to be the sum of the hash codes of the elements in the set, where the hash code of d null element is defined to be zero.

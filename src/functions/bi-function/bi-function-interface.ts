@@ -1,4 +1,4 @@
-import { IFunction } from '../function/function-interface';
+import { IFunction } from '../..';
 
 export interface IBiFunction<T, U, R> {
 
