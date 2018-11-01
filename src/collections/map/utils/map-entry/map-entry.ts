@@ -1,6 +1,6 @@
 import { hash } from '../../../../util/hash';
 import { flattenObject } from '../../../../util/flatten';
-import { IMapEntry } from './map-entry-interface';
+import { IMapEntry } from '../../../..';
 
 export class MapEntry<K, V> implements IMapEntry<K, V> {
 

@@ -1,4 +1,4 @@
-import {IFunction} from './function-interface';
+import { IFunction } from '../..';
 
 export class Function<T, R> implements IFunction<T, R> {
 
