@@ -1,11 +1,11 @@
-import {Exception} from './exception';
-import {ClassCastException} from './class-cast-exception';
-import {IllegalArgumentException} from './illegal-argument-exception';
-import {NullReferenceException} from './null-reference-exception';
-import {UnsupportedOperationException} from './unsupported-operation-exception';
-import {IndexOutOfBoundsException} from './index-out-of-bounds-exception';
-import {InvalidMarkException} from './invalid-mark-exception';
-import {ReadOnlyBufferException} from './read-only-buffer-exception';
+import { Exception } from '..';
+import { ClassCastException } from '..';
+import { IllegalArgumentException } from '..';
+import { NullReferenceException } from '..';
+import { UnsupportedOperationException } from '..';
+import { IndexOutOfBoundsException } from '..';
+import { InvalidMarkException } from '..';
+import { ReadOnlyBufferException } from '..';
 
 describe('exception', function () {
     it('should return the error', function () {

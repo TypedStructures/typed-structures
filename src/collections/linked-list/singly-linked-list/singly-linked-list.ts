@@ -1,5 +1,5 @@
-import {Node} from '../utils/node/node';
-import {ILinkedList} from '../linked-list-interface';
+import { Node } from '../../..';
+import { ILinkedList } from '../../..';
 
 export class SinglyLinkedList<T> implements ILinkedList<T> {
 

@@ -1,11 +1,11 @@
-import {IMap} from './map-interface';
-import {IBiFunction} from '../../functions/bi-function/bi-function-interface';
-import {IFunction} from '../../functions/function/function-interface';
-import {ISetInterface} from '../set/set-interface';
-import {IMapEntry} from './utils/map-entry/map-entry-interface';
-import {NullReferenceException} from '../../exceptions/null-reference-exception';
-import {Set} from '../set/set';
-import {MapEntry} from './utils/map-entry/map-entry';
+import { IMap } from '../..';
+import { IBiFunction } from '../..';
+import { IFunction } from '../..';
+import { ISet } from '../..';
+import { IMapEntry } from '../..';
+import { NullReferenceException } from '../..';
+import { Set } from '../..';
+import { MapEntry } from '../..';
 
 export class Map<K, V> implements IMap<K, V> {
 
@@ -85,8 +85,8 @@ export class Map<K, V> implements IMap<K, V> {
         }) !== undefined;
     }
 
-    entrySet(): ISetInterface<IMapEntry<K, V>> {
-        let set: ISetInterface<IMapEntry<K, V>> = new Set<MapEntry<K, V>>();
+    entrySet(): ISet<IMapEntry<K, V>> {
+        let set: ISet<IMapEntry<K, V>> = new Set<MapEntry<K, V>>();
         set.addAll(this._entries);
         return set;
     }
@@ -131,8 +131,8 @@ export class Map<K, V> implements IMap<K, V> {
         return this._entries.length === 0;
     }
 
-    keySet(): ISetInterface<K> {
-        return this._entries.reduce((set: ISetInterface<K>, mapEntry: IMapEntry<K, V>) => {
+    keySet(): ISet<K> {
+        return this._entries.reduce((set: ISet<K>, mapEntry: IMapEntry<K, V>) => {
             set.add(mapEntry.getKey());
             return set;
         }, new Set<K>());

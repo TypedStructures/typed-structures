@@ -1,6 +1,6 @@
-import { IBuffer } from './buffer-interface';
-import { IllegalArgumentException } from '../../exceptions/illegal-argument-exception';
-import { InvalidMarkException } from '../../exceptions/invalid-mark-exception';
+import { IBuffer } from '../..';
+import { IllegalArgumentException } from '../..';
+import { InvalidMarkException } from '../..';
 
 export abstract class Buffer implements IBuffer {
 

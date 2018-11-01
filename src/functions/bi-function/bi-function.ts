@@ -1,5 +1,5 @@
-import {IBiFunction} from './bi-function-interface';
-import {IFunction} from '../function/function-interface';
+import { IBiFunction } from '../..';
+import { IFunction } from '../..';
 
 export class BiFunction<T, U, R> implements IBiFunction<T, U, R> {
 
