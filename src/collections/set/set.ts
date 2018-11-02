@@ -1,6 +1,11 @@
 import { ISet } from '../..';
 import { NullReferenceException } from '../..';
+import {TsQ} from '../../tsQ/decorator/TsQDecorator';
 
+@TsQ({
+    type: Array,
+    getter: 'toArray'
+})
 export class Set<E> implements ISet<E> {
 
     private _elements: E[];

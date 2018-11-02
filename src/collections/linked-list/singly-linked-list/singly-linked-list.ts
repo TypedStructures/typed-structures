@@ -1,6 +1,12 @@
 import { Node } from '../../..';
 import { ILinkedList } from '../../..';
+import { TsQ } from '../../../tsQ/decorator/TsQDecorator';
 
+@TsQ({
+    type: Array,
+    getter: 'toArray',
+    embedGetter: 'data'
+})
 export class SinglyLinkedList<T> implements ILinkedList<T> {
 
     private _head?: Node<T>;
