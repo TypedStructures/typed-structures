@@ -1,7 +1,12 @@
 import { Buffer } from '../../..';
 import { IBuffer } from '../../..';
 import { IllegalArgumentException } from '../../..';
+import { TsQ } from '../../../tsQ/decorator/TsQDecorator';
 
+@TsQ({
+    type: Array,
+    key: '_buf'
+})
 export class GenericRingBuffer<T> extends Buffer {
 
     private readonly _buf: T[];
