@@ -22,5 +22,5 @@ export interface IBinaryTree<T> {
      * @param item the element to find
      * @returns {T} the first element
      */
-    remove(item: T): T;
+    find(item: T): T;
 }
