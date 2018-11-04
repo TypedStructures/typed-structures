@@ -1,3 +1,5 @@
+import { BNode } from "./utils/node/b-node";
+
 export interface IBinaryTree<T> {
     
     /**
@@ -6,7 +8,7 @@ export interface IBinaryTree<T> {
      * @param item the element to add
      * @returns {boolean} true if added, false otherwise
      */
-    add(item: T): boolean;
+    add(root: BNode<T>, item: T): boolean;
 
     /**
      * delete an element.
@@ -23,4 +25,10 @@ export interface IBinaryTree<T> {
      * @returns {T} the first element
      */
     find(item: T): T;
+
+    /**
+     * return the root of the tree.
+     * @returns {BNode} the root node
+     */
+    root(): BNode<T>;
 }
