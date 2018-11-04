@@ -1,4 +1,6 @@
-export class BNode<T> {
+import { IBNode } from "./b-node-interface";
+
+export class BNode<T> implements IBNode {
 
     private _data: T;
     private _left?: BNode<T>;
