@@ -38,6 +38,7 @@ export class BinaryTreeSearch<T> implements IBinaryTree<T> {
                 const result = root;
                 root = undefined;
                 return result.data;
+            // otherwise recursive
             } else {
                 if (root.data > item ) {
                     this.remove(root.left, item);
