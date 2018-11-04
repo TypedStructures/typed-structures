@@ -25,10 +25,27 @@ export class BinaryTreeSearch<T> implements IBinaryTree<T> {
                 this.add(root.right, item);
             }
         }
-    }    
-    
-    remove(item: T): boolean {
-        throw new Error("Method not implemented.");
+    }
+
+    remove(root: BNode<T>, item: T): T {
+
+        // if root is undefined
+        if (root.data === undefined) {
+            return undefined;
+        } else {
+            // if root is the element
+            if (root.data === item) {
+                const result = root;
+                root = undefined;
+                return result.data;
+            } else {
+                if (root.data > item ) {
+                    this.remove(root.left, item);
+                } else {
+                    this.remove(root.right, item);
+                }
+            }
+        }
     }
 
     find(item: T): T {
