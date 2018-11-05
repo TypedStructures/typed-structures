@@ -1,6 +1,9 @@
 import { IBinaryTree } from '../bt-interface';
 import { BNode } from '../utils/node/b-node';
 
+const LEFT = 'left';
+const RIGHT = 'right';
+
 export class BinaryTreeSearch<T> implements IBinaryTree<T> {
 
     private _root?: BNode<T>;
@@ -15,15 +18,29 @@ export class BinaryTreeSearch<T> implements IBinaryTree<T> {
 
     add(root: BNode<T>, item: T): boolean {
 
-        if (root === undefined) {
-            root = this.create(item);
-            return true;
+        const newNode = this.create(item);
+
+        if (this.root() === undefined) {
+            this._root = newNode;
+        } else
+            this.insertNode(this._root, newNode);
+        return true;
+    }
+
+    private insertNode(node: BNode<T>, newNode: BNode<T>) {
+
+        if (newNode.data < node.data) {
+
+            if (node.left === undefined)
+                node.left = newNode;
+            else
+                this.insertNode(node.left, newNode);
         } else {
-            if (root.data > item) {
-                this.add(root.left, item);
-            } else {
-                this.add(root.right, item);
-            }
+
+            if (node.right === undefined)
+                node.right = newNode;
+            else
+                this.insertNode(node.right, newNode);
         }
     }
 
@@ -50,7 +67,7 @@ export class BinaryTreeSearch<T> implements IBinaryTree<T> {
     }
 
     find(item: T): T {
-        throw new Error("Method not implemented.");
+        throw new Error('Method not implemented.');
     }
 
     private create(item: T): BNode<T> {
