@@ -1,4 +1,4 @@
-import { BinaryTreeSearch } from "./binary-tree-search";
+import { BinaryTreeSearch } from './binary-tree-search';
 
 describe('new tree element', function () {
     it('should add to the root', function () {
