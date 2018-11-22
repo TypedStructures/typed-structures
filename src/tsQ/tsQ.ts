@@ -1,6 +1,6 @@
 import {OrderClause} from './orderClause';
 import {NoDecoratorException} from '../exceptions/no-decorator-exception';
-import {Map} from '..';
+import {Map, Stack} from '..';
 
 export class TsQ {
 
@@ -8,7 +8,7 @@ export class TsQ {
     private _groupby: string;
     _from: any;
     private _where: any;
-    private _orderby: OrderClause[] = [];
+    private _orderby: Stack<OrderClause> = new Stack<OrderClause>();
     _conf: { type: any, key: string, getter: string, embedGetter: string };
 
     public select(...select: string[]): TsQ {
@@ -29,7 +29,7 @@ export class TsQ {
     }
 
     public order_by(field: string, direction: string = 'asc'): TsQ {
-        this._orderby.push(new OrderClause(field, direction));
+        this._orderby.stack(new OrderClause(field, direction));
         return this;
     }
 
@@ -91,72 +91,42 @@ export class TsQ {
      */
     private orderByProcess(data: any[]) {
         if (this._orderby.length)
-            this._orderby.forEach((c: OrderClause) => {
+            while (!this._orderby.empty()) {
+                let c: OrderClause = this._orderby.unstack();
                 data = data.sort((a: any, b: any) => {
 
                     let sort: any;
 
-                    if (c.direction.toLowerCase() === 'asc') {
+                    if (typeof a[c.field] === 'number' || a[c.field] instanceof Date)
+                        sort = c.direction.toLowerCase() === 'asc' ? a[c.field] - b[c.field] : b[c.field] - a[c.field];
 
-                        if (typeof a[c.field] === 'number')
-                            sort = a[c.field] - b[c.field];
+                    if (typeof a[c.field] === 'string')
+                        sort = c.direction.toLowerCase() === 'asc' ? a[c.field].localeCompare(b[c.field]) : b[c.field].localeCompare(a[c.field]);
 
-                        if (typeof a[c.field] === 'string')
-                            sort = a[c.field].localeCompare(b[c.field]);
+                    if (typeof a[c.field] === 'object') {
+                        let aPropertiesMap: Map<string, number | string>;
+                        let bPropertiesMap: Map<string, number | string>;
 
-                        if (typeof a[c.field] === 'object') {
-                            let aPropertiesMap: Map<string, number | string>;
-                            let bPropertiesMap: Map<string, number | string>;
+                        aPropertiesMap = this.getObjectMap(a[c.field], '');
+                        bPropertiesMap = this.getObjectMap(b[c.field], '');
 
-                            aPropertiesMap = this.getObjectMap(a, '');
-                            bPropertiesMap = this.getObjectMap(b, '');
+                        let aCount: number = 0;
+                        let bCount: number = 0;
 
-                            let aCount: number = 0;
-                            let bCount: number = 0;
+                        aPropertiesMap.keySet().toArray().forEach((key: string) => {
+                            if (typeof aPropertiesMap.get(key) === 'number')
+                                (<number>aPropertiesMap.get(key) - <number>bPropertiesMap.get(key)) > 0 ? bCount++ : aCount++;
 
-                            aPropertiesMap.keySet().toArray().forEach((key: string) => {
-                                if (typeof aPropertiesMap.get(key) === 'number')
-                                    (<number>aPropertiesMap.get(key) - <number>bPropertiesMap.get(key)) > 0 ? bCount++ : aCount++;
+                            if (typeof aPropertiesMap.get(key) === 'string')
+                                sort = (<string>aPropertiesMap.get(key)).localeCompare(<string>bPropertiesMap.get(key)) > 0 ? bCount++ : aCount++;
+                        });
 
-                                if (typeof aPropertiesMap.get(key) === 'string')
-                                    sort = (<string>aPropertiesMap.get(key)).localeCompare(<string>bPropertiesMap.get(key)) > 0 ? bCount++ : aCount++;
-                            });
-
-                            sort = aCount > bCount ? -1 : 1;
-                        }
-
-                    } else {
-
-                        if (typeof a[c.field] === 'number')
-                            sort = b[c.field] - a[c.field];
-
-                        if (typeof a[c.field] === 'string')
-                            sort = b[c.field].localeCompare(a[c.field]);
-
-                        if (typeof a[c.field] === 'object') {
-                            let aPropertiesMap: Map<string, number | string>;
-                            let bPropertiesMap: Map<string, number | string>;
-
-                            aPropertiesMap = this.getObjectMap(a[c.field], '');
-                            bPropertiesMap = this.getObjectMap(b[c.field], '');
-
-                            let aCount: number = 0;
-                            let bCount: number = 0;
-
-                            aPropertiesMap.keySet().toArray().forEach((key: string) => {
-                                if (typeof aPropertiesMap.get(key) === 'number')
-                                    (<number>bPropertiesMap.get(key) - <number>aPropertiesMap.get(key)) > 0 ? bCount++ : aCount++;
-
-                                if (typeof aPropertiesMap.get(key) === 'string')
-                                    sort = (<string>bPropertiesMap.get(key)).localeCompare(<string>aPropertiesMap.get(key)) > 0 ? bCount++ : aCount++;
-                            });
-
-                            sort = aCount > bCount ? -1 : 1;
-                        }
+                        sort = c.direction.toLowerCase() === 'asc' ? aCount > bCount ? 1 : -1 : aCount > bCount ? -1 : 1;
                     }
+
                     return sort;
                 });
-            });
+            }
 
         return data;
     }
@@ -196,12 +166,12 @@ export class TsQ {
 
     private getObjectMap(o: object, path: string) {
 
-        let res: Map<string, number | string> = new Map<string, number|string>();
+        let res: Map<string, number | string> = new Map<string, number | string>();
 
         Object.getOwnPropertyNames(o).forEach((property: string) => {
-            if (typeof (<any>o)[property] === 'number' || typeof (<any>o)[property] === 'string') {
-                res.put(`${path}.${property}`, (<any>o)[property]);}
-            else
+            if (typeof (<any>o)[property] === 'number' || typeof (<any>o)[property] === 'string' || (<any>o)[property] instanceof Date) {
+                res.put(`${path}.${property}`, (<any>o)[property]);
+            } else
                 res = this.getObjectMap((<any>o)[property], path);
         });
 
