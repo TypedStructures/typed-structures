@@ -152,11 +152,12 @@ describe('order_by', function () {
         }
     }
 
-    let a = new Person(5, 'Dubois', 'Simon', new Date('2012-02-23'), 27);
-    let b = new Person(4, 'Dubois', 'Chloé', new Date('2012-02-16'), 98);
-    let c = new Person(3, 'Durant', 'Fabienne', new Date('2012-02-13'), 90);
-    let d = new Person(2, 'Dupond', 'Fabrice', new Date('2012-02-07'), 65);
-    let e = new Person(1, 'Durant', 'Maurice', new Date('2012-02-05'), 145);
+    let a = new Person(1, 'A', 'A', new Date('0000-01-01'), 0);
+    let b = new Person(2, 'A', 'A', new Date('0000-01-02'), 0);
+    let c = new Person(3, 'A', 'A', new Date('0000-01-03'), 0);
+    let d = new Person(4, 'B', 'A', new Date('0000-01-01'), 0);
+    let e = new Person(5, 'B', 'A', new Date('0000-01-02'), 0);
+    let f = new Person(6, 'B', 'A', new Date('0000-01-03'), 0);
 
     it('should order in the right order of provided clauses', function () {
         let q: Queue<Person> = new Queue<Person>();
@@ -165,15 +166,16 @@ describe('order_by', function () {
         q.enqueue(c);
         q.enqueue(d);
         q.enqueue(e);
+        q.enqueue(f);
 
         expect(
             TsQ
                 .from(q)
+                .order_by('subscription_date', 'asc')
                 .order_by('name', 'desc')
-                .order_by('subscription_date', 'desc')
                 .toArray()
                 .map((person: Person) => person.id)
-        ).toEqual([5, 4, 3, 2, 1]);
+        ).toEqual([3, 2, 1, 6, 5, 4]);
     });
 
     class SponsoredPerson {
@@ -242,28 +244,30 @@ describe('order_by', function () {
         }
     }
 
-    let f = new SponsoredPerson(5, 'Dubois', 'Simon', new Date('2012-02-23'), 27, a);
-    let g = new SponsoredPerson(4, 'Dubois', 'Chloé', new Date('2012-02-16'), 98, b);
-    let h = new SponsoredPerson(3, 'Durant', 'Fabienne', new Date('2012-02-13'), 90, c);
-    let i = new SponsoredPerson(2, 'Dupond', 'Fabrice', new Date('2012-02-07'), 65, d);
-    let j = new SponsoredPerson(1, 'Durant', 'Maurice', new Date('2012-02-05'), 145, e);
+    let g = new SponsoredPerson(1, 'Dubois', 'Simon', new Date('2012-02-23'), 27, a);
+    let h = new SponsoredPerson(2, 'Dubois', 'Chloé', new Date('2012-02-16'), 98, b);
+    let i = new SponsoredPerson(3, 'Durant', 'Fabienne', new Date('2012-02-13'), 90, c);
+    let j = new SponsoredPerson(4, 'Dupond', 'Fabrice', new Date('2012-02-07'), 65, d);
+    let k = new SponsoredPerson(5, 'Durant', 'Maurice', new Date('2012-02-05'), 145, e);
+    let l = new SponsoredPerson(6, 'Durant', 'Maurice', new Date('2012-02-05'), 145, f);
 
     it('should order embedded objects', function () {
         let q: Queue<SponsoredPerson> = new Queue<SponsoredPerson>();
-        q.enqueue(f);
         q.enqueue(g);
         q.enqueue(h);
         q.enqueue(i);
         q.enqueue(j);
+        q.enqueue(k);
+        q.enqueue(l);
 
         expect(
             TsQ
                 .from(q)
-                // .order_by('name', 'desc')
-                // .order_by('subscription_date', 'desc')
+                .order_by('name', 'desc')
+                .order_by('subscription_date', 'desc')
                 .order_by('sponsor', 'desc')
                 .toArray()
                 .map((person: Person) => person.id)
-        ).toEqual([5, 4, 3, 2, 1]);
+        ).toEqual([3, 6, 5, 4, 2, 1]);
     });
 });
