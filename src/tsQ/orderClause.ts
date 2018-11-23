@@ -1,6 +1,6 @@
 export class OrderClause {
-    private _field: any;
-    private _direction: string;
+     private readonly _field: any;
+    private readonly _direction: string;
 
     constructor(field: any, direction: string) {
         this._field = field;
@@ -12,15 +12,7 @@ export class OrderClause {
         return this._field;
     }
 
-    set field(value: any) {
-        this._field = value;
-    }
-
     get direction(): string {
         return this._direction;
-    }
-
-    set direction(value: string) {
-        this._direction = value;
     }
 }

@@ -1,6 +1,7 @@
 import {OrderClause} from './orderClause';
 import {NoDecoratorException} from '../exceptions/no-decorator-exception';
 import {Map, Stack} from '..';
+import {NoSuchPropertyException} from '../exceptions/no-such-property-exception';
 
 export class TsQ {
 
@@ -11,8 +12,33 @@ export class TsQ {
     private _orderby: Stack<OrderClause> = new Stack<OrderClause>();
     _conf: { type: any, key: string, getter: string, embedGetter: string };
 
-    public select(...select: string[]): TsQ {
-        this._select = select;
+    public select(select: string[] = []): TsQ {
+        let tsq: TsQ = this;
+
+        this._select = select.map((key: string) => {
+
+            let values: any[];
+
+            switch (this._conf.type) {
+                case Array:
+                    if (this._conf.key)
+                        values = <any[]>this._from[this._conf.key];
+
+                    if (this._conf.getter)
+                        values = <any[]>eval(`tsq._from.${this._conf.getter}()`);
+            }
+
+            if (this._conf.embedGetter) {
+                values = values.map((embed: any) => eval(`embed.${this._conf.embedGetter}`));
+            }
+
+            if (!this.propertyExistsIn(values, key))
+                throw new NoSuchPropertyException(`The specified property "${key}" does not exist in the data provided collection`);
+
+            return `_${key}`;
+        });
+
+        select = null;
         return this;
     }
 
@@ -138,16 +164,12 @@ export class TsQ {
      */
     private selectProcess(data: any[]) {
         if (this._select)
-            return data.map((e: any) => {
-                return Object.getOwnPropertyNames(e)
-                    .filter(key => this._select.includes(key))
-                    .reduce((obj: any, key: any) => {
-                        obj[key] = e[key];
-                        return obj;
-                    }, {});
+            data.forEach((e: any) => {
+                Object.getOwnPropertyNames(e)
+                    .filter(key => !this._select.includes(key))
+                    .forEach((key: string) => Reflect.deleteProperty(e, key));
             });
-        else
-            return data;
+        return data;
     }
 
     /**
@@ -156,12 +178,13 @@ export class TsQ {
      */
     private groupByProcess(data: any[]) {
         if (this._groupby)
-            return data.reduce((accumulator: any[], e: any) => {
-                (accumulator[e[this._groupby]] = accumulator[e[this._groupby]] || []).push(e);
+            data = data.reduce((accumulator: any[], e: any) => {
+                let group: number = this.numberify(e[this._groupby]);
+                (accumulator[group] = accumulator[group] || []).push(e);
                 return accumulator;
-            }, []).filter((e: any) => e !== null);
-        else
-            return data;
+            }, []).filter((e: any) => e !== undefined);
+
+        return data;
     }
 
     private getObjectMap(o: object, path: string) {
@@ -176,5 +199,13 @@ export class TsQ {
         });
 
         return res;
+    }
+
+    private propertyExistsIn(values: any[], key: string) {
+        return values.every(value => eval(`value.${key}`) !== undefined);
+    }
+
+    private numberify(s: string): number {
+        return Number(s.split('').map((char: string) => char.charCodeAt(0)).join(''));
     }
 }
