@@ -1,5 +1,6 @@
 import { TsQ } from './tsQ';
 import {DoublyLinkedList, GenericRingBuffer, SinglyLinkedList, Map, Queue, Set, Stack} from '..';
+import {NoSuchPropertyException} from '../exceptions/no-such-property-exception';
 
 let b: GenericRingBuffer<number> = new GenericRingBuffer<number>(2, 1, 0, 0, 0);
 b.put(1);
@@ -28,6 +29,144 @@ g.add(2);
 let h: Stack<number> = new Stack<number>();
 h.stack(1);
 h.stack(2);
+
+class Person {
+    private _id: number;
+    private _name: string;
+    private _surname: string;
+    private _subscription_date: Date;
+    private _price: number;
+
+    constructor(id: number, name: string, surname: string, date: Date, price: number) {
+        this._id = id;
+        this._name = name;
+        this._surname = surname;
+        this._subscription_date = date;
+        this._price = price;
+    }
+
+    get id(): number {
+        return this._id;
+    }
+
+    set id(value: number) {
+        this._id = value;
+    }
+
+    get name(): string {
+        return this._name;
+    }
+
+    set name(value: string) {
+        this._name = value;
+    }
+
+    get subscription_date(): Date {
+        return this._subscription_date;
+    }
+
+    set subscription_date(value: Date) {
+        this._subscription_date = value;
+    }
+
+    get price(): number {
+        return this._price;
+    }
+
+    set price(value: number) {
+        this._price = value;
+    }
+
+    get surname(): string {
+        return this._surname;
+    }
+
+    set surname(value: string) {
+        this._surname = value;
+    }
+}
+
+let Pa = new Person(1, 'A', 'A', new Date('0000-01-01'), 0);
+let Pb = new Person(2, 'A', 'A', new Date('0000-01-02'), 0);
+let Pc = new Person(3, 'A', 'A', new Date('0000-01-03'), 0);
+let Pd = new Person(4, 'B', 'A', new Date('0000-01-01'), 0);
+let Pe = new Person(5, 'B', 'A', new Date('0000-01-02'), 0);
+let Pf = new Person(6, 'B', 'A', new Date('0000-01-03'), 0);
+
+class SponsoredPerson {
+    private _id: number;
+    private _name: string;
+    private _surname: string;
+    private _subscription_date: Date;
+    private _price: number;
+    private _sponsor: Person;
+
+    constructor(id: number, name: string, surname: string, date: Date, price: number, sponsor: Person) {
+        this._id = id;
+        this._name = name;
+        this._surname = surname;
+        this._subscription_date = date;
+        this._price = price;
+        this._sponsor = sponsor;
+    }
+
+    get id(): number {
+        return this._id;
+    }
+
+    set id(value: number) {
+        this._id = value;
+    }
+
+    get name(): string {
+        return this._name;
+    }
+
+    set name(value: string) {
+        this._name = value;
+    }
+
+    get subscription_date(): Date {
+        return this._subscription_date;
+    }
+
+    set subscription_date(value: Date) {
+        this._subscription_date = value;
+    }
+
+    get price(): number {
+        return this._price;
+    }
+
+    set price(value: number) {
+        this._price = value;
+    }
+
+    get surname(): string {
+        return this._surname;
+    }
+
+    set surname(value: string) {
+        this._surname = value;
+    }
+
+    get sponsor(): Person {
+        return this._sponsor;
+    }
+
+    set sponsor(value: Person) {
+        this._sponsor = value;
+    }
+}
+
+let Pg = new SponsoredPerson(1, 'Dubois', 'Simon', new Date('2012-02-23'), 27, Pa);
+let Ph = new SponsoredPerson(2, 'Dubois', 'Chloé', new Date('2012-02-16'), 98, Pb);
+let Pi = new SponsoredPerson(3, 'Durant', 'Fabienne', new Date('2012-02-13'), 90, Pc);
+let Pj = new SponsoredPerson(4, 'Dupond', 'Fabrice', new Date('2012-02-07'), 65, Pd);
+let Pk = new SponsoredPerson(5, 'Durant', 'Maurice', new Date('2012-02-05'), 145, Pe);
+let Pl = new SponsoredPerson(6, 'Durant', 'Maurice', new Date('2012-02-05'), 145, Pf);
+
+
 
 describe('from', function () {
     it('should return an *identity* function for all types', function () {
@@ -96,169 +235,14 @@ describe('where', function () {
 
 describe('order_by', function () {
 
-    class Person {
-        private _id: number;
-        private _name: string;
-        private _surname: string;
-        private _subscription_date: Date;
-        private _price: number;
-
-        constructor(id: number, name: string, surname: string, date: Date, price: number) {
-            this._id = id;
-            this._name = name;
-            this._surname = surname;
-            this._subscription_date = date;
-            this._price = price;
-        }
-
-        get id(): number {
-            return this._id;
-        }
-
-        set id(value: number) {
-            this._id = value;
-        }
-
-        get name(): string {
-            return this._name;
-        }
-
-        set name(value: string) {
-            this._name = value;
-        }
-
-        get subscription_date(): Date {
-            return this._subscription_date;
-        }
-
-        set subscription_date(value: Date) {
-            this._subscription_date = value;
-        }
-
-        get price(): number {
-            return this._price;
-        }
-
-        set price(value: number) {
-            this._price = value;
-        }
-
-        get surname(): string {
-            return this._surname;
-        }
-
-        set surname(value: string) {
-            this._surname = value;
-        }
-    }
-
-    let a = new Person(1, 'A', 'A', new Date('0000-01-01'), 0);
-    let b = new Person(2, 'A', 'A', new Date('0000-01-02'), 0);
-    let c = new Person(3, 'A', 'A', new Date('0000-01-03'), 0);
-    let d = new Person(4, 'B', 'A', new Date('0000-01-01'), 0);
-    let e = new Person(5, 'B', 'A', new Date('0000-01-02'), 0);
-    let f = new Person(6, 'B', 'A', new Date('0000-01-03'), 0);
-
-    it('should order in the right order of provided clauses', function () {
-        let q: Queue<Person> = new Queue<Person>();
-        q.enqueue(a);
-        q.enqueue(b);
-        q.enqueue(c);
-        q.enqueue(d);
-        q.enqueue(e);
-        q.enqueue(f);
-
-        expect(
-            TsQ
-                .from(q)
-                .order_by('subscription_date', 'asc')
-                .order_by('name', 'desc')
-                .toArray()
-                .map((person: Person) => person.id)
-        ).toEqual([3, 2, 1, 6, 5, 4]);
-    });
-
-    class SponsoredPerson {
-        private _id: number;
-        private _name: string;
-        private _surname: string;
-        private _subscription_date: Date;
-        private _price: number;
-        private _sponsor: Person;
-
-        constructor(id: number, name: string, surname: string, date: Date, price: number, sponsor: Person) {
-            this._id = id;
-            this._name = name;
-            this._surname = surname;
-            this._subscription_date = date;
-            this._price = price;
-            this._sponsor = sponsor;
-        }
-
-        get id(): number {
-            return this._id;
-        }
-
-        set id(value: number) {
-            this._id = value;
-        }
-
-        get name(): string {
-            return this._name;
-        }
-
-        set name(value: string) {
-            this._name = value;
-        }
-
-        get subscription_date(): Date {
-            return this._subscription_date;
-        }
-
-        set subscription_date(value: Date) {
-            this._subscription_date = value;
-        }
-
-        get price(): number {
-            return this._price;
-        }
-
-        set price(value: number) {
-            this._price = value;
-        }
-
-        get surname(): string {
-            return this._surname;
-        }
-
-        set surname(value: string) {
-            this._surname = value;
-        }
-
-        get sponsor(): Person {
-            return this._sponsor;
-        }
-
-        set sponsor(value: Person) {
-            this._sponsor = value;
-        }
-    }
-
-    let g = new SponsoredPerson(1, 'Dubois', 'Simon', new Date('2012-02-23'), 27, a);
-    let h = new SponsoredPerson(2, 'Dubois', 'Chloé', new Date('2012-02-16'), 98, b);
-    let i = new SponsoredPerson(3, 'Durant', 'Fabienne', new Date('2012-02-13'), 90, c);
-    let j = new SponsoredPerson(4, 'Dupond', 'Fabrice', new Date('2012-02-07'), 65, d);
-    let k = new SponsoredPerson(5, 'Durant', 'Maurice', new Date('2012-02-05'), 145, e);
-    let l = new SponsoredPerson(6, 'Durant', 'Maurice', new Date('2012-02-05'), 145, f);
-
     it('should order embedded objects', function () {
         let q: Queue<SponsoredPerson> = new Queue<SponsoredPerson>();
-        q.enqueue(g);
-        q.enqueue(h);
-        q.enqueue(i);
-        q.enqueue(j);
-        q.enqueue(k);
-        q.enqueue(l);
+        q.enqueue(Pg);
+        q.enqueue(Ph);
+        q.enqueue(Pi);
+        q.enqueue(Pj);
+        q.enqueue(Pk);
+        q.enqueue(Pl);
 
         expect(
             TsQ
@@ -269,5 +253,106 @@ describe('order_by', function () {
                 .toArray()
                 .map((person: Person) => person.id)
         ).toEqual([3, 6, 5, 4, 2, 1]);
+    });
+
+    // it('should order in the right order of provided clauses', function () {
+    //     let q: Queue<Person> = new Queue<Person>();
+    //     q.enqueue(Pa);
+    //     q.enqueue(Pb);
+    //     q.enqueue(Pc);
+    //     q.enqueue(Pd);
+    //     q.enqueue(Pe);
+    //     q.enqueue(Pf);
+    //
+    //     expect(
+    //         TsQ
+    //             .from(q)
+    //             .order_by('subscription_date', 'asc')
+    //             .order_by('name', 'desc')
+    //             .toArray()
+    //             .map((person: Person) => person.id)
+    //     ).toEqual([3, 2, 1, 6, 5, 4]);
+    // });
+});
+
+describe('select', function () {
+    it('should filter with getter name', function () {
+        let q: Queue<Person> = new Queue<Person>();
+        q.enqueue(Pa);
+        q.enqueue(Pb);
+        q.enqueue(Pc);
+        q.enqueue(Pd);
+        q.enqueue(Pe);
+        q.enqueue(Pf);
+
+        expect(
+            TsQ
+                .from(q)
+                .select(['name'])
+                .toArray()
+                .map((p: Person) => p.name)
+        ).toEqual(['A', 'A', 'A', 'B', 'B', 'B']);
+    });
+
+    it('should throw an exception if the field does not exist', function () {
+        let q: Queue<Person> = new Queue<Person>();
+        q.enqueue(Pa);
+        q.enqueue(Pb);
+        q.enqueue(Pc);
+        q.enqueue(Pd);
+        q.enqueue(Pe);
+        q.enqueue(Pf);
+
+        expect(
+            () => TsQ
+                .from(q)
+                .select(['test'])
+                .toArray()
+                .map((p: Person) => p.name)
+        ).toThrow(new NoSuchPropertyException('The specified property "test" does not exist in the data provided collection'));
+    });
+
+    it('should handle key\'ed classes', function () {
+        let q: GenericRingBuffer<Person> = new GenericRingBuffer<Person>(6, 5, 0, 0, 0);
+        q.put(Pa);
+        q.put(Pb);
+        q.put(Pc);
+        q.put(Pd);
+        q.put(Pe);
+        q.put(Pf);
+
+        expect(
+            TsQ
+                .from(q)
+                .select(['name'])
+                .toArray()
+                .map((p: Person) => p.name)
+        ).toEqual(['A', 'A', 'A', 'B', 'B', 'B']);
+    });
+});
+
+describe('group_by', function() {
+    it('should group', function () {
+        let q: GenericRingBuffer<Person> = new GenericRingBuffer<Person>(6, 5, 0, 0, 0);
+        q.put(Pa);
+        q.put(Pb);
+        q.put(Pc);
+        q.put(Pd);
+        q.put(Pe);
+        q.put(Pf);
+
+        expect(
+            TsQ
+                .from(q)
+                .group_by('name')
+                .toArray()[0]
+        ).toEqual([Pa, Pb, Pc]);
+
+        expect(
+            TsQ
+                .from(q)
+                .group_by('name')
+                .toArray()[1]
+        ).toEqual([Pd, Pe, Pf]);
     });
 });

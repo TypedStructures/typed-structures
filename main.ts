@@ -1,4 +1,4 @@
-import {Queue} from './src';
+import {GenericRingBuffer, Queue} from './src';
 import {TsQ} from './src/tsQ/tsQ';
 
 class Person {
@@ -143,11 +143,20 @@ q.enqueue(h);
 q.enqueue(i);
 q.enqueue(j);
 
-console.log(TsQ
-    .from(q)
-    // .order_by('name', 'desc')
-    // .order_by('subscription_date', 'desc')
-    .order_by('sponsor', 'desc')
-    .toArray()
-    .map((person: Person) => person.id)
-);
+
+let buffer: GenericRingBuffer<Person> = new GenericRingBuffer<Person>(6, 5, 0, 0, 0);
+        buffer.put(a);
+        buffer.put(b);
+        buffer.put(c);
+        buffer.put(d);
+        buffer.put(e);
+
+        console.log(TsQ
+            .from(buffer)
+            .select(['id', 'name'])
+            .group_by('name')
+            .toArray());
+
+        // expect(
+        //
+        // ).toEqual([1, 2, 3, 4, 5, 6]);
