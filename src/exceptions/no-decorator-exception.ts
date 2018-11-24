@@ -7,6 +7,6 @@ export class NoDecoratorException extends Exception {
     }
 
     public toString() {
-        return `NoDecoratorException${super.toString()}`;
+        return `NoDecorator${super.toString()}`;
     }
 }

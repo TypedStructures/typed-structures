@@ -1,6 +1,7 @@
 import { TsQ } from './tsQ';
-import {DoublyLinkedList, GenericRingBuffer, SinglyLinkedList, Map, Queue, Set, Stack} from '..';
+import {DoublyLinkedList, GenericRingBuffer, SinglyLinkedList, Map, Queue, Set, Stack, IStack} from '..';
 import {NoSuchPropertyException} from '../exceptions/no-such-property-exception';
+import {NoDecoratorException} from '../exceptions/no-decorator-exception';
 
 let b: GenericRingBuffer<number> = new GenericRingBuffer<number>(2, 1, 0, 0, 0);
 b.put(1);
@@ -247,32 +248,49 @@ describe('order_by', function () {
         expect(
             TsQ
                 .from(q)
-                .order_by('name', 'desc')
+                .order_by('name')
                 .order_by('subscription_date', 'desc')
                 .order_by('sponsor', 'desc')
                 .toArray()
                 .map((person: Person) => person.id)
-        ).toEqual([3, 6, 5, 4, 2, 1]);
+        ).toEqual([2, 1, 4, 3, 6, 5]);
     });
 
-    // it('should order in the right order of provided clauses', function () {
-    //     let q: Queue<Person> = new Queue<Person>();
-    //     q.enqueue(Pa);
-    //     q.enqueue(Pb);
-    //     q.enqueue(Pc);
-    //     q.enqueue(Pd);
-    //     q.enqueue(Pe);
-    //     q.enqueue(Pf);
-    //
-    //     expect(
-    //         TsQ
-    //             .from(q)
-    //             .order_by('subscription_date', 'asc')
-    //             .order_by('name', 'desc')
-    //             .toArray()
-    //             .map((person: Person) => person.id)
-    //     ).toEqual([3, 2, 1, 6, 5, 4]);
-    // });
+    it('should order embedded objects', function () {
+        let q: Queue<SponsoredPerson> = new Queue<SponsoredPerson>();
+        q.enqueue(Pg);
+        q.enqueue(Ph);
+        q.enqueue(Pi);
+        q.enqueue(Pj);
+        q.enqueue(Pk);
+        q.enqueue(Pl);
+
+        expect(
+            TsQ
+                .from(q)
+                .order_by('sponsor', 'asc')
+                .toArray()
+                .map((person: Person) => person.id)
+        ).toEqual([4, 5, 6, 1, 2, 3]);
+    });
+
+    it('should order in the right order of provided clauses', function () {
+        let q: Queue<Person> = new Queue<Person>();
+        q.enqueue(Pa);
+        q.enqueue(Pb);
+        q.enqueue(Pc);
+        q.enqueue(Pd);
+        q.enqueue(Pe);
+        q.enqueue(Pf);
+
+        expect(
+            TsQ
+                .from(q)
+                .order_by('subscription_date')
+                .order_by('name', 'desc')
+                .toArray()
+        ).toEqual([Pc, Pb, Pa, Pf, Pe, Pd]);
+    });
 });
 
 describe('select', function () {
@@ -288,7 +306,7 @@ describe('select', function () {
         expect(
             TsQ
                 .from(q)
-                .select(['name'])
+                .select('name')
                 .toArray()
                 .map((p: Person) => p.name)
         ).toEqual(['A', 'A', 'A', 'B', 'B', 'B']);
@@ -306,7 +324,7 @@ describe('select', function () {
         expect(
             () => TsQ
                 .from(q)
-                .select(['test'])
+                .select('test')
                 .toArray()
                 .map((p: Person) => p.name)
         ).toThrow(new NoSuchPropertyException('The specified property "test" does not exist in the data provided collection'));
@@ -324,7 +342,7 @@ describe('select', function () {
         expect(
             TsQ
                 .from(q)
-                .select(['name'])
+                .select('name')
                 .toArray()
                 .map((p: Person) => p.name)
         ).toEqual(['A', 'A', 'A', 'B', 'B', 'B']);
@@ -356,3 +374,47 @@ describe('group_by', function() {
         ).toEqual([Pd, Pe, Pf]);
     });
 });
+
+describe('no decorator', function () {
+    it('should throw an exception', function () {
+
+        class NoDecoratorStack<T> implements IStack<T> {
+
+            private _items: SinglyLinkedList<T>;
+
+            constructor() {
+                this._items = new SinglyLinkedList<T>();
+            }
+
+            public length() {
+                return this._items.length();
+            }
+
+            public stack(item: T): void {
+                this._items.unshift(item);
+            }
+
+            public unstack(): T {
+                return this._items.shift();
+            }
+
+            public peek(): T {
+                return this._items.peek();
+            }
+
+            public empty(): boolean {
+                return this._items.empty();
+            }
+
+            public toArray(): T[] {
+                return this._items.toArray();
+            }
+        }
+
+        let nds = new NoDecoratorStack<Person>();
+
+        nds.stack(Pa);
+
+        expect(() => TsQ.from(nds).toArray()).toThrow(new NoDecoratorException('TsQ decorator is missing from class NoDecoratorStack'));
+    });
+})
