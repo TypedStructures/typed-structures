@@ -6,6 +6,8 @@ import { UnsupportedOperationException } from '..';
 import { IndexOutOfBoundsException } from '..';
 import { InvalidMarkException } from '..';
 import { ReadOnlyBufferException } from '..';
+import {NoDecoratorException} from './no-decorator-exception';
+import {NoSuchPropertyException} from './no-such-property-exception';
 
 describe('exception', function () {
     it('should return the error', function () {
@@ -67,5 +69,19 @@ describe('ReadOnlyBufferException', function () {
     it('should return the error', function () {
         let e = new ReadOnlyBufferException('error');
         expect(e.toString()).toEqual('ReadOnlyBufferException: error\n');
+    });
+});
+
+describe('NoDecoratorException', function () {
+    it('should return the error', function () {
+        let e = new NoDecoratorException('error');
+        expect(e.toString()).toEqual('NoDecoratorException: error\n');
+    });
+});
+
+describe('NoSuchPropertyException', function () {
+    it('should return the error', function () {
+        let e = new NoSuchPropertyException('error');
+        expect(e.toString()).toEqual('NoSuchPropertyException: error\n');
     });
 });
