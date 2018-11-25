@@ -2,11 +2,6 @@ import { SinglyLinkedList } from '../..';
 import { IStack } from '../..';
 import {TsQ} from '../../tsQ/decorator/TsQDecorator';
 
-@TsQ({
-    type: Array,
-    getter: 'toArray',
-    embedGetter: 'data'
-})
 export class Stack<T> implements IStack<T> {
 
     private _items: SinglyLinkedList<T>;
@@ -35,6 +30,7 @@ export class Stack<T> implements IStack<T> {
         return this._items.empty();
     }
 
+    @TsQ()
     public toArray(): T[] {
         return this._items.toArray();
     }

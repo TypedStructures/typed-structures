@@ -248,12 +248,20 @@ describe('order_by', function () {
         expect(
             TsQ
                 .from(q)
-                .order_by('name')
+                .order_by('name', 'desc')
                 .order_by('subscription_date', 'desc')
                 .order_by('sponsor', 'desc')
                 .toArray()
                 .map((person: Person) => person.id)
-        ).toEqual([2, 1, 4, 3, 6, 5]);
+        ).toEqual([3, 6, 5, 4, 2, 1]);
+
+        expect(
+            TsQ
+                .from(q)
+                .order_by('id')
+                .toArray()
+                .map((person: Person) => person.id)
+        ).toEqual([1, 2, 3, 4, 5, 6]);
     });
 
     it('should order embedded objects', function () {
@@ -286,8 +294,8 @@ describe('order_by', function () {
         expect(
             TsQ
                 .from(q)
+                .order_by('name')
                 .order_by('subscription_date')
-                .order_by('name', 'desc')
                 .toArray()
         ).toEqual([Pc, Pb, Pa, Pf, Pe, Pd]);
     });
@@ -417,4 +425,4 @@ describe('no decorator', function () {
 
         expect(() => TsQ.from(nds).toArray()).toThrow(new NoDecoratorException('TsQ decorator is missing from class NoDecoratorStack'));
     });
-})
+});
