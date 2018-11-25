@@ -2,10 +2,6 @@ import { Buffer } from '../../..';
 import { IBuffer } from '../../..';
 import { TsQ } from '../../../tsQ/decorator/TsQDecorator';
 
-@TsQ({
-    type: Array,
-    key: '_buf'
-})
 export class GenericBuffer<T> extends Buffer {
 
     private readonly _buf: T[];
@@ -30,7 +26,12 @@ export class GenericBuffer<T> extends Buffer {
         return this;
     }
 
-    isReadOnly(): boolean {
+    public isReadOnly(): boolean {
         return this._readonly;
+    }
+
+    @TsQ()
+    public toArray(): T[] {
+        return this._buf;
     }
 }

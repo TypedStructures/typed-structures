@@ -10,27 +10,13 @@ export class TsQ {
     _from: any;
     private _where: any;
     private _orderby: Stack<OrderClause> = new Stack<OrderClause>();
-    _conf: { type: any, key: string, getter: string, embedGetter: string };
+    _key: string;
 
     public select(...select: string[]): TsQ {
-        let tsq: TsQ = this;
 
         this._select = select.map((key: string) => {
 
-            let values: any[];
-
-            switch (this._conf.type) {
-                case Array:
-                    if (this._conf.key)
-                        values = <any[]>this._from[this._conf.key];
-
-                    if (this._conf.getter)
-                        values = <any[]>eval(`tsq._from.${this._conf.getter}()`);
-            }
-
-            if (this._conf.embedGetter) {
-                values = values.map((embed: any) => eval(`embed.${this._conf.embedGetter}`));
-            }
+            let values: any[] = this._from[this._key]();
 
             if (!this.propertyExistsIn(values, key))
                 throw new NoSuchPropertyException(`The specified property "${key}" does not exist in the data provided collection`);
@@ -45,7 +31,11 @@ export class TsQ {
     public static from(from: any): TsQ {
         let tsq: TsQ = new TsQ();
         tsq._from = from;
-        tsq._conf = from._tsq_conf;
+        try {
+            tsq._key = from.prototype._tsq_conf;
+        } catch (e) {
+            throw new NoDecoratorException('TsQ decorator is missing from class ' + from.constructor.name);
+        }
         return tsq;
     }
 
@@ -65,61 +55,42 @@ export class TsQ {
     }
 
     public toArray(): any[] {
+        this
+            .fromProcess()
+            .whereProcess()
+            .orderByProcess()
+            .selectProcess()
+            .groupByProcess();
 
-        if (!this._conf)
-            throw new NoDecoratorException('TsQ decorator is missing from class ' + this._from.constructor.name);
-
-        let r: any[] = this.fromProcess();
-        r = this.whereProcess(r);
-        r = this.orderByProcess(r);
-        r = this.selectProcess(r);
-        return this.groupByProcess(r);
+        return this._from;
     }
 
     /**
      * Gets the data from class based on decorator configuration.
      */
     private fromProcess() {
-
-        let r: any[];
-
-        switch (this._conf.type) {
-            case Array:
-                if (this._conf.key)
-                    r = <any[]>this._from[this._conf.key];
-
-                if (this._conf.getter)
-                    r = <any[]>eval(`this._from.${this._conf.getter}()`);
-        }
-
-        if (this._conf.embedGetter) {
-            r = r.map((embed: any) => eval(`embed.${this._conf.embedGetter}`));
-        }
-
-        return r;
+        this._from = this._from[this._key]();
+        return this;
     }
 
     /**
      * Filters data according to the calback provided in "where" clause.
-     * @param data
      */
-    private whereProcess(data: any[]) {
+    private whereProcess() {
         if (this._where)
-            return data.filter(this._where);
-        else
-            return data;
+            this._from = this._from.filter(this._where);
+        return this;
     }
 
     /**
      * Orders data
      * TODO: Add comparaison callback handling, not everything is numbers
-     * @param data
      */
-    private orderByProcess(data: any[]) {
+    private orderByProcess() {
 
         while (!this._orderby.empty()) {
             let c: OrderClause = this._orderby.unstack();
-            data = data.sort((a: any, b: any) => {
+            this._from = this._from.sort((a: any, b: any) => {
 
                 let sort: any;
 
@@ -154,17 +125,16 @@ export class TsQ {
             });
         }
 
-        return data;
+        return this;
     }
 
     /**
      * Filters on provided fields list
      * TODO: Add function handling like SQL's SUM function
-     * @param data
      */
-    private selectProcess(data: any[]) {
+    private selectProcess() {
         if (this._select) {
-            data.forEach((e: any) => {
+            this._from.forEach((e: any) => {
                 Object.getOwnPropertyNames(e)
                     .filter(key => !this._select.includes(key))
                     .forEach((key: string) => Reflect.deleteProperty(e, key));
@@ -172,22 +142,21 @@ export class TsQ {
             this._select = null;
         }
 
-        return data;
+        return this;
     }
 
     /**
      * Groups data by provided groups list
-     * @param data
      */
-    private groupByProcess(data: any[]) {
+    private groupByProcess() {
         if (this._groupby)
-            data = data.reduce((accumulator: any[], e: any) => {
+            this._from = this._from.reduce((accumulator: any[], e: any) => {
                 let group: number = this.numberify(e[this._groupby]);
                 (accumulator[group] = accumulator[group] || []).push(e);
                 return accumulator;
             }, []).filter((e: any) => e !== undefined);
 
-        return data;
+        return this;
     }
 
     private getObjectMap(o: object, path: string) {
@@ -210,7 +179,7 @@ export class TsQ {
     }
 
     private propertyExistsIn(values: any[], key: string) {
-        return values.every(value => eval(`value.${key}`) !== undefined);
+        return values.every(value => value[key] !== undefined);
     }
 
     private numberify(s: string): number {

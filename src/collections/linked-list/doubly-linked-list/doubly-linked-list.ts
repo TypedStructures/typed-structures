@@ -2,11 +2,6 @@ import { Node } from '../../..';
 import { ILinkedList } from '../../..';
 import {TsQ} from '../../../tsQ/decorator/TsQDecorator';
 
-@TsQ({
-    type: Array,
-    getter: 'toArray',
-    embedGetter: 'data'
-})
 export class DoublyLinkedList<T> implements ILinkedList<T> {
 
     private _head?: Node<T>;
@@ -211,9 +206,10 @@ export class DoublyLinkedList<T> implements ILinkedList<T> {
         return undefined;
     }
 
+    @TsQ()
     public toArray(): T[] {
         let res: T[] = [];
-        this.forEach((item: T) => res.push(item));
+        this.forEach((item: Node<T>) => res.push(item.data));
         return res;
     }
 }
