@@ -171,13 +171,13 @@ let Pl = new SponsoredPerson(6, 'Durant', 'Maurice', new Date('2012-02-05'), 145
 
 describe('from', function () {
     it('should return an *identity* function for all types', function () {
-        expect(TsQ.from(b).toArray()).toEqual([1, 2]);
-        expect(TsQ.from(c).toArray()).toEqual([1, 2]);
-        expect(TsQ.from(d).toArray()).toEqual([1, 2]);
-        expect(TsQ.from(e).toArray()).toEqual([1, 2]);
-        expect(TsQ.from(f).toArray()).toEqual([1, 2]);
-        expect(TsQ.from(g).toArray()).toEqual([1, 2]);
-        expect(TsQ.from(h).toArray().reverse()).toEqual([1, 2]);
+        expect(TsQ.from(b).fetch()).toEqual([1, 2]);
+        expect(TsQ.from(c).fetch()).toEqual([1, 2]);
+        expect(TsQ.from(d).fetch()).toEqual([1, 2]);
+        expect(TsQ.from(e).fetch()).toEqual([1, 2]);
+        expect(TsQ.from(f).fetch()).toEqual([1, 2]);
+        expect(TsQ.from(g).fetch()).toEqual([1, 2]);
+        expect(TsQ.from(h).fetch().reverse()).toEqual([1, 2]);
     });
 });
 
@@ -187,49 +187,49 @@ describe('where', function () {
             TsQ
                 .from(b)
                 .where(e => e < 2)
-                .toArray()
+                .fetch()
         ).toEqual([1]);
 
         expect(
             TsQ
                 .from(c)
                 .where(e => e < 2)
-                .toArray()
+                .fetch()
         ).toEqual([1]);
 
         expect(
             TsQ
                 .from(d)
                 .where(e => e < 2)
-                .toArray()
+                .fetch()
         ).toEqual([1]);
 
         expect(
             TsQ
                 .from(e)
                 .where(e => e < 2)
-                .toArray()
+                .fetch()
         ).toEqual([1]);
 
         expect(
             TsQ
                 .from(f)
                 .where(e => e < 2)
-                .toArray()
+                .fetch()
         ).toEqual([1]);
 
         expect(
             TsQ
                 .from(g)
                 .where(e => e < 2)
-                .toArray()
+                .fetch()
         ).toEqual([1]);
 
         expect(
             TsQ
                 .from(h)
                 .where(e => e < 2)
-                .toArray()
+                .fetch()
         ).toEqual([1]);
     });
 });
@@ -251,7 +251,8 @@ describe('order_by', function () {
                 .order_by('name', 'desc')
                 .order_by('subscription_date', 'desc')
                 .order_by('sponsor', 'desc')
-                .toArray()
+                .order_by('id')
+                .fetch()
                 .map((person: Person) => person.id)
         ).toEqual([3, 6, 5, 4, 2, 1]);
 
@@ -259,7 +260,7 @@ describe('order_by', function () {
             TsQ
                 .from(q)
                 .order_by('id')
-                .toArray()
+                .fetch()
                 .map((person: Person) => person.id)
         ).toEqual([1, 2, 3, 4, 5, 6]);
     });
@@ -277,7 +278,7 @@ describe('order_by', function () {
             TsQ
                 .from(q)
                 .order_by('sponsor', 'asc')
-                .toArray()
+                .fetch()
                 .map((person: Person) => person.id)
         ).toEqual([4, 5, 6, 1, 2, 3]);
     });
@@ -296,7 +297,7 @@ describe('order_by', function () {
                 .from(q)
                 .order_by('name')
                 .order_by('subscription_date')
-                .toArray()
+                .fetch()
         ).toEqual([Pc, Pb, Pa, Pf, Pe, Pd]);
     });
 });
@@ -311,13 +312,17 @@ describe('select', function () {
         q.enqueue(Pe);
         q.enqueue(Pf);
 
-        expect(
-            TsQ
-                .from(q)
-                .select('name')
-                .toArray()
-                .map((p: Person) => p.name)
-        ).toEqual(['A', 'A', 'A', 'B', 'B', 'B']);
+        let res: string[] = [];
+
+        TsQ
+            .from(q)
+            .select('name')
+            .fetch()
+            .forEach((p: Person) => {
+                res.push(p.name);
+            });
+
+        expect(res).toEqual(['A', 'A', 'A', 'B', 'B', 'B']);
     });
 
     it('should throw an exception if the field does not exist', function () {
@@ -333,7 +338,7 @@ describe('select', function () {
             () => TsQ
                 .from(q)
                 .select('test')
-                .toArray()
+                .fetch()
                 .map((p: Person) => p.name)
         ).toThrow(new NoSuchPropertyException('The specified property "test" does not exist in the data provided collection'));
     });
@@ -351,7 +356,7 @@ describe('select', function () {
             TsQ
                 .from(q)
                 .select('name')
-                .toArray()
+                .fetch()
                 .map((p: Person) => p.name)
         ).toEqual(['A', 'A', 'A', 'B', 'B', 'B']);
     });
@@ -371,14 +376,14 @@ describe('group_by', function() {
             TsQ
                 .from(q)
                 .group_by('name')
-                .toArray()[0]
+                .fetch()[0]
         ).toEqual([Pa, Pb, Pc]);
 
         expect(
             TsQ
                 .from(q)
                 .group_by('name')
-                .toArray()[1]
+                .fetch()[1]
         ).toEqual([Pd, Pe, Pf]);
     });
 });
@@ -423,6 +428,6 @@ describe('no decorator', function () {
 
         nds.stack(Pa);
 
-        expect(() => TsQ.from(nds).toArray()).toThrow(new NoDecoratorException('TsQ decorator is missing from class NoDecoratorStack'));
+        expect(() => TsQ.from(nds).fetch()).toThrow(new NoDecoratorException('TsQ decorator is missing from class NoDecoratorStack'));
     });
 });
