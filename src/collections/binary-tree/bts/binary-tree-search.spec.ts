@@ -26,4 +26,57 @@ describe('new tree element', function () {
         expect(tree.add(root, 1)).toBe(true);
         expect(tree.root().left.data).toEqual(1);
     });
+
+    it('should add recursively left or right', function () {
+        let tree: BinaryTreeSearch<any> = new BinaryTreeSearch<any>();
+        let root = tree.root();
+        expect(tree.add(root, 2))
+        expect(tree.add(root, 3))
+        expect(tree.add(root, 1))
+        expect(tree.add(root, 4))
+        expect(tree.add(root, 0))
+    });
 });
+
+describe('remove tree element', function() {
+    it('should return undefined', function() {
+        let tree: BinaryTreeSearch<any> = new BinaryTreeSearch<any>();
+        let root = tree.root();
+        expect(tree.remove(root, 1)).toBeUndefined();
+    });
+    it('should remove', function() {
+        let tree: BinaryTreeSearch<any> = new BinaryTreeSearch<any>();
+        let root = tree.root();
+        tree.add(root, 1);
+        expect(tree.root().data).toEqual(1);
+        expect(tree.remove(root, 1)).toEqual(1);
+    });
+    it('should remove left', function() {
+        let tree: BinaryTreeSearch<any> = new BinaryTreeSearch<any>();
+        let root = tree.root();
+        tree.add(root, 2);
+        tree.add(root, 1);
+        expect(tree.remove(root, 1))
+        expect(tree.root().left).toBeUndefined();
+    });
+    it('should remove right', function() {
+        let tree: BinaryTreeSearch<any> = new BinaryTreeSearch<any>();
+        let root = tree.root();
+        tree.add(root, 1);
+        tree.add(root, 2);
+        expect(tree.remove(root, 2))
+        expect(tree.root().right).toBeUndefined();
+    });
+    it('should remove recursively', function() {
+        let tree: BinaryTreeSearch<any> = new BinaryTreeSearch<any>();
+        let root = tree.root();
+        expect(tree.add(root, 2))
+        expect(tree.add(root, 3))
+        expect(tree.add(root, 1))
+        expect(tree.add(root, 4))
+        expect(tree.add(root, 0))
+        expect(tree.remove(root, 4))
+        expect(tree.remove(root, 0))
+    });
+    
+})
