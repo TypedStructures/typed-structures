@@ -12,3 +12,4 @@ debug.log
 .vscode/
 .vscode/*
 package-lock.json
+.DS_STORE
