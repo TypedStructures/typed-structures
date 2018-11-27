@@ -47,22 +47,37 @@ export class BinaryTreeSearch<T> implements IBinaryTree<T> {
     remove(root: BNode<T>, item: T): T {
 
         // if root is undefined
-        if (root.data === undefined) {
+        if (this.root() === undefined) {
             return undefined;
         } else {
             // if root is the element
-            if (root.data === item) {
-                const result = root;
-                root = undefined;
-                return result.data;
-            // otherwise recursive
+            if (this.root().data === item) {
+                const result = this.root().data;
+                this._root = undefined;
+                return result;
+                // otherwise recursive
             } else {
-                if (root.data > item ) {
-                    this.remove(root.left, item);
-                } else {
-                    this.remove(root.right, item);
-                }
+                this.removeNode(this._root, item);
             }
+        }
+    }
+
+    private removeNode(node: BNode<T>, item: T) {
+
+        if (item < node.data) {
+
+            if (node.left.data === item) {
+                node.left = undefined;
+            }
+            else
+                this.removeNode(node.left, item);
+        } else {
+
+            if (node.right.data === item) {
+                node.right = undefined;
+            }
+            else
+                this.removeNode(node.right, item);
         }
     }
 
