@@ -46,7 +46,7 @@ export class BinaryTreeSearch<T> implements IBinaryTree<T> {
 
     remove(root: BNode<T>, item: T): BNode<T> {
 
-        if (this._root === undefined) {
+        if (root === undefined) {
             return undefined;
         } else {
             if (item < root.data) {
