@@ -49,7 +49,7 @@ describe('remove tree element', function() {
         let root = tree.root();
         tree.add(root, 1);
         expect(tree.root().data).toEqual(1);
-        expect(tree.remove(root, 1)).toEqual(1);
+        expect(tree.remove(root, 1))
     });
     it('should remove left', function() {
         let tree: BinaryTreeSearch<any> = new BinaryTreeSearch<any>();

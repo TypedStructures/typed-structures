@@ -18,7 +18,7 @@ export interface IBinaryTree<T> {
      * @param item the element to remove
      * @returns {boolean} true if added, false otherwise
      */
-    remove(root: BNode<T>, item: T): T;
+    remove(root: BNode<T>, item: T): BNode<T>;
 
     /**
      * the first element in the tree.

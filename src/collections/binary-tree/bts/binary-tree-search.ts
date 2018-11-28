@@ -44,41 +44,41 @@ export class BinaryTreeSearch<T> implements IBinaryTree<T> {
         }
     }
 
-    remove(root: BNode<T>, item: T): T {
+    remove(root: BNode<T>, item: T): BNode<T> {
 
-        // if root is undefined
-        if (this.root() === undefined) {
+        if (this._root === undefined) {
             return undefined;
         } else {
-            // if root is the element
-            if (this.root().data === item) {
-                const result = this.root().data;
-                this._root = undefined;
-                return result;
-                // otherwise recursive
+            if (item < root.data) {
+                this.remove(root.left, item);
+            } else if (item > root.data) {
+                this.remove(root.right, item);
             } else {
-                this.removeNode(this._root, item);
+                // no children
+                if (root.right === undefined && root.left === undefined) {
+                    return undefined;
+                    // no left children
+                } else if (root.left === undefined) {
+                    return root.right
+                    // no right children
+                } else if (root.right === undefined) {
+                    return root.left;
+                } else {
+                    // two childs
+                    const minValue = this.getMinValue(root.right);
+                    root.data = minValue
+                    root.right = this.remove(root.right, minValue);
+                }
             }
         }
+        return root;
     }
 
-    private removeNode(node: BNode<T>, item: T) {
-
-        if (item < node.data) {
-
-            if (node.left.data === item) {
-                node.left = undefined;
-            }
-            else
-                this.removeNode(node.left, item);
-        } else {
-
-            if (node.right.data === item) {
-                node.right = undefined;
-            }
-            else
-                this.removeNode(node.right, item);
+    private getMinValue(node: BNode<T>): T {
+        if (node.left !== undefined) {
+            return this.getMinValue(node.left);
         }
+        return node.data;
     }
 
     find(item: T): T {
