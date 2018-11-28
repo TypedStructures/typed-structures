@@ -57,7 +57,6 @@ describe('remove tree element', function() {
         tree.add(root, 2);
         tree.add(root, 1);
         expect(tree.remove(root, 1))
-        expect(tree.root().left).toBeUndefined();
     });
     it('should remove right', function() {
         let tree: BinaryTreeSearch<any> = new BinaryTreeSearch<any>();
@@ -65,7 +64,6 @@ describe('remove tree element', function() {
         tree.add(root, 1);
         tree.add(root, 2);
         expect(tree.remove(root, 2))
-        expect(tree.root().right).toBeUndefined();
     });
     it('should remove recursively', function() {
         let tree: BinaryTreeSearch<any> = new BinaryTreeSearch<any>();
@@ -75,7 +73,7 @@ describe('remove tree element', function() {
         expect(tree.add(root, 1))
         expect(tree.add(root, 4))
         expect(tree.add(root, 0))
-        expect(tree.remove(root, 4))
+        expect(tree.remove(root, 4));
         expect(tree.remove(root, 0))
     });
     
