@@ -45,29 +45,33 @@ export class BinaryTreeSearch<T> implements IBinaryTree<T> {
     }
 
     remove(root: BNode<T>, item: T): BNode<T> {
-
         if (root === undefined) {
             return undefined;
         } else {
             if (item < root.data) {
-                this.remove(root.left, item);
+                return this.remove(root.left, item);
             } else if (item > root.data) {
-                this.remove(root.right, item);
+                return this.remove(root.right, item);
             } else {
                 // no children
                 if (root.right === undefined && root.left === undefined) {
-                    return undefined;
+                    const result = root;
+                    root = undefined;
+                    return result;
                     // no left children
                 } else if (root.left === undefined) {
-                    return root.right
+                    const result = root.right;
+                    root.right = root;
+                    return result
                     // no right children
                 } else if (root.right === undefined) {
-                    return root.left;
+                    const result = root.left;
+                    root.left = root;
+                    return result
                 } else {
                     // two childs
-                    const minValue = this.getMinValue(root.right);
-                    root.data = minValue
-                    root.right = this.remove(root.right, minValue);
+                    root.data = this.getMinValue(root.right);
+                    root.right = this.remove(root.right, root.data);
                 }
             }
         }
@@ -75,10 +79,12 @@ export class BinaryTreeSearch<T> implements IBinaryTree<T> {
     }
 
     private getMinValue(node: BNode<T>): T {
-        if (node.left !== undefined) {
-            return this.getMinValue(node.left);
+        let minimum: T = node.data;
+        while (node.left !== undefined) {
+            minimum = node.left.data;
+            node = node.left;
         }
-        return node.data;
+        return minimum;
     }
 
     find(item: T): T {
