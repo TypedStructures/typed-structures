@@ -87,8 +87,18 @@ export class BinaryTreeSearch<T> implements IBinaryTree<T> {
         return minimum;
     }
 
-    find(item: T): T {
-        throw new Error('Method not implemented.');
+    find(root: BNode<T>, item: T): T {
+        if (root === undefined) {
+            return undefined;
+        } else {
+            if (item < root.data) {
+                return this.find(root.left, item);
+            } else if (item > root.data) {
+                return this.find(root.right, item);
+            } else {
+                return root.data;
+            }
+        }
     }
 
     private create(item: T): BNode<T> {
