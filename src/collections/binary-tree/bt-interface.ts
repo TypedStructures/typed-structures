@@ -26,7 +26,7 @@ export interface IBinaryTree<T> {
      * @param item the element to find
      * @returns {T} the first element
      */
-    find(item: T): T;
+    find(root: BNode<T>, item: T): T;
 
     /**
      * return the root of the tree.

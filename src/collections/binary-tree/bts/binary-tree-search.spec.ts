@@ -88,20 +88,64 @@ describe('remove tree element', function() {
         expect(tree.add(tree.root(), 4));
         expect(tree.remove(tree.root(), 3).data).toEqual(4);
     });
-    it('should remove when two childs and more than 1 nodes', function() {
+    // it('should remove when two childs and more than 1 nodes', function() {
+    //     let tree: BinaryTreeSearch<any> = new BinaryTreeSearch<any>();
+    //     let root = tree.root();
+    //     expect(tree.add(root, 2))
+    //     expect(tree.add(tree.root(), 3))
+    //     expect(tree.add(tree.root(), 1))
+    //     expect(tree.add(tree.root(), 2))
+    //     expect(tree.add(tree.root(), 4))
+    //     expect(tree.add(tree.root(), 5))
+    //     expect(tree.add(tree.root(), 6))
+    //     expect(tree.add(tree.root(), 7))
+    //     expect(tree.add(tree.root(), 8))
+    //     expect(tree.remove(tree.root(), 4).data).toEqual(5);
+    //     console.log(jasmine.pp(tree));
+    // });
+    
+})
+
+
+describe("finding element", function() {
+    it("should return undefined", function() {
         let tree: BinaryTreeSearch<any> = new BinaryTreeSearch<any>();
         let root = tree.root();
         expect(tree.add(root, 2))
-        expect(tree.add(tree.root(), 3))
-        expect(tree.add(tree.root(), 1))
-        expect(tree.add(tree.root(), 2))
-        expect(tree.add(tree.root(), 4))
-        expect(tree.add(tree.root(), 5))
-        expect(tree.add(tree.root(), 6))
-        expect(tree.add(tree.root(), 7))
-        expect(tree.add(tree.root(), 8))
-        expect(tree.remove(tree.root(), 4).data).toEqual(5);
-        console.log(jasmine.pp(tree));
-    });
-    
+        expect(tree.find(tree.root(), 1)).toBeUndefined();
+    })
+    it("should return 2", function() {
+        let tree: BinaryTreeSearch<any> = new BinaryTreeSearch<any>();
+        let root = tree.root();
+        expect(tree.add(root, 2))
+        expect(tree.find(tree.root(), 2)).toEqual(2);
+    })
+    it("should return 4 right", function() {
+        let tree: BinaryTreeSearch<any> = new BinaryTreeSearch<any>();
+        let root = tree.root();
+        expect(tree.add(root, 2))
+        expect(tree.add(root, 1))
+        expect(tree.add(root, 3))
+        expect(tree.add(root, 4))
+        expect(tree.find(tree.root(), 4)).toEqual(4);
+    })
+    it("should return 3 left", function() {
+        let tree: BinaryTreeSearch<any> = new BinaryTreeSearch<any>();
+        let root = tree.root();
+        expect(tree.add(root, 2))
+        expect(tree.add(root, 1))
+        expect(tree.add(root, 3))
+        expect(tree.add(root, 4))
+        expect(tree.find(tree.root(), 3)).toEqual(3);
+    })
+    it("should return first occurence", function() {
+        let tree: BinaryTreeSearch<any> = new BinaryTreeSearch<any>();
+        let root = tree.root();
+        expect(tree.add(root, 2))
+        expect(tree.add(root, 1))
+        expect(tree.add(root, 3))
+        expect(tree.add(root, 4))
+        expect(tree.add(root, 2))
+        expect(tree.find(tree.root(), 2)).toEqual(2);
+    })
 })
