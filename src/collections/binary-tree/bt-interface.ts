@@ -5,11 +5,10 @@ export interface IBinaryTree<T> {
     /**
      * add an element.
      *
-     * @param root
      * @param item the element to add
      * @returns {boolean} true if added, false otherwise
      */
-    add(root: BNode<T>, item: T): boolean;
+    add(item: T): boolean;
 
     /**
      * delete an element.
