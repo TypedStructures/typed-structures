@@ -79,6 +79,42 @@ describe('right', function () {
     });
 });
 
+describe('add', function () {
+    it('add undefined', function () {
+        let root: BNode<number> = new BNode<number>(undefined);
+        expect(root.add(2)).toBe(false);
+    });
+    it('add left', function () {
+        let root: BNode<number> = new BNode<number>(5);
+        expect(root.add(2)).toBe(true);
+    });
+    it('add right', function () {
+        let root: BNode<number> = new BNode<number>(5);
+        expect(root.add(6)).toBe(true);
+    });
+    it('add two node right subtree', function () {
+        let root: BNode<number> = new BNode<number>(5);
+        root.add(6);
+        root.add(7);
+        expect(root.right.data).toEqual(6);
+        expect(root.right.right.data).toEqual(7);
+    });
+    it('add two node left subtree', function () {
+        let root: BNode<number> = new BNode<number>(5);
+        root.add(4);
+        root.add(3);
+        expect(root.left.data).toEqual(4);
+        expect(root.left.left.data).toEqual(3);
+    });
+    it('add left then rigth', function () {
+        let root: BNode<number> = new BNode<number>(5);
+        root.add(4);
+        root.add(6);
+        expect(root.left.data).toEqual(4);
+        expect(root.right.data).toEqual(6);
+    });
+});
+
 describe('return min value', function () {
     it('should return same node value', function () {
         let node1: BNode<number> = new BNode<number>(5);

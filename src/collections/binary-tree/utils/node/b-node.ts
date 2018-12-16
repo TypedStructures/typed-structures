@@ -52,6 +52,26 @@ export class BNode<T> implements IBNode<T> {
         }
     }
 
+    public add(item: T): boolean {
+        if (item < this.data) {
+            if(this._left === undefined) {
+                this._left = new BNode<T>(item);
+                return true;
+            } else {
+                return this._left.add(item);
+            }
+        } else if (item > this.data) {
+            if(this._right === undefined) {
+                this._right = new BNode<T>(item);
+                return true;
+            } else {
+                return this._right.add(item);
+            }
+        } else {
+            return false;
+        }
+    }
+
     public remove(parent: BNode<T>, item: T): boolean {
         if (item < this.data) {
             if (this._left !== undefined)
@@ -68,9 +88,9 @@ export class BNode<T> implements IBNode<T> {
             if (this._left !== undefined && this._right !== undefined) {
                 this.data = this._right.getMinValue();
                 this._right.remove(this, this.data);
-            } else if (parent.left == this) {
+            } else if (parent.left === this) {
                 parent.left = (this._left !== undefined) ? this._left : this._right;
-            } else if (parent.right == this) {
+            } else if (parent.right === this) {
                 parent.right = (this._left !== undefined) ? this._left : this._right;
             }
             return true;

@@ -13,33 +13,13 @@ export class BinaryTreeSearch<T> implements IBinaryTree<T> {
         return this._root;
     }
 
-    add(root: BNode<T>, item: T): boolean {
-
-        const newNode = this.create(item);
-
-        if (this.root() === undefined) {
-            this._root = newNode;
-        } else
-            this.insertNode(this._root, newNode);
-        return true;
-    }
-
-    private insertNode(node: BNode<T>, newNode: BNode<T>) {
-
-        if (newNode.data < node.data) {
-
-            if (node.left === undefined)
-                node.left = newNode;
-            else
-                this.insertNode(node.left, newNode);
-        } else {
-
-            if (node.right === undefined)
-                node.right = newNode;
-            else
-                this.insertNode(node.right, newNode);
-        }
-    }
+     add(item: T): boolean {
+        if (this._root == null) {
+            this._root = this.create(item);
+            return true;
+      } else
+            return this._root.add(item);
+     }
 
     remove(item: T): boolean {
         if (this._root === undefined)
