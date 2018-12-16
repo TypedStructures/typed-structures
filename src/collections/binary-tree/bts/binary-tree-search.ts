@@ -1,9 +1,6 @@
 import { IBinaryTree } from '../bt-interface';
 import { BNode } from '../utils/node/b-node';
 
-const LEFT = 'left';
-const RIGHT = 'right';
-
 export class BinaryTreeSearch<T> implements IBinaryTree<T> {
 
     private _root?: BNode<T>;
@@ -44,37 +41,21 @@ export class BinaryTreeSearch<T> implements IBinaryTree<T> {
         }
     }
 
-    remove(item: T): BNode<T> {
-        this._root = this.deleteNode(item, this._root);
-        return this._root
-    }
+    remove(item: T): boolean {
+        if (this._root === undefined)
+                  return false;
+            else {
+                  if (this.root().data == item) {
+                        const temp = this.create(item);
+                        temp.left = this._root;
+                        const result = this._root.remove(temp, item);
+                        this._root = temp.left;
+                        return result;
+                  } else {
+                        return this._root.remove(undefined, item);
+                  }
 
-    private deleteNode(value: T, node: BNode<T>) {
-        if (node) {
-            if (value < node.data) {
-                node.left = this.deleteNode(value, node.left);
-            } else if (value > node.data) {
-                node.right = this.deleteNode(value, node.right);
-            } else if (node.left && node.right) {
-                node.data = this.getMinValue(node.right);
-                node.right = this.deleteNode(node.data, node.right);
-            } else {
-                if (node.left) {
-                    node = node.right;
-                } else if (node.right) {
-                    node = node.left
-                } else {
-                    const result = node;
-                    node = undefined;
-                    return result;
-                }
             }
-        }
-        return node;
-    }
-
-    private getMinValue(node: BNode<T>): T {
-        return node.left ? this.getMinValue(node.left) : node.data;
     }
 
     find(root: BNode<T>, item: T): T {

@@ -1,4 +1,4 @@
-export interface IBNode {
+export interface IBNode<T> {
 
     /**
      * Return wether the current node has a left child node
@@ -11,5 +11,11 @@ export interface IBNode {
      * @return {boolean} true if the node as a right node, false otherwise
      */
     hasRight(): boolean;
+
+    /**
+     * Return the minimum value in a subtree
+     * @return {T} the value of the node
+     */
+    getMinValue(): T;
 
 }
