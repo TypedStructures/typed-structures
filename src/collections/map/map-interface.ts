@@ -3,10 +3,6 @@ import { IFunction } from '../..';
 import { ISet } from '../..';
 import { IMapEntry } from '../..';
 
-/**
- * This interface an adaptation of the Map<K, V> of the Java Collections Framework.
- * https://docs.oracle.com/javase/8/docs/api/java/util/Map.html
- */
 export interface IMap<K, V> {
 
     /**
@@ -47,9 +43,6 @@ export interface IMap<K, V> {
      *      }
      *  }
      *
-     * The default implementation makes no guarantees about synchronization or atomicity properties of this method.
-     * Any implementation providing atomicity guarantees must override this method and document its concurrency properties.
-     * In particular, all implementations of subinterface ConcurrentMap must document whether the function is applied once atomically only if the value is not present.
      * @param {K} key
      * @param {IBiFunction<K, V, V>} remappingFunction
      * @since 0.0.1
@@ -76,9 +69,6 @@ export interface IMap<K, V> {
      *          map.put(key, newValue);
      *  }
      *
-     * The default implementation makes no guarantees about synchronization or atomicity properties of this method.
-     * Any implementation providing atomicity guarantees must override this method and document its concurrency properties.
-     * In particular, all implementations of subinterface ConcurrentMap must document whether the function is applied once atomically only if the value is not present.
      * @param {K} key key with which the specified value is to be associated
      * @param {IFunction<K, V>} mappingFunction the function to compute d value
      * @return {V} the current (existing or computed) value associated with the specified key, or null if the computed value is null
@@ -106,9 +96,6 @@ export interface IMap<K, V> {
      *      }
      *  }
      *
-     * The default implementation makes no guarantees about synchronization or atomicity properties of this method.
-     * Any implementation providing atomicity guarantees must override this method and document its concurrency properties.
-     * In particular, all implementations of subinterface ConcurrentMap must document whether the function is applied once atomically only if the value is not present.
      * @param {K} key key with which the specified value is to be associated
      * @param {IBiFunction<K, V, V>} v the function to compute d value
      * @return {V} the new value associated with the specified key, or null if none
@@ -291,8 +278,6 @@ export interface IMap<K, V> {
      *
      *  return v;
      *
-     * The default implementation makes no guarantees about synchronization or atomicity properties of this method.
-     * Any implementation providing atomicity guarantees must override this method and document its concurrency properties.
      * @param {K} key key with which the specified value is to be associated
      * @param {V} value value to be associated with the specified key
      * @return {V} the previous value associated with the specified key, or null if there was no mapping for the key. (A null return can also indicate that the map previously associated null with the key, if the implementation supports null values.)
@@ -332,8 +317,6 @@ export interface IMap<K, V> {
      *      return false;
      *  }
      *
-     * The default implementation makes no guarantees about synchronization or atomicity properties of this method.
-     * Any implementation providing atomicity guarantees must override this method and document its concurrency properties.
      * @param key key with which the specified value is associated
      * @param value value expected to be associated with the specified key
      * @return true if the value was removed
@@ -355,8 +338,6 @@ export interface IMap<K, V> {
      *      return null;
      *  }
      *
-     * The default implementation makes no guarantees about synchronization or atomicity properties of this method.
-     * Any implementation providing atomicity guarantees must override this method and document its concurrency properties.
      * @param {K} key key with which the specified value is associated
      * @param {V} value value to be associated with the specified key
      * @return {V} the previous value associated with the specified key, or null if there was no mapping for the key. (A null return can also indicate that the map previously associated null with the key, if the implementation supports null values.)
@@ -380,9 +361,6 @@ export interface IMap<K, V> {
      *      return false;
      *  }
      *
-     * The default implementation does not throw NullPointerException for maps that do not support null values if oldValue is null unless newValue is also null.
-     * The default implementation makes no guarantees about synchronization or atomicity properties of this method.
-     * Any implementation providing atomicity guarantees must override this method and document its concurrency properties.
      * @param {K} key key with which the specified value is associated
      * @param {V} oldValue value expected to be associated with the specified key
      * @param {V} newValue value to be associated with the specified key
@@ -406,7 +384,6 @@ export interface IMap<K, V> {
      *      entry.setValue(f.apply(entry.getKey(), entry.getValue()));
      *  }
      *
-     * The default implementation makes no guarantees about synchronization or atomicity properties of this method. Any implementation providing atomicity guarantees must override this method and document its concurrency properties.
      * @param {IBiFunction<K, V, V>} f the function to apply to each entry
      * @throws UnsupportedOperationException - if the set operation is not supported by this map's entry set iterator.
      * @throws ClassCastException - if the class of d replacement value prevents it from being stored in this map
