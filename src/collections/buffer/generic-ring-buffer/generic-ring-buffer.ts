@@ -1,6 +1,7 @@
 import { Buffer } from '../../..';
 import { IBuffer } from '../../..';
 import { IllegalArgumentException } from '../../..';
+import { TsQ } from '../../../tsQ/decorator/TsQDecorator';
 
 export class GenericRingBuffer<T> extends Buffer {
 
@@ -43,5 +44,10 @@ export class GenericRingBuffer<T> extends Buffer {
 
         this._readPosition = newPosition;
         return this;
+    }
+
+    @TsQ()
+    public toArray(): T[] {
+        return this._buf;
     }
 }

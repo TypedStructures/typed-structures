@@ -10,7 +10,7 @@
             "spaces"
         ],
         "no-duplicate-variable": true,
-        "no-eval": true,
+        "no-eval": false,
         "no-trailing-whitespace": true,
         "no-unsafe-finally": true,
         "one-line": [

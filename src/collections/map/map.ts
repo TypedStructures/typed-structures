@@ -6,6 +6,7 @@ import { IMapEntry } from '../..';
 import { NullReferenceException } from '../..';
 import { Set } from '../..';
 import { MapEntry } from '../..';
+import {TsQ} from '../../tsQ/decorator/TsQDecorator';
 
 export class Map<K, V> implements IMap<K, V> {
 
@@ -249,6 +250,7 @@ export class Map<K, V> implements IMap<K, V> {
         return this._entries.length;
     }
 
+    @TsQ()
     values(): V[] {
         return this._entries
             .map((mapEntry: IMapEntry<K, V>) => mapEntry.getValue());

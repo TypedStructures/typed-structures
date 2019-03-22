@@ -1,5 +1,6 @@
 import { Node } from '../../..';
 import { ILinkedList } from '../../..';
+import { TsQ } from '../../../tsQ/decorator/TsQDecorator';
 
 export class SinglyLinkedList<T> implements ILinkedList<T> {
 
@@ -199,6 +200,13 @@ export class SinglyLinkedList<T> implements ILinkedList<T> {
         ++this._size;
 
         return this._size;
+    }
+
+    @TsQ()
+    public toArray(): T[] {
+        let res: T[] = [];
+        this.forEach((item: Node<T>) => res.push(item.data));
+        return res;
     }
 
     private create(item: T): Node<T> {

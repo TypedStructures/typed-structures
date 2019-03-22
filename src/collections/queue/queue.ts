@@ -1,8 +1,8 @@
 import { DoublyLinkedList } from '../..';
 import { IQueue } from '../..';
+import {TsQ} from '../../tsQ/decorator/TsQDecorator';
 
 export class Queue<T> implements IQueue<T> {
-
     protected _items: DoublyLinkedList<T>;
 
     constructor() {
@@ -31,5 +31,10 @@ export class Queue<T> implements IQueue<T> {
 
     public empty(): boolean {
         return this._items.empty();
+    }
+
+    @TsQ()
+    public toArray(): T[] {
+        return this._items.toArray();
     }
 }

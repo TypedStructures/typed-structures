@@ -1,5 +1,6 @@
 import { Buffer } from '../../..';
 import { IBuffer } from '../../..';
+import { TsQ } from '../../../tsQ/decorator/TsQDecorator';
 
 export class GenericBuffer<T> extends Buffer {
 
@@ -25,7 +26,12 @@ export class GenericBuffer<T> extends Buffer {
         return this;
     }
 
-    isReadOnly(): boolean {
+    public isReadOnly(): boolean {
         return this._readonly;
+    }
+
+    @TsQ()
+    public toArray(): T[] {
+        return this._buf;
     }
 }
