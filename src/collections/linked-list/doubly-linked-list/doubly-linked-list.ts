@@ -1,5 +1,6 @@
 import { Node } from '../../..';
 import { ILinkedList } from '../../..';
+import {TsQ} from '../../../tsQ/decorator/TsQDecorator';
 
 export class DoublyLinkedList<T> implements ILinkedList<T> {
 
@@ -203,5 +204,12 @@ export class DoublyLinkedList<T> implements ILinkedList<T> {
             current = current.next;
         }
         return undefined;
+    }
+
+    @TsQ()
+    public toArray(): T[] {
+        let res: T[] = [];
+        this.forEach((item: Node<T>) => res.push(item.data));
+        return res;
     }
 }

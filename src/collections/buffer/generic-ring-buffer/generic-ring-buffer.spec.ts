@@ -1,5 +1,4 @@
 import {GenericRingBuffer} from './generic-ring-buffer';
-import {GenericBuffer} from '../generic-buffer/generic-buffer';
 import {IllegalArgumentException} from '../../../exceptions/illegal-argument-exception';
 
 describe('get/put', function () {

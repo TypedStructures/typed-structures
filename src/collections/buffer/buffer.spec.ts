@@ -103,3 +103,19 @@ describe('rewind', function () {
         expect(b.rewind()).toEqual(b);
     });
 });
+
+describe('toArray', function () {
+    it('should return an array', function () {
+        let b: GenericBuffer<number> = new GenericBuffer<number>(1, 1, 0, -1);
+        b.put(1);
+        expect(b.toArray()).toEqual([1]);
+    });
+});
+
+describe('put', function () {
+    it('should do nothing', function () {
+        let b: GenericBuffer<number> = new GenericBuffer<number>(1, 1, 0, -1, true);
+        b.put(1);
+        expect(b.get()).toBe(undefined);
+    });
+});
