@@ -32,11 +32,11 @@ h.stack(1);
 h.stack(2);
 
 class Person {
-    private _id: number;
-    private _name: string;
-    private _surname: string;
-    private _subscription_date: Date;
-    private _price: number;
+    protected _id: number;
+    protected _name: string;
+    protected _surname: string;
+    protected _subscription_date: Date;
+    protected _price: number;
 
     constructor(id: number, name: string, surname: string, date: Date, price: number) {
         this._id = id;
@@ -94,20 +94,11 @@ let Pd = new Person(4, 'B', 'A', new Date('0000-01-01'), 0);
 let Pe = new Person(5, 'B', 'A', new Date('0000-01-02'), 0);
 let Pf = new Person(6, 'B', 'A', new Date('0000-01-03'), 0);
 
-class SponsoredPerson {
-    private _id: number;
-    private _name: string;
-    private _surname: string;
-    private _subscription_date: Date;
-    private _price: number;
+class SponsoredPerson extends Person {
     private _sponsor: Person;
 
     constructor(id: number, name: string, surname: string, date: Date, price: number, sponsor: Person) {
-        this._id = id;
-        this._name = name;
-        this._surname = surname;
-        this._subscription_date = date;
-        this._price = price;
+        super(id, name, surname, date, price);
         this._sponsor = sponsor;
     }
 
