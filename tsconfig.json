@@ -4,7 +4,15 @@
     "sourceMap": true,
     "noImplicitAny": true,
     "module": "commonjs",
-    "target": "es6",
-    "allowJs": true
-  }
+    "target": "es2016",
+    "declaration": true,
+    "listEmittedFiles": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "allowJs": true
 }

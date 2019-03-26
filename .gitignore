@@ -11,3 +11,5 @@ debug.log
 .idea/*
 .vscode/
 .vscode/*
+package-lock.json
+.DS_STORE
