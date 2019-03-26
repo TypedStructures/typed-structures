@@ -12,6 +12,7 @@ cache:
 branches:
   only:
     - master
+    - dev
 
 notifications:
   email:
