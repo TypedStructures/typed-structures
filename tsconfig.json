@@ -6,10 +6,13 @@
     "module": "commonjs",
     "target": "es2016",
     "declaration": true,
-    "declarationMap": true,
     "listEmittedFiles": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "esModuleInterop": true
   },
-  "exclude": ["./dist"],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
   "allowJs": true
 }
