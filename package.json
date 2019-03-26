@@ -1,6 +1,6 @@
 {
   "name": "typed-structures",
-  "version": "0.0.20",
+  "version": "1.0.0",
   "description": "Common typed structures implementations in TypeScript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -19,6 +19,8 @@
   },
   "keywords": [
     "buffer",
+    "binary-tree",
+    "data-structures",
     "linked-list",
     "linkedlist",
     "map",
