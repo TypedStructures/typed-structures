@@ -1,5 +1,5 @@
 
-![TypedStructures](./images/TypedStructures.png)
+![TypedStructures](./images/typed-structures.png)
 
 # TypedStructures
 
