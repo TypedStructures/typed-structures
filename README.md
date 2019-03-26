@@ -43,7 +43,7 @@ For questions and support feel free to open an issue
 
 ## Issues
 
-Currently working on the guideline
+See CONTRIBUTING.md
 
 ## Contribution
 
