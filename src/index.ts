@@ -30,3 +30,4 @@ export { ReadOnlyBufferException } from './exceptions/read-only-buffer-exception
 export { UnsupportedOperationException } from './exceptions/unsupported-operation-exception';
 export { BiFunction } from './functions/bi-function/bi-function';
 export { Function } from './functions/function/function';
+export { BinaryTreeSearch } from './collections/binary-tree/bts/binary-tree-search';
