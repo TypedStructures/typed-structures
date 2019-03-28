@@ -64,20 +64,202 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<p><img src="./images/typed-structures.png" alt="TypedStructures"></p>
-				<h1 id="typedstructures">TypedStructures</h1>
-				<p>TypeScript implementation of data structures.</p>
-				<h2 id="current-features">Current features</h2>
-				<ul>
-					<li><input checked="" disabled="" type="checkbox"> Singly linked list</li>
-					<li><input checked="" disabled="" type="checkbox"> Doubly linked list</li>
-					<li><input checked="" disabled="" type="checkbox"> Map</li>
-					<li><input checked="" disabled="" type="checkbox"> Set</li>
-					<li><input checked="" disabled="" type="checkbox"> Stack</li>
-					<li><input checked="" disabled="" type="checkbox"> Queue</li>
-					<li><input checked="" disabled="" type="checkbox"> Binary tree</li>
-					<li><input checked="" disabled="" type="checkbox"> Buffer</li>
-				</ul>
+				<p align="center">
+					<a><img href="https://travis-ci.org/TypedStructures/typed-structures" src="https://travis-ci.org/TypedStructures/typed-structures.svg?branch=master" alt="Build Status"></a>
+					<a href="https://codeclimate.com/github/TypedStructures/typed-structures/test_coverage"><img src="https://api.codeclimate.com/v1/badges/f3f520469906412ed5f0/test_coverage" /></a>
+					<a href="https://codeclimate.com/github/TypedStructures/typed-structures/maintainability"><img src="https://api.codeclimate.com/v1/badges/f3f520469906412ed5f0/maintainability" /></a>
+				</p>
+				<h2 align="center">Typed Structures</h2>
+				<p>Typed Structures is an MIT-licensed on-going open source project meant to bring a fullset of data structures to the awesome TypeScript 🎉</p>
+				<h2 id="how-to-install">How to install</h2>
+				<pre><code class="language-bash">npm install typed-structures</code></pre>
+				<h2 id="how-to-import">How to import</h2>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { <span class="hljs-built_in">Map</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">'typed-structures'</span>;
+<span class="hljs-keyword">let</span> map: <span class="hljs-built_in">Map</span>&lt;number, number&gt; = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>&lt;number, number&gt;();
+map.put(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+map.containsKey(<span class="hljs-number">1</span>);
+<span class="hljs-comment">// true</span></code></pre>
+				<h2 id="documentation-">Documentation 📝</h2>
+				<p>Complete API available <a href="https://typedstructures.github.io/typed-structures/">here</a>.</p>
+				<h2 id="structures-examples-">Structures (Examples) 📕📗📘</h2>
+				<h3 id="doubly-linked-list">Doubly linked list</h3>
+				<p>Generic doubly linked list.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { DoublyLinkedList, Node, Queue } <span class="hljs-keyword">from</span> <span class="hljs-string">'typed-structures'</span>;
+<span class="hljs-keyword">import</span> { Track } <span class="hljs-keyword">from</span> <span class="hljs-string">'./track'</span>;
+<span class="hljs-keyword">import</span> { MixService } <span class="hljs-keyword">from</span> <span class="hljs-string">'./mix-service'</span>;
+
+<span class="hljs-keyword">class</span> Player {
+    <span class="hljs-keyword">private</span> playlist: DoublyLinkedList&lt;Track&gt; = <span class="hljs-keyword">new</span> DoublyLinkedList&lt;Track&gt;();
+    <span class="hljs-keyword">private</span> mix: Queue&lt;Track&gt; = MixService.getMix();
+    <span class="hljs-keyword">private</span> currentTrack: Node&lt;Track&gt;;
+
+    <span class="hljs-keyword">constructor</span>(<span class="hljs-params"></span>) {
+        <span class="hljs-keyword">this</span>.playlist.push(<span class="hljs-keyword">this</span>.mix.dequeue());
+        <span class="hljs-keyword">this</span>.currentTrack = <span class="hljs-keyword">new</span> Node&lt;Track&gt;(<span class="hljs-keyword">this</span>.playlist.peek());
+    }
+
+    onNextClick() {
+        <span class="hljs-keyword">this</span>.next();
+    }
+
+    onPreviousClick() {
+        <span class="hljs-keyword">this</span>.previous();
+    }
+
+    onTrackEnd() {
+        <span class="hljs-keyword">this</span>.next();
+    }
+
+    <span class="hljs-keyword">private</span> next() {
+        <span class="hljs-keyword">this</span>.playlist.push(<span class="hljs-keyword">this</span>.mix.dequeue());
+        <span class="hljs-keyword">this</span>.currentTrack = <span class="hljs-keyword">this</span>.currentTrack.next();
+    }
+
+    <span class="hljs-keyword">private</span> previous() {
+        <span class="hljs-keyword">this</span>.currentTrack = <span class="hljs-keyword">this</span>.currentTrack.previous();
+    }
+}
+</code></pre>
+				<h3 id="map">Map</h3>
+				<p>Generic plain data map.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Map, Stack } <span class="hljs-keyword">from</span> <span class="hljs-string">'typed-structures'</span>;
+<span class="hljs-keyword">import</span> { Task } <span class="hljs-keyword">from</span> <span class="hljs-string">"./task"</span>;
+
+<span class="hljs-keyword">let</span> map: Map&lt;<span class="hljs-built_in">string</span>, Stack&lt;Task&gt;&gt; = <span class="hljs-keyword">new</span> Map&lt;<span class="hljs-built_in">string</span>, Stack&lt;Task&gt;&gt;();
+
+map.put(<span class="hljs-string">'todo'</span>, <span class="hljs-keyword">new</span> Stack&lt;Task&gt;());
+map.put(<span class="hljs-string">'in-progress'</span>, <span class="hljs-keyword">new</span> Stack&lt;Task&gt;());
+map.put(<span class="hljs-string">'done'</span>, <span class="hljs-keyword">new</span> Stack&lt;Task&gt;());
+
+<span class="hljs-keyword">let</span> firstTask: Task = <span class="hljs-keyword">new</span> Task(<span class="hljs-string">'Read the docs'</span>);
+<span class="hljs-keyword">let</span> todo: Stack&lt;Task&gt; = map.get(<span class="hljs-string">'todo'</span>);
+todo.stack(firstTask);
+map.replace(<span class="hljs-string">'todo'</span>, todo);
+
+<span class="hljs-keyword">let</span> inProgress: Stack&lt;Task&gt; = map.get(<span class="hljs-string">'in-progress'</span>);
+inProgress.stack(map.get(<span class="hljs-string">'todo'</span>).unstack());
+map.replace(<span class="hljs-string">'in-progress'</span>, inProgress);
+
+<span class="hljs-keyword">let</span> done: Stack&lt;Task&gt; = map.get(<span class="hljs-string">'done'</span>);
+done.stack(map.get(<span class="hljs-string">'in-progress'</span>).unstack());
+map.replace(<span class="hljs-string">'done'</span>, done);</code></pre>
+				<h3 id="set">Set</h3>
+				<p>Generic set.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Set } <span class="hljs-keyword">from</span> <span class="hljs-string">'typed-structures'</span>;
+
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">set</span>: Set&lt;<span class="hljs-built_in">string</span>&gt; = <span class="hljs-keyword">new</span> Set&lt;<span class="hljs-built_in">string</span>&gt;();
+
+<span class="hljs-keyword">set</span>.add(<span class="hljs-string">'first'</span>);
+<span class="hljs-keyword">set</span>.add(<span class="hljs-string">'second'</span>);
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">set</span>.contains(<span class="hljs-string">'first'</span>)); <span class="hljs-comment">// true</span>
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> key of <span class="hljs-keyword">set</span>.keys())
+    <span class="hljs-built_in">console</span>.log(key); <span class="hljs-comment">// first, second</span></code></pre>
+				<h3 id="stack">Stack</h3>
+				<p>Simple and generic stack. </p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Stack } <span class="hljs-keyword">from</span> <span class="hljs-string">"typed-structures"</span>;
+<span class="hljs-keyword">import</span> { Task } <span class="hljs-keyword">from</span> <span class="hljs-string">"./task"</span>;
+
+<span class="hljs-keyword">let</span> taskStack: Stack&lt;Task&gt; = <span class="hljs-keyword">new</span> Stack&lt;Task&gt;();
+
+taskStack.stack(<span class="hljs-keyword">new</span> Task(<span class="hljs-string">'taskName'</span>));
+
+<span class="hljs-built_in">console</span>.log(taskStack.peek().name); <span class="hljs-comment">// taskName</span>
+
+<span class="hljs-built_in">console</span>.log(taskStack.empty()); <span class="hljs-comment">// false</span>
+
+<span class="hljs-built_in">console</span>.log(taskStack.length()); <span class="hljs-comment">// 1</span>
+
+<span class="hljs-built_in">console</span>.log(taskStack.unstack().name); <span class="hljs-comment">//taskName</span>
+
+<span class="hljs-built_in">console</span>.log(taskStack.empty()); <span class="hljs-comment">// true</span></code></pre>
+				<p><a href="https://codesandbox.io/s/zk6ro2w3j3?autoresize=1&amp;fontsize=14">Live example on CodeSandbox</a></p>
+				<h3 id="queue">Queue</h3>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Queue } <span class="hljs-keyword">from</span> <span class="hljs-string">'typed-structures'</span>;
+<span class="hljs-keyword">import</span> { Emiter } <span class="hljs-keyword">from</span> <span class="hljs-string">'./emiter'</span>;
+<span class="hljs-keyword">import</span> { Logger } <span class="hljs-keyword">from</span> <span class="hljs-string">'./logger'</span>;
+
+<span class="hljs-keyword">let</span> emiter1: Emiter = <span class="hljs-keyword">new</span> Emiter();
+<span class="hljs-keyword">let</span> emiter2: Emiter = <span class="hljs-keyword">new</span> Emiter();
+<span class="hljs-keyword">let</span> logger: Logger = <span class="hljs-keyword">new</span> Logger();
+<span class="hljs-keyword">let</span> channel: Queue&lt;<span class="hljs-built_in">string</span>&gt; = <span class="hljs-keyword">new</span> Queue&lt;<span class="hljs-built_in">string</span>&gt;();
+
+channel.enqueue(emiter1.emit(<span class="hljs-string">'Hi !'</span>));
+channel.enqueue((emiter2.emit(<span class="hljs-string">'Hey, How are you doing ?'</span>)));
+<span class="hljs-comment">/* ... */</span>
+
+<span class="hljs-keyword">while</span> (!channel.empty()) {
+    logger.log(channel.dequeue());
+}</code></pre>
+				<h3 id="binary-tree">Binary tree</h3>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { BinaryTreeSearch } <span class="hljs-keyword">from</span> <span class="hljs-string">'typed-structures'</span>;
+
+<span class="hljs-keyword">let</span> tree: BinaryTreeSearch&lt;<span class="hljs-built_in">string</span>&gt; = <span class="hljs-keyword">new</span> BinaryTreeSearch&lt;<span class="hljs-built_in">string</span>&gt;();
+
+tree.add(<span class="hljs-string">'Find me ^^'</span>);
+
+<span class="hljs-built_in">console</span>.log(tree.find(tree.root(), <span class="hljs-string">'Find me ^^'</span>)); <span class="hljs-comment">// Find me ^^</span>
+<span class="hljs-built_in">console</span>.log(tree.find(tree.root(), <span class="hljs-string">'404'</span>)); <span class="hljs-comment">// undefined</span></code></pre>
+				<h3 id="buffer">Buffer</h3>
+				<p>Generic buffer.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { GenericBuffer } <span class="hljs-keyword">from</span> <span class="hljs-string">'typed-structures'</span>;
+
+<span class="hljs-keyword">let</span> b: GenericBuffer&lt;<span class="hljs-built_in">number</span>&gt; = <span class="hljs-keyword">new</span> GenericBuffer&lt;<span class="hljs-built_in">number</span>&gt;(<span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-number">-1</span>);
+
+    b.put(<span class="hljs-number">1</span>);
+    b.put(<span class="hljs-number">2</span>);
+
+    b.rewind();
+
+    <span class="hljs-built_in">console</span>.log(b.get()); <span class="hljs-comment">// 1</span>
+    <span class="hljs-built_in">console</span>.log(b.get()); <span class="hljs-comment">// 2</span></code></pre>
+				<h3 id="ringbuffer">RingBuffer</h3>
+				<p>Generic ring buffer.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { GenericRingBuffer } <span class="hljs-keyword">from</span> <span class="hljs-string">'typed-structures'</span>;
+
+<span class="hljs-keyword">let</span> b: GenericRingBuffer&lt;<span class="hljs-built_in">number</span>&gt; = <span class="hljs-keyword">new</span> GenericRingBuffer&lt;<span class="hljs-built_in">number</span>&gt;(<span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+b.put(<span class="hljs-number">1</span>);
+b.put(<span class="hljs-number">2</span>);
+
+<span class="hljs-built_in">console</span>.log(b.get()); <span class="hljs-comment">// 1</span></code></pre>
+				<h3 id="tsq-linq-inspired-">TsQ (LinQ inspired)</h3>
+				<p>Minimalist implementation of .NET&#39;s LinQ for TypedStructures.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { TsQ, Set } <span class="hljs-keyword">from</span> <span class="hljs-string">'typed-structures'</span>;
+<span class="hljs-keyword">import</span> { Person } <span class="hljs-keyword">from</span> <span class="hljs-string">'./person'</span>;
+
+<span class="hljs-keyword">let</span> firstUnknown: Person = <span class="hljs-keyword">new</span> Person(<span class="hljs-number">1</span>, <span class="hljs-string">'John'</span>, <span class="hljs-string">'Doe'</span>, <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">'1970-01-01'</span>));
+<span class="hljs-keyword">let</span> secondUnknown: Person = <span class="hljs-keyword">new</span> Person(<span class="hljs-number">2</span>, <span class="hljs-string">'Jane'</span>, <span class="hljs-string">'Doe'</span>, <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">'1970-01-02'</span>));
+<span class="hljs-keyword">let</span> thirdUnknown: Person = <span class="hljs-keyword">new</span> Person(<span class="hljs-number">3</span>, <span class="hljs-string">'Complete'</span>, <span class="hljs-string">'Stranger'</span>, <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">'1970-01-03'</span>));
+<span class="hljs-keyword">let</span> fourthUnknown: Person = <span class="hljs-keyword">new</span> Person(<span class="hljs-number">4</span>, <span class="hljs-string">'Unidentified'</span>, <span class="hljs-string">'Person'</span>, <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">'1970-01-04'</span>));
+<span class="hljs-keyword">let</span> fifthUnknown: Person = <span class="hljs-keyword">new</span> Person(<span class="hljs-number">5</span>, <span class="hljs-string">'Unnamed'</span>, <span class="hljs-string">'Person'</span>, <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-string">'1970-01-04'</span>));
+
+<span class="hljs-keyword">let</span> unknowns: Set&lt;Person&gt; = <span class="hljs-keyword">new</span> Set&lt;Person&gt;();
+unknowns.add(firstUnknown);
+unknowns.add(secondUnknown);
+unknowns.add(thirdUnknown);
+unknowns.add(fourthUnknown);
+unknowns.add(fifthUnknown);
+
+TsQ.from(unknowns)
+    .select(<span class="hljs-string">"name"</span>)
+    .where(<span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> e.name.length &gt; <span class="hljs-number">4</span>)
+    .order_by(<span class="hljs-string">"id"</span>, <span class="hljs-string">"desc"</span>)
+    .fetch();
+
+TsQ.from(unknowns)
+    .group_by(<span class="hljs-string">"group"</span>)
+    .fetch();
+</code></pre>
+				<h2 id="questions-">Questions 💬</h2>
+				<p>For questions and support feel free to open an issue</p>
+				<h2 id="issues-">Issues 🔎</h2>
+				<p>See CONTRIBUTING.md</p>
+				<h2 id="contribution-">Contribution 🛠</h2>
+				<p>Feel free to contribute and enhance typed structures 🎉💛</p>
+				<h2 id="license">License</h2>
+				<p><a href="http://opensource.org/licenses/MIT">MIT</a></p>
+				<p>2018-present Anthony &amp; Thibaud</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
