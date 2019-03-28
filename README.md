@@ -8,6 +8,11 @@
 
 Typed Structures is an MIT-licensed on-going open source project meant to bring a fullset of data structures to the awesome TypeScript 🎉
 
+## Motivation
+
+With the rise in popularity of Typescript, we think that having the same kind of data structures as the standard libraries of widely used strongly typed languages would be helpful to anyone planning to implement complex features.
+We believe in the power of open-source and we want this project to be driven by the ones who need it. 
+
 ## How to install 
 ```bash
 npm install typed-structures
@@ -15,11 +20,7 @@ npm install typed-structures
   
 ## How to import
 ```javascript
-import { Map } from 'typed-structures';
-let map: Map<number, number> = new Map<number, number>();
-map.put(1, 1);
-map.containsKey(1);
-// true
+import { Map, Buffer, Set /* ... */ } from 'typed-structures';
 ```
 
 ## Documentation 📝
