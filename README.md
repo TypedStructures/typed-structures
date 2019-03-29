@@ -210,11 +210,11 @@ Minimalist implementation of .NET's LinQ for TypedStructures.
 import { TsQ, Set } from 'typed-structures';
 import { Person } from './person';
 
-let firstUnknown: Person = new Person(1, 'John', 'Doe', new Date('1970-01-01'));
-let secondUnknown: Person = new Person(2, 'Jane', 'Doe', new Date('1970-01-02'));
-let thirdUnknown: Person = new Person(3, 'Complete', 'Stranger', new Date('1970-01-03'));
-let fourthUnknown: Person = new Person(4, 'Unidentified', 'Person', new Date('1970-01-04'));
-let fifthUnknown: Person = new Person(5, 'Unnamed', 'Person', new Date('1970-01-04'));
+let firstUnknown: Person = new Person(1, 'John', 'Doe', 'group1');
+let secondUnknown: Person = new Person(2, 'Jane', 'Doe', 'group1');
+let thirdUnknown: Person = new Person(3, 'Complete', 'Stranger', 'group1'');
+let fourthUnknown: Person = new Person(4, 'Unidentified', 'Person', 'group2');
+let fifthUnknown: Person = new Person(5, 'Unnamed', 'Person', 'group2');
 
 let unknowns: Set<Person> = new Set<Person>();
 unknowns.add(firstUnknown);
