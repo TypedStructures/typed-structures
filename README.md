@@ -212,7 +212,7 @@ import { Person } from './person';
 
 let firstUnknown: Person = new Person(1, 'John', 'Doe', 'group1');
 let secondUnknown: Person = new Person(2, 'Jane', 'Doe', 'group1');
-let thirdUnknown: Person = new Person(3, 'Complete', 'Stranger', 'group1'');
+let thirdUnknown: Person = new Person(3, 'Complete', 'Stranger', 'group1');
 let fourthUnknown: Person = new Person(4, 'Unidentified', 'Person', 'group2');
 let fifthUnknown: Person = new Person(5, 'Unnamed', 'Person', 'group2');
 
